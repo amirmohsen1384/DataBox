@@ -7,7 +7,8 @@ SOURCES += \
     sources/main.cpp \
     sources/rootwindow.cpp
 HEADERS += \
-    headers/rootwindow.h
+    headers/rootwindow.h \
+    headers/personinfo.h
 FORMS += \
     gui/rootwindow.ui
 qnx: target.path = /tmp/$${TARGET}/bin
