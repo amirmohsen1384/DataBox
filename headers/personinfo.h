@@ -80,9 +80,13 @@ public:
     PersonInfo& operator=(const PersonInfo &dataItem);
     friend QDataStream& operator<<(QDataStream &stream, const PersonInfo &target);
     friend QDataStream& operator>>(QDataStream &stream, PersonInfo &target);
+    friend bool operator==(const PersonInfo &one, const PersonInfo &two);
+    friend bool operator!=(const PersonInfo &one, const PersonInfo &two);
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(PersonInfo::HiddenInfoFlags);
 QDataStream& operator<<(QDataStream &stream, const PersonInfo &target);
 QDataStream& operator>>(QDataStream &stream, PersonInfo &target);
+bool operator==(const PersonInfo &one, const PersonInfo &two);
+bool operator!=(const PersonInfo &one, const PersonInfo &two);
 
 #endif // PERSONINFO_H

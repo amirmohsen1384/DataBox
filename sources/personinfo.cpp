@@ -123,3 +123,25 @@ QDataStream& operator>>(QDataStream &stream, PersonInfo &target)
     target.hiddenInfo.setFlag(PersonInfo::LastModified, (value & PersonInfo::LastModified) == PersonInfo::LastModified);
     return stream;
 }
+bool operator==(const PersonInfo &one, const PersonInfo &two)
+{
+    if(one.firstName != two.firstName)
+        return false;
+    else if(one.lastName != two.lastName)
+        return false;
+    else if(one.fatherName != two.fatherName)
+        return false;
+    else if(one.birthday != two.birthday)
+        return false;
+    else if(one.gender != two.gender)
+        return false;
+    else if(one.nationality != two.nationality)
+        return false;
+    else if(one.bornProvince != two.bornProvince)
+        return false;
+    else if(one.photo != two.photo)
+        return false;
+
+    return true;
+}
+bool operator!=(const PersonInfo &one, const PersonInfo &two) { return !(one == two); }
