@@ -123,17 +123,17 @@ QDataStream& operator>>(QDataStream &stream, PersonInfo &target)
     stream >> target.firstName >> target.lastName >> target.fatherName >> reinterpret_cast<quint16&>(target.gender);
     stream >> target.birthday >> target.nationality >> target.bornProvince >> target.photo;
     stream >> target.hiddenInfo >> target.createdDateTime >> target.lastModifiedDateTime;
-    target.firstNameChanged(target.firstName);
-    target.lastNameChanged(target.lastName);
-    target.fatherNameChanged(target.fatherName);
-    target.genderChanged(target.gender);
-    target.birthdayChanged(target.birthday);
-    target.nationalityChanged(target.nationality);
-    target.bornProvinceChanged(target.bornProvince);
-    target.photoChanged(target.photo);
-    target.hiddenInfoChanged(target.hiddenInfo);
-    target.createdDateTimeChanged(target.createdDateTime);
-    target.lastModifiedDateTimeChanged(target.lastModifiedDateTime);
+    emit target.firstNameChanged(target.firstName);
+    emit target.lastNameChanged(target.lastName);
+    emit target.fatherNameChanged(target.fatherName);
+    emit target.genderChanged(target.gender);
+    emit target.birthdayChanged(target.birthday);
+    emit target.nationalityChanged(target.nationality);
+    emit target.bornProvinceChanged(target.bornProvince);
+    emit target.photoChanged(target.photo);
+    emit target.hiddenInfoChanged(target.hiddenInfo);
+    emit target.createdDateTimeChanged(target.createdDateTime);
+    emit target.lastModifiedDateTimeChanged(target.lastModifiedDateTime);
     return stream;
 }
 bool operator==(const PersonInfo &one, const PersonInfo &two)
@@ -152,7 +152,7 @@ bool operator==(const PersonInfo &one, const PersonInfo &two)
         return false;
     else if(one.bornProvince != two.bornProvince)
         return false;
-    else if(one.photo != two.photo)
+    else if(one.photo.toImage() != two.photo.toImage())
         return false;
 
     return true;
