@@ -8,6 +8,7 @@ SOURCES += \
     sources/personinfo.cpp \
     sources/rootwindow.cpp
 HEADERS += \
+    headers/infoitem.h \
     headers/rootwindow.h \
     headers/personinfo.h
 FORMS += \
