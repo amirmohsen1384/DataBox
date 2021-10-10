@@ -17,8 +17,8 @@ public:
                  Nationality = 0x20,
                  BornProvince = 0x40,
                  Photo = 0x80,
-                 Created = 0x100,
-                 LastModified = 0x200} HiddenInfoFlag;
+                 CreatedDateTime = 0x100,
+                 LastModifiedDateTime = 0x200} HiddenInfoFlag;
     Q_DECLARE_FLAGS(HiddenInfoFlags, HiddenInfoFlag)
 private:
     QString firstName, lastName, fatherName;

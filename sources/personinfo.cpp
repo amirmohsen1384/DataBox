@@ -107,8 +107,8 @@ QDataStream& operator>>(QDataStream &stream, PersonInfo::HiddenInfoFlags &target
     target.setFlag(PersonInfo::Nationality, (value & PersonInfo::Nationality) == PersonInfo::Nationality);
     target.setFlag(PersonInfo::BornProvince, (value & PersonInfo::BornProvince) == PersonInfo::BornProvince);
     target.setFlag(PersonInfo::Photo, (value & PersonInfo::Photo) == PersonInfo::Photo);
-    target.setFlag(PersonInfo::Created, (value & PersonInfo::Created) == PersonInfo::Created);
-    target.setFlag(PersonInfo::LastModified, (value & PersonInfo::LastModified) == PersonInfo::LastModified);
+    target.setFlag(PersonInfo::CreatedDateTime, (value & PersonInfo::CreatedDateTime) == PersonInfo::CreatedDateTime);
+    target.setFlag(PersonInfo::LastModifiedDateTime, (value & PersonInfo::LastModifiedDateTime) == PersonInfo::LastModifiedDateTime);
     return stream;
 }
 QDataStream& operator<<(QDataStream &stream, const PersonInfo &target)
