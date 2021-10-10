@@ -10,6 +10,7 @@ SOURCES += \
     sources/rootwindow.cpp
 HEADERS += \
     headers/infoitem.h \
+    headers/photoviewer.h \
     headers/rootwindow.h \
     headers/personinfo.h
 FORMS += \
