@@ -158,3 +158,11 @@ bool operator==(const PersonInfo &one, const PersonInfo &two)
     return true;
 }
 bool operator!=(const PersonInfo &one, const PersonInfo &two) { return !(one == two); }
+QString connectFirstAndLastName(const QString &firstName, const QString &lastName)
+{
+    QString result(firstName);
+    if(!lastName.isEmpty())
+        result.append(!firstName.isEmpty() ? ' ' + lastName : lastName);
+
+    return result;
+}

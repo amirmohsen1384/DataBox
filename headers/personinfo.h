@@ -7,7 +7,7 @@ class PersonInfo : public QObject
 {
     Q_OBJECT
 public:
-    typedef enum {Male = 0x01, Female = 0x02} GenderType;
+    typedef enum {Male = 0x00, Female = 0x01} GenderType;
     typedef enum {FirstName = 0x01,
                  LastName = 0x02,
                  FatherName = 0x04,
@@ -82,4 +82,5 @@ QDataStream& operator<<(QDataStream &stream, const PersonInfo &target);
 QDataStream& operator>>(QDataStream &stream, PersonInfo &target);
 bool operator==(const PersonInfo &one, const PersonInfo &two);
 bool operator!=(const PersonInfo &one, const PersonInfo &two);
+QString connectFirstAndLastName(const QString &firstName, const QString &lastName);
 #endif // PERSONINFO_H
