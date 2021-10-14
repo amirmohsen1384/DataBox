@@ -7,6 +7,8 @@ CONFIG += c++11
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 SOURCES += \
     sources/infoeditor.cpp \
+    sources/infomonitor.cpp \
+    sources/personinfowidget.cpp \
     sources/photoviewer.cpp \
     sources/infoitem.cpp \
     sources/main.cpp \
@@ -15,6 +17,8 @@ SOURCES += \
 HEADERS += \
     headers/infoeditor.h \
     headers/infoitem.h \
+    headers/infomonitor.h \
+    headers/personinfowidget.h \
     headers/photoviewer.h \
     headers/rootwindow.h \
     headers/personinfo.h
