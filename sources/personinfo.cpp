@@ -166,3 +166,7 @@ QString connectFirstAndLastName(const QString &firstName, const QString &lastNam
 
     return result;
 }
+QString genderToString(const PersonInfo::GenderType &gender)
+{
+    return gender == PersonInfo::Male ? "Male" : "Female";
+}

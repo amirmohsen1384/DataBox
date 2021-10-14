@@ -83,4 +83,5 @@ QDataStream& operator>>(QDataStream &stream, PersonInfo &target);
 bool operator==(const PersonInfo &one, const PersonInfo &two);
 bool operator!=(const PersonInfo &one, const PersonInfo &two);
 QString connectFirstAndLastName(const QString &firstName, const QString &lastName);
+QString genderToString(const PersonInfo::GenderType &gender);
 #endif // PERSONINFO_H
