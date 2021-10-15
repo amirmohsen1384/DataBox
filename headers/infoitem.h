@@ -44,4 +44,7 @@ QDataStream& operator<<(QDataStream &stream, const InfoItem &target);
 QDataStream& operator>>(QDataStream &stream, InfoItem &target);
 bool operator==(const InfoItem &one, const InfoItem &two);
 bool operator!=(const InfoItem &one, const InfoItem &two);
+typedef QList<InfoItem> InfoItemList;
+typedef QListIterator<InfoItem> InfoItemListIterator;
+typedef QMutableListIterator<InfoItem> InfoItemMutableListIterator;
 #endif // INFOITEM_H
