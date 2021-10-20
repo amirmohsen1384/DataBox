@@ -130,6 +130,14 @@ void InfoSheet::wipe()
 {
     mainContainer.clear();
 }
+bool InfoSheet::isEmpty() const
+{
+    return mainContainer.isEmpty();
+}
+int InfoSheet::getSize() const
+{
+    return mainContainer.size();
+}
 QDataStream& operator<<(QDataStream &stream, const InfoSheet &sheet)
 {
     stream << sheet.mainContainer;

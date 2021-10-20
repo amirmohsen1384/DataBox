@@ -30,6 +30,8 @@ public:
     QList<InfoItem*> getSelectedItems();
     bool remove(int row);
     void wipe();
+    bool isEmpty() const;
+    int getSize() const;
     friend QDataStream& operator<<(QDataStream &stream, const InfoSheet &containter);
     friend QDataStream& operator>>(QDataStream &stream, InfoSheet &container);
 };
