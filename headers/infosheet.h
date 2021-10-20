@@ -28,10 +28,11 @@ public:
     int getCurrentRow() const;
     QList<int> getSelectedRows() const;
     QList<InfoItem*> getSelectedItems();
+    bool remove(int row);
+    void wipe();
     friend QDataStream& operator<<(QDataStream &stream, const InfoSheet &containter);
     friend QDataStream& operator>>(QDataStream &stream, InfoSheet &container);
 };
-QDataStream& operator<<(QDataStream &stream, const InfoSheet &containter);
-QDataStream& operator>>(QDataStream &stream, InfoSheet &container);
-
+QDataStream& operator<<(QDataStream &stream, const InfoSheet &sheet);
+QDataStream& operator>>(QDataStream &stream, InfoSheet &sheet);
 #endif // INFOSHEET_H

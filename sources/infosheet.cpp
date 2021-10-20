@@ -118,6 +118,18 @@ QList<InfoItem*> InfoSheet::getSelectedItems()
     }
     return result;
 }
+bool InfoSheet::remove(int row)
+{
+    if(!checkInRange(row))
+        return false;
+
+    mainContainer.removeAt(row);
+    return true;
+}
+void InfoSheet::wipe()
+{
+    mainContainer.clear();
+}
 QDataStream& operator<<(QDataStream &stream, const InfoSheet &sheet)
 {
     stream << sheet.mainContainer;
