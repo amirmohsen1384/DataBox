@@ -5,6 +5,13 @@ bool InfoSheet::checkInRange(int row) const
 {
     return (row >= 0 && row < mainContainer.size());
 }
+void InfoSheet::updateVisualList()
+{
+    ui->infoList->clear();
+    InfoItemListIterator iterator(mainContainer);
+    while(iterator.hasNext())
+        iterator.next().addToQListWidget(ui->infoList);
+}
 InfoSheet::InfoSheet(QWidget *parent) : QWidget(parent), ui(new Ui::InfoSheet)
 {
     ui->setupUi(this);

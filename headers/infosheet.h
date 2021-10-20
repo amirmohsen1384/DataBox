@@ -12,6 +12,7 @@ class InfoSheet : public QWidget
     Ui::InfoSheet *ui = nullptr;
 private:
     bool checkInRange(int row) const;
+    void updateVisualList();
 public:
     InfoSheet(QWidget *parent = nullptr);
     InfoSheet(const InfoItemList &initalList, QWidget *parent = nullptr);
