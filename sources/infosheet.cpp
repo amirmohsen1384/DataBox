@@ -118,3 +118,14 @@ QList<InfoItem*> InfoSheet::getSelectedItems()
     }
     return result;
 }
+QDataStream& operator<<(QDataStream &stream, const InfoSheet &sheet)
+{
+    stream << sheet.mainContainer;
+    return stream;
+}
+QDataStream& operator>>(QDataStream &stream, InfoSheet &sheet)
+{
+    stream >> sheet.mainContainer;
+    sheet.updateVisualList();
+    return stream;
+}

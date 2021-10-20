@@ -28,6 +28,10 @@ public:
     int getCurrentRow() const;
     QList<int> getSelectedRows() const;
     QList<InfoItem*> getSelectedItems();
+    friend QDataStream& operator<<(QDataStream &stream, const InfoSheet &containter);
+    friend QDataStream& operator>>(QDataStream &stream, InfoSheet &container);
 };
+QDataStream& operator<<(QDataStream &stream, const InfoSheet &containter);
+QDataStream& operator>>(QDataStream &stream, InfoSheet &container);
 
 #endif // INFOSHEET_H
