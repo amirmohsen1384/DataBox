@@ -125,6 +125,7 @@ QDataStream& operator<<(QDataStream &stream, const InfoSheet &sheet)
 }
 QDataStream& operator>>(QDataStream &stream, InfoSheet &sheet)
 {
+    sheet.mainContainer.clear();
     stream >> sheet.mainContainer;
     sheet.updateVisualList();
     return stream;
