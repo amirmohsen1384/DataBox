@@ -14,6 +14,7 @@ private:
     bool checkInRange(int row) const;
     void updateVisualList();
 public:
+    QString recentFileName;
     InfoSheet(QWidget *parent = nullptr);
     InfoSheet(const InfoItemList &initalList, QWidget *parent = nullptr);
     InfoSheet(const InfoSheet &initalSheet, QWidget *parent = nullptr);
