@@ -6,6 +6,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++11
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 SOURCES += \
+    sources/filehandling.cpp \
     sources/infosheet.cpp \
     sources/infoeditor.cpp \
     sources/infomonitor.cpp \
