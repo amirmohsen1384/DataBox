@@ -4,6 +4,10 @@
 #include "../headers/infoeditor.h"
 #include "../headers/infomonitor.h"
 
+void showNoItemSelectedMessage(QWidget *parent = nullptr)
+{
+    QMessageBox::warning(parent, "No item selected", "You have not selected any item from the current sheet.");
+}
 bool RootWindow::checkInRange(int index) const
 {
     return (index >= 0 && index < sheetContainer.size());
@@ -94,6 +98,8 @@ void RootWindow::on_actionEdit_triggered()
             editor.setWindowTitle(currentItem->getItemText() + " - Edit the information");
             editor.exec();
         }
+        else
+            showNoItemSelectedMessage(this);
     }
 }
 bool confirmToDelete(int size, QWidget *parent = nullptr)
@@ -124,7 +130,7 @@ void RootWindow::on_actionRemove_triggered()
             }
         }
         else
-            QMessageBox::warning(this, "Failed to delete", "No item has been selected.");
+            showNoItemSelectedMessage(this);
     }
 }
 void RootWindow::on_actionWipe_triggered()
@@ -153,5 +159,7 @@ void RootWindow::on_actionShow_triggered()
         InfoItem *current = currentSheet->getCurrentItem();
         if(current != nullptr)
             showItem(current);
+        else
+            showNoItemSelectedMessage(this);
     }
 }
