@@ -2,6 +2,7 @@
 #include "ui_rootwindow.h"
 #include <QMessageBox>
 #include "../headers/infoeditor.h"
+
 bool RootWindow::checkInRange(int index) const
 {
     return (index >= 0 && index < sheetContainer.size());
@@ -54,11 +55,14 @@ RootWindow::RootWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::RootWi
 }
 RootWindow::~RootWindow()
 {
+    for(int i = sheetContainer.size() - 1; i >= 0; --i)
+        delete sheetContainer.takeAt(i);
+
     delete ui;
 }
 void RootWindow::on_actionNew_triggered()
 {
-    if(sheetContainer.last()->isEmpty())
+    if(!sheetContainer.isEmpty() && sheetContainer.last()->isEmpty())
     {
         QMessageBox::warning(this, "The last sheet is still empty", "A new sheet cannot be created if the last one is empty.");
         return;
@@ -76,3 +80,61 @@ void RootWindow::on_actionAdd_triggered()
             currentSheet->add(*editor.getInformation());
     }
 }
+void RootWindow::on_actionEdit_triggered()
+{
+    InfoSheet *currentSheet = getCurrentSheet();
+    if(currentSheet != nullptr)
+    {
+        InfoItem *currentItem = currentSheet->getCurrentItem();
+        if(currentItem != nullptr)
+        {
+            InfoEditor editor(currentItem);
+            editor.setWindowTitle(currentItem->getItemText() + " - Edit the information");
+            editor.exec();
+        }
+    }
+}
+bool confirmToDelete(int size, QWidget *parent = nullptr)
+{
+    QMessageBox confirmMessage;
+    confirmMessage.setParent(parent);
+    confirmMessage.setWindowTitle("Confirm");
+    confirmMessage.setIcon(QMessageBox::Warning);
+    confirmMessage.setText("Are you sure to delete " + QString::number(size) + " element(s) from the sheet?");
+    confirmMessage.setInformativeText("Warning: This cannot be undone later.");
+    confirmMessage.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    return confirmMessage.exec() == QMessageBox::Yes ? true : false;
+}
+void RootWindow::on_actionRemove_triggered()
+{
+    InfoSheet *currentSheet = getCurrentSheet();
+    if(currentSheet != nullptr)
+    {
+        QList<int> itemRows = currentSheet->getSelectedRows();
+        if(!itemRows.isEmpty())
+        {
+            if(confirmToDelete(itemRows.size()))
+            {
+                QListIterator<int> rowIterator(itemRows);
+                rowIterator.toBack();
+                while(rowIterator.hasPrevious())
+                    currentSheet->remove(rowIterator.previous());
+            }
+        }
+        else
+            QMessageBox::warning(this, "Failed to delete", "No item has been selected.");
+    }
+}
+void RootWindow::on_actionWipe_triggered()
+{
+    InfoSheet *currentSheet = getCurrentSheet();
+    if(currentSheet != nullptr)
+    {
+        int size = currentSheet->getSize();
+        if(size <= 0)
+            QMessageBox::warning(this, "Failed to delete", "There's no item to delete.");
+        else if(confirmToDelete(currentSheet->getSize()))
+            currentSheet->wipe();
+    }
+}
+
