@@ -120,34 +120,38 @@ InfoSheet* readSheetFromFile(const QString &fileName, InfoSheet *first = nullptr
 }
 InfoSheet* writeSheetToFile(const QString &filename, InfoSheet *target)
 {
-    if(target != nullptr)
+    if(target == nullptr)
+        return nullptr;
+
+    QSaveFile file(filename);
+    if(!file.open(QFile::WriteOnly))
     {
-        QSaveFile file(filename);
-        if(!file.open(QFile::WriteOnly))
-        {
-            showOpenFailed();
-            return nullptr;
-        }
-        QDataStream stream(&file);
-        if(writeMagicNumber(stream).status() != QDataStream::Ok || (stream << *target).status() != QDataStream::Ok)
-        {
-            showSaveFailed();
-            return nullptr;
-        }
-        file.commit();
-        updateInfoSheetFileName(target, file.fileName());
+        showOpenFailed();
+        return nullptr;
     }
+    QDataStream stream(&file);
+    if(writeMagicNumber(stream).status() != QDataStream::Ok || (stream << *target).status() != QDataStream::Ok)
+    {
+        showSaveFailed();
+        return nullptr;
+    }
+    file.commit();
+    updateInfoSheetFileName(target, file.fileName());
+
     return target;
 }
 void RootWindow::on_actionOpen_triggered()
 {
     QStringList files = showOpenDialog();
     QStringListIterator iterator(files);
-    InfoSheet *lastSheet = sheetContainer.last();
-    if(lastSheet->isEmpty() && iterator.hasNext())
+    if(!sheetContainer.isEmpty())
     {
-        readSheetFromFile(iterator.next(), lastSheet);
-        ui->sheetViewer->setTabText(ui->sheetViewer->count() - 1, lastSheet->windowTitle());
+        InfoSheet *lastSheet = sheetContainer.last();
+        if(lastSheet->isEmpty() && iterator.hasNext())
+        {
+            readSheetFromFile(iterator.next(), lastSheet);
+            ui->sheetViewer->setTabText(ui->sheetViewer->count() - 1, lastSheet->windowTitle());
+        }
     }
     while(iterator.hasNext())
     {
@@ -159,18 +163,24 @@ void RootWindow::on_actionOpen_triggered()
 void RootWindow::on_actionSave_triggered()
 {
     InfoSheet *currentSheet = getCurrentSheet();
-    QString targetFileName = !currentSheet->recentFileName.isEmpty() ? currentSheet->recentFileName : showSaveDialog();
-    if(targetFileName.isEmpty())
+    if(currentSheet == nullptr)
         return;
-    writeSheetToFile(targetFileName, currentSheet);
-    ui->sheetViewer->setTabText(getCurrentIndex(), currentSheet->windowTitle());
+    QString targetFileName = !currentSheet->recentFileName.isEmpty() ? currentSheet->recentFileName : showSaveDialog();
+    if(!targetFileName.isEmpty())
+    {
+        writeSheetToFile(targetFileName, currentSheet);
+        ui->sheetViewer->setTabText(getCurrentIndex(), currentSheet->windowTitle());
+    }
 }
 void RootWindow::on_actionSaveAs_triggered()
 {
     InfoSheet *currentSheet = getCurrentSheet();
-    QString targetFileName = showSaveDialog();
-    if(targetFileName.isEmpty())
+    if(currentSheet == nullptr)
         return;
-    writeSheetToFile(targetFileName, currentSheet);
-    ui->sheetViewer->setTabText(getCurrentIndex(), currentSheet->windowTitle());
+    QString targetFileName = showSaveDialog();
+    if(!targetFileName.isEmpty())
+    {
+        writeSheetToFile(targetFileName, currentSheet);
+        ui->sheetViewer->setTabText(getCurrentIndex(), currentSheet->windowTitle());
+    }
 }
