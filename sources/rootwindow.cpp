@@ -140,7 +140,7 @@ void RootWindow::on_actionWipe_triggered()
     {
         int size = currentSheet->getSize();
         if(size <= 0)
-            QMessageBox::warning(this, "Failed to delete", "There's no item to delete.");
+            QMessageBox::information(this, "This sheet is already empty.", "There's no item to delete from the sheet.");
         else if(confirmToDelete(currentSheet->getSize()))
             currentSheet->wipe();
     }
