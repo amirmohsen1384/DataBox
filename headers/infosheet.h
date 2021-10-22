@@ -13,6 +13,9 @@ class InfoSheet : public QWidget
 private:
     bool checkInRange(int row) const;
     void updateVisualList();
+    void setInitalProperties();
+private slots:
+    void activateItem(QListWidgetItem *item);
 public:
     QString recentFileName;
     InfoSheet(QWidget *parent = nullptr);
@@ -35,6 +38,8 @@ public:
     int getSize() const;
     friend QDataStream& operator<<(QDataStream &stream, const InfoSheet &containter);
     friend QDataStream& operator>>(QDataStream &stream, InfoSheet &container);
+signals:
+    void itemActivated(InfoItem *item);
 };
 QDataStream& operator<<(QDataStream &stream, const InfoSheet &sheet);
 QDataStream& operator>>(QDataStream &stream, InfoSheet &sheet);

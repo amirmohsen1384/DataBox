@@ -12,18 +12,29 @@ void InfoSheet::updateVisualList()
     while(iterator.hasNext())
         iterator.next().addToQListWidget(ui->infoList);
 }
+void InfoSheet::setInitalProperties()
+{
+    connect(ui->infoList, &QListWidget::itemActivated, this, &InfoSheet::activateItem);
+}
+void InfoSheet::activateItem(QListWidgetItem *item)
+{
+    emit itemActivated(getItemAt(ui->infoList->row(item)));
+}
 InfoSheet::InfoSheet(QWidget *parent) : QWidget(parent), ui(new Ui::InfoSheet)
 {
     ui->setupUi(this);
+    setInitalProperties();
 }
 InfoSheet::InfoSheet(const InfoItemList &initalList, QWidget *parent) : QWidget(parent), ui(new Ui::InfoSheet)
 {
     ui->setupUi(this);
+    setInitalProperties();
     add(initalList);
 }
 InfoSheet::InfoSheet(const InfoSheet &initalSheet, QWidget *parent) : QWidget(parent), ui(new Ui::InfoSheet)
 {
     ui->setupUi(this);
+    setInitalProperties();
     add(initalSheet.mainContainer);
 }
 InfoSheet &InfoSheet::operator=(const InfoSheet &other)
