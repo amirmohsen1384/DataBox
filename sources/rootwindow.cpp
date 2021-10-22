@@ -163,3 +163,8 @@ void RootWindow::on_actionShow_triggered()
             showNoItemSelectedMessage(this);
     }
 }
+void RootWindow::on_sheetViewer_tabCloseRequested(int index)
+{
+    delete sheetContainer.takeAt(index);
+}
+

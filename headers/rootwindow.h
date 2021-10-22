@@ -34,5 +34,6 @@ private slots:
     void on_actionWipe_triggered();
     void showItem(const InfoItem *information);
     void on_actionShow_triggered();
+    void on_sheetViewer_tabCloseRequested(int index);
 };
 #endif // ROOTWINDOW_H

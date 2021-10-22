@@ -16,7 +16,11 @@
   <widget class="QWidget" name="parentWidget">
    <layout class="QVBoxLayout" name="mainLayout">
     <item>
-     <widget class="QTabWidget" name="sheetViewer"/>
+     <widget class="QTabWidget" name="sheetViewer">
+      <property name="tabsClosable">
+       <bool>true</bool>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
