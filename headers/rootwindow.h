@@ -29,5 +29,8 @@ private slots:
     void on_actionSave_triggered();
     void on_actionSaveAs_triggered();
     void on_actionAdd_triggered();
+    void on_actionEdit_triggered();
+    void on_actionRemove_triggered();
+    void on_actionWipe_triggered();
 };
 #endif // ROOTWINDOW_H
