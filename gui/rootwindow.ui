@@ -47,6 +47,7 @@
    <addaction name="actionSaveAs"/>
    <addaction name="separator"/>
    <addaction name="actionAdd"/>
+   <addaction name="actionShow"/>
    <addaction name="actionEdit"/>
    <addaction name="actionRemove"/>
    <addaction name="actionWipe"/>
@@ -166,6 +167,21 @@
    </property>
    <property name="shortcut">
     <string>Alt+Del</string>
+   </property>
+  </action>
+  <action name="actionShow">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/resources/icons/Show.ico</normaloff>:/icons/resources/icons/Show.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Show</string>
+   </property>
+   <property name="toolTip">
+    <string>Show the information of the current item</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+S</string>
    </property>
   </action>
  </widget>

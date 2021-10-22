@@ -2,6 +2,7 @@
 #include "ui_rootwindow.h"
 #include <QMessageBox>
 #include "../headers/infoeditor.h"
+#include "../headers/infomonitor.h"
 
 bool RootWindow::checkInRange(int index) const
 {
@@ -21,6 +22,7 @@ void RootWindow::createNewSheet(InfoSheet *initialSheet)
         sheetContainer.append(newSheet);
         ui->sheetViewer->addTab(newSheet, newSheet->windowTitle());
     }
+    connect(newSheet, &InfoSheet::itemActivated, this, &RootWindow::showItem);
 }
 InfoSheet *RootWindow::getCurrentSheet()
 {
@@ -137,4 +139,19 @@ void RootWindow::on_actionWipe_triggered()
             currentSheet->wipe();
     }
 }
-
+void RootWindow::showItem(const InfoItem *information)
+{
+    InfoMonitor monitor(*information);
+    monitor.setFont(QFont("Segoe UI", 10, QFont::Bold));
+    monitor.exec();
+}
+void RootWindow::on_actionShow_triggered()
+{
+    InfoSheet *currentSheet = getCurrentSheet();
+    if(currentSheet != nullptr)
+    {
+        InfoItem *current = currentSheet->getCurrentItem();
+        if(current != nullptr)
+            showItem(current);
+    }
+}

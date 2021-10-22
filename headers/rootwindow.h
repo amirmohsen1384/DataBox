@@ -32,5 +32,7 @@ private slots:
     void on_actionEdit_triggered();
     void on_actionRemove_triggered();
     void on_actionWipe_triggered();
+    void showItem(const InfoItem *information);
+    void on_actionShow_triggered();
 };
 #endif // ROOTWINDOW_H

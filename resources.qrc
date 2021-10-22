@@ -8,5 +8,6 @@
         <file>resources/icons/Save.ico</file>
         <file>resources/icons/Save As.ico</file>
         <file>resources/icons/Trash.ico</file>
+        <file>resources/icons/Show.ico</file>
     </qresource>
 </RCC>
