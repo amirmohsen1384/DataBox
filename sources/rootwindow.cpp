@@ -3,11 +3,8 @@
 #include <QMessageBox>
 #include "../headers/infoeditor.h"
 #include "../headers/infomonitor.h"
+#include "../headers/messages.h"
 
-void showNoItemSelectedMessage(QWidget *parent = nullptr)
-{
-    QMessageBox::warning(parent, "No item selected", "You have not selected any item from the current sheet.");
-}
 bool RootWindow::checkInRange(int index) const
 {
     return (index >= 0 && index < sheetContainer.size());
@@ -85,6 +82,8 @@ void RootWindow::on_actionAdd_triggered()
         if(editor.exec() == QDialog::Accepted)
             currentSheet->add(*editor.getInformation());
     }
+    else
+        Messages::noSheetFound(this);
 }
 void RootWindow::on_actionEdit_triggered()
 {
@@ -99,19 +98,10 @@ void RootWindow::on_actionEdit_triggered()
             editor.exec();
         }
         else
-            showNoItemSelectedMessage(this);
+            Messages::noItemSelected(this);
     }
-}
-bool confirmToDelete(int size, QWidget *parent = nullptr)
-{
-    QMessageBox confirmMessage;
-    confirmMessage.setParent(parent);
-    confirmMessage.setWindowTitle("Confirm");
-    confirmMessage.setIcon(QMessageBox::Warning);
-    confirmMessage.setText("Are you sure to delete " + QString::number(size) + " element(s) from the sheet?");
-    confirmMessage.setInformativeText("Warning: This cannot be undone later.");
-    confirmMessage.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    return confirmMessage.exec() == QMessageBox::Yes ? true : false;
+    else
+        Messages::noSheetFound(this);
 }
 void RootWindow::on_actionRemove_triggered()
 {
@@ -121,7 +111,7 @@ void RootWindow::on_actionRemove_triggered()
         QList<int> itemRows = currentSheet->getSelectedRows();
         if(!itemRows.isEmpty())
         {
-            if(confirmToDelete(itemRows.size()))
+            if(Messages::confirmToDelete(itemRows.size(), this))
             {
                 QListIterator<int> rowIterator(itemRows);
                 rowIterator.toBack();
@@ -129,9 +119,16 @@ void RootWindow::on_actionRemove_triggered()
                     currentSheet->remove(rowIterator.previous());
             }
         }
+        else if(currentSheet->getCurrentRow() != -1)
+        {
+            if(Messages::confirmToDelete(1, this))
+                currentSheet->remove(currentSheet->getCurrentRow());
+        }
         else
-            showNoItemSelectedMessage(this);
+            Messages::noItemSelected(this);
     }
+    else
+        Messages::noSheetFound(this);
 }
 void RootWindow::on_actionWipe_triggered()
 {
@@ -141,9 +138,11 @@ void RootWindow::on_actionWipe_triggered()
         int size = currentSheet->getSize();
         if(size <= 0)
             QMessageBox::information(this, "This sheet is already empty.", "There's no item to delete from the sheet.");
-        else if(confirmToDelete(currentSheet->getSize()))
+        else if(Messages::confirmToDelete(size, this))
             currentSheet->wipe();
     }
+    else
+        Messages::noSheetFound(this);
 }
 void RootWindow::showItem(const InfoItem *information)
 {
@@ -160,11 +159,12 @@ void RootWindow::on_actionShow_triggered()
         if(current != nullptr)
             showItem(current);
         else
-            showNoItemSelectedMessage(this);
+            Messages::noItemSelected(this);
     }
+    else
+        Messages::noSheetFound(this);
 }
 void RootWindow::on_sheetViewer_tabCloseRequested(int index)
 {
     delete sheetContainer.takeAt(index);
 }
-

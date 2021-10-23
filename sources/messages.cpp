@@ -46,3 +46,22 @@ void Messages::corruptFile(QWidget *parent)
     message.setInformativeText("Please select another one and try again.");
     message.exec();
 }
+void Messages::noItemSelected(QWidget *parent)
+{
+    QMessageBox message(parent);
+    message.setIcon(QMessageBox::Warning);
+    message.setWindowTitle("No item selected");
+    message.setText("You have not selected any item from the current sheet.");
+    message.setInformativeText("You can select an item by clicking on it or check it.");
+    message.exec();
+}
+bool Messages::confirmToDelete(int size, QWidget *parent)
+{
+    QMessageBox confirmMessage(parent);
+    confirmMessage.setWindowTitle("Confirm");
+    confirmMessage.setIcon(QMessageBox::Warning);
+    confirmMessage.setText("Are you sure to delete " + QString::number(size) + " element(s) from the sheet?");
+    confirmMessage.setInformativeText("Warning: This cannot be undone later.");
+    confirmMessage.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    return confirmMessage.exec() == QMessageBox::Yes ? true : false;
+}
