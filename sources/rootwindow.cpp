@@ -93,7 +93,7 @@ void RootWindow::on_actionEdit_triggered()
         InfoItem *currentItem = currentSheet->getCurrentItem();
         if(currentItem != nullptr)
         {
-            InfoEditor editor(currentItem, this);
+            InfoEditor editor(*currentItem, this);
             editor.setWindowTitle(currentItem->getItemText() + " - Edit the information");
             editor.exec();
         }

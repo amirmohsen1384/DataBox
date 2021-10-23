@@ -77,16 +77,12 @@ void InfoEditor::updateInfoTitle()
     QString name = connectFirstAndLastName(ui->containerFirstName->text(), ui->containerLastName->text());
     ui->containerInfoTitle->setText(name);
 }
-InfoEditor::InfoEditor(InfoItem *initialInformation, QWidget *parent) : QDialog(parent), ui(new Ui::InfoEditor)
+InfoEditor::InfoEditor(InfoItem &initialInformation, QWidget *parent) : QDialog(parent), ui(new Ui::InfoEditor)
 {
     ui->setupUi(this);
     setInitialProperties();
-
-    this->currentInformation = initialInformation;
-    if(this->currentInformation == nullptr)
-        this->currentInformation = new InfoItem();
-
-    this->defaultInformation = *this->currentInformation;
+    this->currentInformation = &initialInformation;
+    this->defaultInformation = initialInformation;
     initializeInformation(this->currentInformation);
 }
 InfoItem *InfoEditor::getInformation() { return currentInformation; }
@@ -152,4 +148,7 @@ InfoEditor::InfoEditor(QWidget *parent) : QDialog(parent), ui(new Ui::InfoEditor
 {
     ui->setupUi(this);
     setInitialProperties();
+    currentInformation = new InfoItem;
+    defaultInformation = *currentInformation;
+    initializeInformation(currentInformation);
 }

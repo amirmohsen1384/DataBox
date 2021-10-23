@@ -30,7 +30,7 @@ private slots:
     void on_buttonResetAll_clicked();
 public:
     InfoEditor(QWidget *parent = nullptr);
-    InfoEditor(InfoItem *information, QWidget *parent = nullptr);
+    InfoEditor(InfoItem &information, QWidget *parent = nullptr);
     InfoItem* getInformation();
     ~InfoEditor();
 };
