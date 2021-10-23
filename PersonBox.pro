@@ -10,6 +10,7 @@ SOURCES += \
     sources/infosheet.cpp \
     sources/infoeditor.cpp \
     sources/infomonitor.cpp \
+    sources/messages.cpp \
     sources/personinfowidget.cpp \
     sources/photoviewer.cpp \
     sources/infoitem.cpp \
@@ -20,6 +21,7 @@ HEADERS += \
     headers/infoeditor.h \
     headers/infoitem.h \
     headers/infomonitor.h \
+    headers/messages.h \
     headers/personinfowidget.h \
     headers/photoviewer.h \
     headers/rootwindow.h \
