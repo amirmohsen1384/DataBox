@@ -1,84 +1,35 @@
 #include "../headers/rootwindow.h"
 #include "ui_rootwindow.h"
-#include <QMessageBox>
+#include "../headers/dialogs.h"
+#include "../headers/messages.h"
 #include <QSaveFile>
+#include <QFileInfo>
 #include <QFile>
-#include <QFileDialog>
 #define MAGIC_NUMBER 0xDFA31EF67B90
-void showSaveFailed(QWidget *parent = nullptr)
-{
-    QMessageBox saveFailed;
-    saveFailed.setParent(parent);
-    saveFailed.setWindowTitle("Failed to write to file");
-    saveFailed.setIcon(QMessageBox::Warning);
-    saveFailed.setText("An error occurred when saving information");
-    saveFailed.setInformativeText("The selected file is probably not allowed to be saved to.");
-    saveFailed.exec();
-}
-void showOpenFailed(QWidget *parent = nullptr)
-{
-    QMessageBox openFailed;
-    openFailed.setParent(parent);
-    openFailed.setIcon(QMessageBox::Warning);
-    openFailed.setWindowTitle("Failed to open file");
-    openFailed.setText("The chosen filename is no longer available");
-    openFailed.setInformativeText("Check if the selected file is not moved, renamed or unavailable and then try again");
-    openFailed.exec();
-}
-void showWrongFormat(QWidget *parent = nullptr)
-{
-    QMessageBox wrongFormat;
-    wrongFormat.setParent(parent);
-    wrongFormat.setIcon(QMessageBox::Critical);
-    wrongFormat.setWindowTitle("Failed to read from file");
-    wrongFormat.setText("The selected file is corrupt or has an unsupported format.");
-    wrongFormat.setInformativeText("Please select another one and try again");
-    wrongFormat.exec();
-}
-QStringList showOpenDialog(QWidget *parent = nullptr)
-{
-    QFileDialog openDialog;
-    openDialog.setParent(parent);
-    openDialog.setAcceptMode(QFileDialog::AcceptOpen);
-    openDialog.setNameFilter("PersonBox database files (*.pbd)");
-    openDialog.setFileMode(QFileDialog::ExistingFiles);
-    if(openDialog.exec() == QDialog::Accepted)
-        return openDialog.selectedFiles();
-    else
-        return QStringList();
-}
-QString showSaveDialog(QWidget *parent = nullptr)
-{
-    QFileDialog saveDialog;
-    saveDialog.setParent(parent);
-    saveDialog.setAcceptMode(QFileDialog::AcceptSave);
-    saveDialog.setNameFilter("PersonBox database files (*.pbd)");
-    saveDialog.setFileMode(QFileDialog::AnyFile);
-    if(saveDialog.exec() == QDialog::Accepted)
-        return saveDialog.selectedFiles().at(0);
-    else
-        return QString();
-}
+#define WRITE_FAILED -1
+#define CORRUPT_FILE -2
+#define OPEN_FAILED -3
+#define UNSUPPORTED_FORMAT -4
+
 QDataStream& writeMagicNumber(QDataStream &stream)
 {
     stream << static_cast<quint64>(MAGIC_NUMBER);
+    if(stream.status() != QDataStream::Ok)
+        throw WRITE_FAILED;
     return stream;
 }
-QDataStream& readMagicNumber(QDataStream &stream)
+quint64 readMagicNumber(QDataStream &stream)
 {
     quint64 magicNumber;
     stream >> static_cast<quint64&>(magicNumber);
-    if(magicNumber != MAGIC_NUMBER)
-        stream.setStatus(QDataStream::ReadCorruptData);
-    return stream;
+    if(stream.status() != QDataStream::Ok)
+        throw CORRUPT_FILE;
+    return magicNumber;
 }
-void updateInfoSheetFileName(InfoSheet *sheet, const QString &fileName)
+void updateInfoSheetFileName(InfoSheet &sheet, const QString &fileName)
 {
-    if(sheet != nullptr)
-    {
-        sheet->recentFileName = fileName;
-        sheet->setWindowTitle(QFileInfo(fileName).fileName());
-    }
+    sheet.recentFileName = fileName;
+    sheet.setWindowTitle(QFileInfo(fileName).fileName());
 }
 InfoSheet* readSheetFromFile(const QString &fileName, InfoSheet *first = nullptr)
 {
@@ -87,62 +38,74 @@ InfoSheet* readSheetFromFile(const QString &fileName, InfoSheet *first = nullptr
         workingSheet = new InfoSheet;
 
     QFile file(fileName);
-    if(!file.open(QFile::ReadOnly))
+    try
     {
-        showOpenFailed();
+        if(!file.open(QFile::ReadOnly))
+            throw OPEN_FAILED;
+
+        QDataStream stream(&file);
+        if(readMagicNumber(stream) != MAGIC_NUMBER)
+            throw UNSUPPORTED_FORMAT;
+
+        if((stream >> *workingSheet).status() != QDataStream::Ok)
+            throw CORRUPT_FILE;
+    }
+    catch(qint64 errorCode)
+    {
+        switch(errorCode)
+        {
+        case OPEN_FAILED:
+            Messages::openFailed();
+            break;
+        case CORRUPT_FILE:
+            Messages::corruptFile();
+            break;
+        case UNSUPPORTED_FORMAT:
+            Messages::unsupportedFormat();
+            break;
+        }
         if(first == nullptr)
             delete workingSheet;
         else
             first->wipe();
         return nullptr;
     }
-    QDataStream stream(&file);
-    if(readMagicNumber(stream).status() != QDataStream::Ok)
-    {
-        showWrongFormat();
-        if(first == nullptr)
-            delete workingSheet;
-        else
-            first->wipe();
-        return nullptr;
-    }
-    if((stream >> *workingSheet).status() != QDataStream::Ok)
-    {
-        showWrongFormat();
-        if(first == nullptr)
-            delete workingSheet;
-        else
-            first->wipe();
-        return nullptr;
-    }
-    updateInfoSheetFileName(workingSheet, file.fileName());
+    updateInfoSheetFileName(*workingSheet, file.fileName());
     return workingSheet;
 }
-InfoSheet* writeSheetToFile(const QString &filename, InfoSheet *target)
+InfoSheet* writeSheetToFile(const QString &filename, InfoSheet &target)
 {
-    if(target == nullptr)
-        return nullptr;
-
     QSaveFile file(filename);
-    if(!file.open(QFile::WriteOnly))
+    try
     {
-        showOpenFailed();
-        return nullptr;
+        if(!file.open(QFile::WriteOnly))
+            throw OPEN_FAILED;
+
+        QDataStream stream(&file);
+        writeMagicNumber(stream);
+        if((stream << target).status() != QDataStream::Ok)
+            throw WRITE_FAILED;
     }
-    QDataStream stream(&file);
-    if(writeMagicNumber(stream).status() != QDataStream::Ok || (stream << *target).status() != QDataStream::Ok)
+    catch(qint64 errorCode)
     {
-        showSaveFailed();
+        switch(errorCode)
+        {
+        case OPEN_FAILED:
+            Messages::openFailed();
+            break;
+        case WRITE_FAILED:
+            Messages::saveFailed();
+            break;
+        }
         return nullptr;
     }
     file.commit();
     updateInfoSheetFileName(target, file.fileName());
-
-    return target;
+    return &target;
 }
 void RootWindow::on_actionOpen_triggered()
 {
-    QStringList files = showOpenDialog();
+    QStringList files = Dialogs::Open(this);
     QStringListIterator iterator(files);
     if(!sheetContainer.isEmpty())
     {
@@ -164,11 +127,14 @@ void RootWindow::on_actionSave_triggered()
 {
     InfoSheet *currentSheet = getCurrentSheet();
     if(currentSheet == nullptr)
+    {
+        Messages::noSheetFound(this);
         return;
-    QString targetFileName = !currentSheet->recentFileName.isEmpty() ? currentSheet->recentFileName : showSaveDialog();
+    }
+    QString targetFileName = !currentSheet->recentFileName.isEmpty() ? currentSheet->recentFileName : Dialogs::Save(this);
     if(!targetFileName.isEmpty())
     {
-        writeSheetToFile(targetFileName, currentSheet);
+        writeSheetToFile(targetFileName, *currentSheet);
         ui->sheetViewer->setTabText(getCurrentIndex(), currentSheet->windowTitle());
     }
 }
@@ -176,11 +142,14 @@ void RootWindow::on_actionSaveAs_triggered()
 {
     InfoSheet *currentSheet = getCurrentSheet();
     if(currentSheet == nullptr)
+    {
+        Messages::noSheetFound(this);
         return;
-    QString targetFileName = showSaveDialog();
+    }
+    QString targetFileName = Dialogs::Save(this);
     if(!targetFileName.isEmpty())
     {
-        writeSheetToFile(targetFileName, currentSheet);
+        writeSheetToFile(targetFileName, *currentSheet);
         ui->sheetViewer->setTabText(getCurrentIndex(), currentSheet->windowTitle());
     }
 }
