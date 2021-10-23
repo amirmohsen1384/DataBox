@@ -148,3 +148,8 @@ void InfoEditor::on_buttonResetAll_clicked()
 {
     initializeInformation(&defaultInformation);
 }
+InfoEditor::InfoEditor(QWidget *parent) : QDialog(parent), ui(new Ui::InfoEditor)
+{
+    ui->setupUi(this);
+    setInitialProperties();
+}

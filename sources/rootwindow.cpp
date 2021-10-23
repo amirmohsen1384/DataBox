@@ -77,7 +77,7 @@ void RootWindow::on_actionAdd_triggered()
     InfoSheet *currentSheet = getCurrentSheet();
     if(currentSheet != nullptr)
     {
-        InfoEditor editor;
+        InfoEditor editor(this);
         editor.setWindowTitle("Create new information");
         if(editor.exec() == QDialog::Accepted)
             currentSheet->add(*editor.getInformation());
@@ -93,7 +93,7 @@ void RootWindow::on_actionEdit_triggered()
         InfoItem *currentItem = currentSheet->getCurrentItem();
         if(currentItem != nullptr)
         {
-            InfoEditor editor(currentItem);
+            InfoEditor editor(currentItem, this);
             editor.setWindowTitle(currentItem->getItemText() + " - Edit the information");
             editor.exec();
         }
@@ -146,7 +146,7 @@ void RootWindow::on_actionWipe_triggered()
 }
 void RootWindow::showItem(const InfoItem *information)
 {
-    InfoMonitor monitor(*information);
+    InfoMonitor monitor(*information, this);
     monitor.setFont(QFont("Segoe UI", 10, QFont::Bold));
     monitor.exec();
 }
