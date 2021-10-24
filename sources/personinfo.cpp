@@ -16,6 +16,7 @@ QString PersonInfo::getBornProvince() const { return bornProvince; }
 QPixmap PersonInfo::getPhoto() const { return photo; }
 QDateTime PersonInfo::getCreatedDateTime() const { return createdDateTime; }
 QDateTime PersonInfo::getLastModifiedDateTime() const { return lastModifiedDateTime; }
+bool PersonInfo::isPrivate() const { return hiddenInfo.testFlag(Everything); }
 PersonInfo::HiddenInfoFlags PersonInfo::getHiddenInfo() const { return hiddenInfo; }
 void PersonInfo::setFirstName(const QString &value)
 {

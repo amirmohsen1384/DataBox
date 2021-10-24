@@ -44,6 +44,7 @@ public:
     HiddenInfoFlags getHiddenInfo() const;
     QDateTime getCreatedDateTime() const;
     QDateTime getLastModifiedDateTime() const;
+    bool isPrivate() const;
 public slots:
     void setFirstName(const QString &value);
     void setLastName(const QString &value);
