@@ -146,9 +146,16 @@ void RootWindow::on_actionWipe_triggered()
 }
 void RootWindow::showItem(const InfoItem *information)
 {
-    InfoMonitor monitor(*information, this);
-    monitor.setFont(QFont("Segoe UI", 10, QFont::Bold));
-    monitor.exec();
+    const PersonInfo &target = information->info;
+    if(!target.isPrivate())
+    {
+        InfoMonitor monitor(target, this);
+        monitor.setFont(QFont("Segoe UI", 10, QFont::Bold));
+        monitor.setWindowTitle(information->getItemText() + " - Show information");
+        monitor.exec();
+    }
+    else
+        Messages::cannotShowItem(this);
 }
 void RootWindow::on_actionShow_triggered()
 {
