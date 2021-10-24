@@ -11,5 +11,6 @@ namespace Messages
     void corruptFile(QWidget *parent = nullptr);
     bool confirmToDelete(int size, QWidget *parent = nullptr);
     void unknownError(QWidget *parent = nullptr);
+    void cannotShowItem(QWidget *parent = nullptr);
 }
 #endif // MESSAGES_H

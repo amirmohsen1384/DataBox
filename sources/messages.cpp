@@ -65,3 +65,12 @@ bool Messages::confirmToDelete(int size, QWidget *parent)
     confirmMessage.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     return confirmMessage.exec() == QMessageBox::Yes ? true : false;
 }
+void Messages::cannotShowItem(QWidget *parent)
+{
+    QMessageBox message(parent);
+    message.setWindowTitle("Cannot show this item.");
+    message.setIcon(QMessageBox::Information);
+    message.setText("The selected information is completely private.");
+    message.setInformativeText("Please select another item or make some information public.");
+    message.exec();
+}
