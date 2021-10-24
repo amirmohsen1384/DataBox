@@ -1,13 +1,11 @@
 #include "../headers/infomonitor.h"
+#include "../headers/personinfo.h"
 #include <QVBoxLayout>
 
-InfoMonitor::InfoMonitor(const InfoItem &information, QWidget *parent) : QDialog(parent)
+InfoMonitor::InfoMonitor(const PersonInfo &data, QWidget *parent) : QDialog(parent)
 {
     mainLayout = new QVBoxLayout;
-
-    const PersonInfo &data = information.info;
     PersonInfo::HiddenInfoFlags hiddenInfo = data.getHiddenInfo();
-
     if(!hiddenInfo.testFlag(PersonInfo::FirstName) && !hiddenInfo.testFlag(PersonInfo::LastName))
     {
         mainWidget.constructName();
@@ -64,7 +62,6 @@ InfoMonitor::InfoMonitor(const InfoItem &information, QWidget *parent) : QDialog
         mainWidget.constructLastModifiedDateTime();
         mainWidget.setLastModifiedDateTime(data.getLastModifiedDateTime().toString());
     }
-
     mainLayout->addWidget(&mainWidget);
     setLayout(mainLayout);
 }
