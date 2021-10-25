@@ -3,14 +3,14 @@
 #include <QDialog>
 #include "personinfowidget.h"
 class QVBoxLayout;
-class PersonInfo;
+class InfoItem;
 class InfoMonitor : public QDialog
 {
     Q_OBJECT
     PersonInfoWidget mainWidget;
     QVBoxLayout *mainLayout = nullptr;
 public:
-    InfoMonitor(const PersonInfo &data, QWidget *parent = nullptr);
+    InfoMonitor(const InfoItem &data, QWidget *parent = nullptr);
 };
 
 #endif // INFOMONITOR_H
