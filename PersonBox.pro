@@ -7,6 +7,7 @@ CONFIG += c++11
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 SOURCES += \
     sources/dialogs.cpp \
+    sources/exceptions.cpp \
     sources/filehandling.cpp \
     sources/infosheet.cpp \
     sources/infoeditor.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
     sources/rootwindow.cpp
 HEADERS += \
     headers/dialogs.h \
+    headers/exceptions.h \
     headers/infoeditor.h \
     headers/infoitem.h \
     headers/infomonitor.h \
