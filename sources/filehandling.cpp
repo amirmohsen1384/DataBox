@@ -2,20 +2,17 @@
 #include "ui_rootwindow.h"
 #include "../headers/dialogs.h"
 #include "../headers/messages.h"
+#include "../headers/exceptions.h"
 #include <QSaveFile>
 #include <QFileInfo>
 #include <QFile>
-#define MAGIC_NUMBER 0xDFA31EF67B90
-#define WRITE_FAILED -1
-#define CORRUPT_FILE -2
-#define OPEN_FAILED -3
-#define UNSUPPORTED_FORMAT -4
-
+#define MAGIC_NUMBER 0xDA43EF756FFDBC5
 QDataStream& writeMagicNumber(QDataStream &stream)
 {
     stream << static_cast<quint64>(MAGIC_NUMBER);
     if(stream.status() != QDataStream::Ok)
-        throw WRITE_FAILED;
+        throw WriteFailedException();
+
     return stream;
 }
 quint64 readMagicNumber(QDataStream &stream)
@@ -23,7 +20,11 @@ quint64 readMagicNumber(QDataStream &stream)
     quint64 magicNumber;
     stream >> static_cast<quint64&>(magicNumber);
     if(stream.status() != QDataStream::Ok)
-        throw CORRUPT_FILE;
+        throw CorruptFileException();
+
+    else if(magicNumber != MAGIC_NUMBER)
+        throw UnsupportedFormatException();
+
     return magicNumber;
 }
 void updateInfoSheetFileName(InfoSheet &sheet, const QString &fileName)
@@ -41,33 +42,25 @@ InfoSheet* readSheetFromFile(const QString &fileName, InfoSheet *first = nullptr
     try
     {
         if(!file.open(QFile::ReadOnly))
-            throw OPEN_FAILED;
+            throw OpenFailedException();
 
         QDataStream stream(&file);
-        if(readMagicNumber(stream) != MAGIC_NUMBER)
-            throw UNSUPPORTED_FORMAT;
-
+        readMagicNumber(stream);
         if((stream >> *workingSheet).status() != QDataStream::Ok)
-            throw CORRUPT_FILE;
+            throw CorruptFileException();
     }
-    catch(qint64 errorCode)
+    catch(const AbstractException &exception)
     {
-        switch(errorCode)
-        {
-        case OPEN_FAILED:
-            Messages::openFailed();
-            break;
-        case CORRUPT_FILE:
-            Messages::corruptFile();
-            break;
-        case UNSUPPORTED_FORMAT:
-            Messages::unsupportedFormat();
-            break;
-        }
+        exception.showMessage();
         if(first == nullptr)
             delete workingSheet;
         else
             first->wipe();
+        return nullptr;
+    }
+    catch(...)
+    {
+        Messages::unknownError();
         return nullptr;
     }
     updateInfoSheetFileName(*workingSheet, file.fileName());
@@ -79,24 +72,22 @@ InfoSheet* writeSheetToFile(const QString &filename, InfoSheet &target)
     try
     {
         if(!file.open(QFile::WriteOnly))
-            throw OPEN_FAILED;
+            throw OpenFailedException();
 
         QDataStream stream(&file);
         writeMagicNumber(stream);
         if((stream << target).status() != QDataStream::Ok)
-            throw WRITE_FAILED;
+            throw WriteFailedException();
     }
-    catch(qint64 errorCode)
+    catch(const AbstractException &exception)
     {
-        switch(errorCode)
-        {
-        case OPEN_FAILED:
-            Messages::openFailed();
-            break;
-        case WRITE_FAILED:
-            Messages::saveFailed();
-            break;
-        }
+        exception.showMessage();
+        file.cancelWriting();
+        return nullptr;
+    }
+    catch(...)
+    {
+        Messages::unknownError();
         return nullptr;
     }
     file.commit();
