@@ -20,7 +20,13 @@ QString Dialogs::Save(QWidget *parent)
     saveDialog.setNameFilter("PersonBox files (*.pbd)");
     saveDialog.setFileMode(QFileDialog::AnyFile);
     if(saveDialog.exec() == QDialog::Accepted)
-        return saveDialog.selectedFiles().at(0);
+    {
+        QString fileName = saveDialog.selectedFiles().at(0);
+        QString suffix = QFileInfo(fileName).completeSuffix();
+        if(suffix.isEmpty() || suffix != "pbd")
+            fileName.append(".pbd");
+        return fileName;
+    }
     else
         return QString();
 }
