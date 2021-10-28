@@ -36,5 +36,6 @@ private slots:
     void on_actionShow_triggered();
     void on_sheetViewer_tabCloseRequested(int index);
     void on_actionSelectAll_triggered();
+    void on_actionUnselectAll_triggered();
 };
 #endif // ROOTWINDOW_H

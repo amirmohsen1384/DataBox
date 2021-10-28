@@ -57,6 +57,7 @@
      <string>Edit</string>
     </property>
     <addaction name="actionSelectAll"/>
+    <addaction name="actionUnselectAll"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menuEdit"/>
@@ -222,6 +223,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="actionUnselectAll">
+   <property name="text">
+    <string>Unselect All</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+A</string>
    </property>
   </action>
  </widget>

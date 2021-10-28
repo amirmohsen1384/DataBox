@@ -184,4 +184,15 @@ void RootWindow::on_actionSelectAll_triggered()
     else
         Messages::noSheetFound(this);
 }
+void RootWindow::on_actionUnselectAll_triggered()
+{
+    InfoSheet *currentSheet = getCurrentSheet();
+    if(currentSheet != nullptr)
+    {
+        for(int i = 0; i < currentSheet->getSize(); ++i)
+            currentSheet->getItemAt(i)->setChecked(false);
+    }
+    else
+        Messages::noSheetFound(this);
+}
 
