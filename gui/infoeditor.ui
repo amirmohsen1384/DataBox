@@ -600,8 +600,10 @@
   <tabstop>containerNationality</tabstop>
   <tabstop>containerBornProvince</tabstop>
   <tabstop>containerInfoTitle</tabstop>
-  <tabstop>hideCreation</tabstop>
-  <tabstop>hideLastModified</tabstop>
+  <tabstop>buttonBrowsePC</tabstop>
+  <tabstop>buttonOk</tabstop>
+  <tabstop>buttonApply</tabstop>
+  <tabstop>buttonCancel</tabstop>
   <tabstop>hideFirstName</tabstop>
   <tabstop>hideLastName</tabstop>
   <tabstop>hideFatherName</tabstop>
@@ -609,6 +611,9 @@
   <tabstop>hideGender</tabstop>
   <tabstop>hideNationality</tabstop>
   <tabstop>hideBornProvince</tabstop>
+  <tabstop>hideCreation</tabstop>
+  <tabstop>hideLastModified</tabstop>
+  <tabstop>hidePhoto</tabstop>
   <tabstop>resetFirstNameButton</tabstop>
   <tabstop>resetLastNameButton</tabstop>
   <tabstop>resetFatherNameButton</tabstop>
@@ -617,9 +622,8 @@
   <tabstop>resetNationalityButton</tabstop>
   <tabstop>resetBornProvinceButton</tabstop>
   <tabstop>resetTitleButton</tabstop>
-  <tabstop>buttonOk</tabstop>
-  <tabstop>buttonCancel</tabstop>
-  <tabstop>buttonApply</tabstop>
+  <tabstop>resetPhotoButton</tabstop>
+  <tabstop>buttonResetAll</tabstop>
  </tabstops>
  <resources/>
  <connections/>
