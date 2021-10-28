@@ -173,3 +173,15 @@ void RootWindow::on_sheetViewer_tabCloseRequested(int index)
 {
     delete sheetContainer.takeAt(index);
 }
+void RootWindow::on_actionSelectAll_triggered()
+{
+    InfoSheet *currentSheet = getCurrentSheet();
+    if(currentSheet != nullptr)
+    {
+        for(int i = 0; i < currentSheet->getSize(); ++i)
+            currentSheet->getItemAt(i)->setChecked(true);
+    }
+    else
+        Messages::noSheetFound(this);
+}
+
