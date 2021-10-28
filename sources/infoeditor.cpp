@@ -2,6 +2,7 @@
 #include "ui_infoeditor.h"
 #include <QDebug>
 #include <QFileDialog>
+#include "headers/messages.h"
 
 void InfoEditor::initializeInformation(const InfoItem *infoItem)
 {
@@ -45,8 +46,24 @@ void InfoEditor::setInitialProperties()
     connect(ui->buttonApply, &QPushButton::clicked, this, &InfoEditor::applyInformation);
     connect(ui->buttonCancel, &QPushButton::clicked, this, &InfoEditor::reject);
 }
-void InfoEditor::applyInformation()
+
+bool InfoEditor::isInfoEnough()
 {
+    QString firstName = ui->containerFirstName->text();
+    QString lastName = ui->containerLastName->text();
+    QString infoTitle = ui->containerInfoTitle->text();
+    if(firstName.isEmpty() || lastName.isEmpty() || infoTitle.isEmpty())
+        return false;
+    else
+        return true;
+}
+bool InfoEditor::applyInformation()
+{
+    if(!isInfoEnough())
+    {
+        Messages::notEnoughInformation(this);
+        return false;
+    }
     // Update currentInformation stored in the main object of "InfoItem"
     currentInformation->info.setFirstName(ui->containerFirstName->text());
     currentInformation->info.setLastName(ui->containerLastName->text());
@@ -67,10 +84,12 @@ void InfoEditor::applyInformation()
     currentInformation->setHiddenInfo(InfoItem::HideCreatedDateTime, ui->hideCreation->isChecked());
     currentInformation->setHiddenInfo(InfoItem::HideLastModifiedDateTime, ui->hideLastModified->isChecked());
     currentInformation->setItemText(ui->containerInfoTitle->text());
+    return true;
 }
 void InfoEditor::applyInformationAndClose()
 {
-    applyInformation();
+    if(applyInformation() != true)
+        return;
     accept();
 }
 void InfoEditor::updateInfoTitle()

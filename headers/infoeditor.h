@@ -13,8 +13,9 @@ class InfoEditor : public QDialog
 private:
     void initializeInformation(const InfoItem *infoItem);
     void setInitialProperties();
+    bool isInfoEnough();
 private slots:
-    void applyInformation();
+    bool applyInformation();
     void applyInformationAndClose();
     void updateInfoTitle();
     void on_buttonBrowsePC_clicked();
