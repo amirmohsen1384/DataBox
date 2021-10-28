@@ -46,3 +46,13 @@ void Messages::unknownError(QWidget *parent)
     message.setText("An unexpected error has happened.");
     message.exec();
 }
+
+void Messages::notEnoughInformation(QWidget *parent)
+{
+    QMessageBox message(parent);
+    message.setWindowTitle("Cannot apply changes.");
+    message.setIcon(QMessageBox::Warning);
+    message.setText("You have not entered required information.");
+    message.setInformativeText("It's important to fill the first name, last name and info text.");
+    message.exec();
+}

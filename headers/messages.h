@@ -8,5 +8,6 @@ namespace Messages
     bool confirmToDelete(int size, QWidget *parent = nullptr);
     void unknownError(QWidget *parent = nullptr);
     void cannotShowItem(QWidget *parent = nullptr);
+    void notEnoughInformation(QWidget *parent = nullptr);
 }
 #endif // MESSAGES_H
