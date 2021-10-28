@@ -25,11 +25,11 @@ You need to use Qt 5.12 or later, to compile this project. It can be compiled an
 4. After you configured the project, press `Ctrl`+`R` or click on `Run` at the bottom right of the environment.
 5. Congratulations, you compiled the project successfully.  
 
-# Ask for a new feature or report a bug
-**To ask for a new feature, please:**
+# Report an issue
+## To ask for a new feature
 1. Check if the feature you want to ask for is not already implemented (All changes in every version of the program is listed in the `changelog` file.)
 2. Check if someone else didn't already open the issue. Then you ask for a new feature in the **issues** section.
 
-**To report a bug, please:**
+## To report a bug
 1. Try the lastest version of the program to make sure the bug is still present.
 2. Make sure another person has not already opened the issue.
