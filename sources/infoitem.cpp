@@ -71,13 +71,13 @@ void InfoItem::setItemText(const QString &newText)
 }
 void InfoItem::setTextColor(const QColor &newColor)
 {
-    item->setTextColor(newColor);
+    item->setForeground(newColor);
     emit textColorChanged(newColor);
     updateLastModifiedDateTime();
 }
 void InfoItem::setBackgroundColor(const QColor &newColor)
 {
-    item->setBackgroundColor(newColor);
+    item->setBackground(newColor);
     emit backgroundColorChanged(newColor);
     updateLastModifiedDateTime();
 }
@@ -117,11 +117,11 @@ QString InfoItem::getItemText() const
 }
 QColor InfoItem::getTextColor() const
 {
-    return item->textColor();
+    return item->foreground().color();
 }
 QColor InfoItem::getBackgroundColor() const
 {
-    return item->backgroundColor();
+    return item->background().color();
 }
 InfoItem::HiddenInfoFlags InfoItem::getHiddenInfo() const
 {
@@ -159,11 +159,11 @@ bool operator==(const InfoItem &one, const InfoItem &two)
         return false;
     else if(one.isChecked() != two.isChecked())
         return false;
+    else if(one.getTextColor() != two.getTextColor())
+        return false;
+    else if(one.getBackgroundColor() != two.getBackgroundColor())
+        return false;
     else if(one.item->isHidden() != two.item->isHidden())
-        return false;
-    else if(one.item->textColor() != two.item->textColor())
-        return false;
-    else if(one.item->backgroundColor() != two.item->backgroundColor())
         return false;
     else if(one.hiddenInfo != two.hiddenInfo)
         return false;
