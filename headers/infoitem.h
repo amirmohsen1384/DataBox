@@ -36,8 +36,8 @@ public:
     InfoItem(const InfoItem &another, QObject *parent = nullptr);
     ~InfoItem();
     QString getItemText() const;
-    QColor getTextColor() const;
-    QColor getBackgroundColor() const;
+    QBrush getForeground() const;
+    QBrush getBackground() const;
     InfoItem::HiddenInfoFlags getHiddenInfo() const;
     bool isChecked() const;
     bool isHidden() const;
@@ -55,16 +55,16 @@ public:
     bool isPrivate() const;
 public slots:
     void setItemText(const QString &newText);
-    void setTextColor(const QColor &newColor);
-    void setBackgroundColor(const QColor &newColor);
+    void setForeground(const QBrush &newBrush);
+    void setBackground(const QBrush &newBrush);
     void setChecked(const bool &newStatus);
     void setHidden(const bool &newStatus);
     void setHiddenInfo(const HiddenInfoFlags &hiddenInfo);
     void setHiddenInfo(const HiddenInfoFlag &hidden, bool toggle = true);
 signals:
     void itemTextChanged(const QString &text);
-    void textColorChanged(const QColor &color);
-    void backgroundColorChanged(const QColor &color);
+    void foregroundChanged(const QBrush &brush);
+    void backgroundChanged(const QBrush &brush);
     void checkStatusChanged(const bool &status);
     void hiddenStatusChanged(const bool &status);
     void createdDateTimeChanged(const QDateTime &date);

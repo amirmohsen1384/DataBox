@@ -32,8 +32,8 @@ InfoItem &InfoItem::operator=(const InfoItem &another)
 {
     this->info = another.info;
     setItemText(another.item->text());
-    setBackgroundColor(another.item->background().color());
-    setTextColor(another.item->foreground().color());
+    setBackground(another.item->background());
+    setForeground(another.item->foreground());
     setHidden(another.item->isHidden());
     setChecked(another.isChecked());
     setHiddenInfo(another.hiddenInfo);
@@ -69,16 +69,16 @@ void InfoItem::setItemText(const QString &newText)
     emit itemTextChanged(newText);
     updateLastModifiedDateTime();
 }
-void InfoItem::setTextColor(const QColor &newColor)
+void InfoItem::setForeground(const QBrush &newBrush)
 {
-    item->setForeground(newColor);
-    emit textColorChanged(newColor);
+    item->setForeground(newBrush);
+    emit foregroundChanged(newBrush);
     updateLastModifiedDateTime();
 }
-void InfoItem::setBackgroundColor(const QColor &newColor)
+void InfoItem::setBackground(const QBrush &newBrush)
 {
-    item->setBackground(newColor);
-    emit backgroundColorChanged(newColor);
+    item->setBackground(newBrush);
+    emit backgroundChanged(newBrush);
     updateLastModifiedDateTime();
 }
 void InfoItem::setChecked(const bool &newStatus)
@@ -115,13 +115,13 @@ QString InfoItem::getItemText() const
 {
     return item->text();
 }
-QColor InfoItem::getTextColor() const
+QBrush InfoItem::getForeground() const
 {
-    return item->foreground().color();
+    return item->foreground();
 }
-QColor InfoItem::getBackgroundColor() const
+QBrush InfoItem::getBackground() const
 {
-    return item->background().color();
+    return item->background();
 }
 InfoItem::HiddenInfoFlags InfoItem::getHiddenInfo() const
 {
@@ -159,9 +159,9 @@ bool operator==(const InfoItem &one, const InfoItem &two)
         return false;
     else if(one.isChecked() != two.isChecked())
         return false;
-    else if(one.getTextColor() != two.getTextColor())
+    else if(one.getForeground() != two.getForeground())
         return false;
-    else if(one.getBackgroundColor() != two.getBackgroundColor())
+    else if(one.getBackground() != two.getBackground())
         return false;
     else if(one.item->isHidden() != two.item->isHidden())
         return false;
