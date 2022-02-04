@@ -1,6 +1,4 @@
-#include "../headers/dialogs.h"
-#include <QStringList>
-#include <QWidget>
+#include "headers/dialogs.h"
 #include <QFileDialog>
 QStringList Dialogs::Open(QWidget *parent)
 {

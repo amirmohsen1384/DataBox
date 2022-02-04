@@ -1,8 +1,9 @@
 #ifndef DIALOGS_H
 #define DIALOGS_H
-class QWidget;
-class QString;
-class QStringList;
+
+#include <QStringList>
+#include <QWidget>
+
 namespace Dialogs
 {
     QStringList Open(QWidget *parent = nullptr);
