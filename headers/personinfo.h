@@ -1,10 +1,8 @@
 #ifndef PERSONINFO_H
 #define PERSONINFO_H
-
 #include <QObject>
 #include <QPixmap>
 #include <QDateTime>
-
 class PersonInfo : public QObject
 {
     Q_OBJECT
@@ -44,13 +42,11 @@ public slots:
 public:
     explicit PersonInfo(QObject *parent = nullptr);
     explicit PersonInfo(const PersonInfo &target, QObject *parent = nullptr);
-
     PersonInfo& operator=(const PersonInfo &dataItem);
     friend QDataStream& operator<<(QDataStream &stream, const PersonInfo &target);
     friend QDataStream& operator>>(QDataStream &stream, PersonInfo &target);
     friend bool operator==(const PersonInfo &one, const PersonInfo &two);
     friend bool operator!=(const PersonInfo &one, const PersonInfo &two);
-
     void connectToUpdateLastModification();
 signals:
     void firstNameChanged(const QString &value);
@@ -63,13 +59,9 @@ signals:
     void photoChanged(const QPixmap &value);
     void lastModificationChanged(const QDateTime &value);
 };
-
 QDataStream& operator<<(QDataStream &stream, const PersonInfo &target);
 QDataStream& operator>>(QDataStream &stream, PersonInfo &target);
 bool operator==(const PersonInfo &one, const PersonInfo &two);
 bool operator!=(const PersonInfo &one, const PersonInfo &two);
-QString connectFirstAndLastName(const QString &firstName, const QString &lastName);
-
 Q_DECLARE_METATYPE(PersonInfo)
-
 #endif // PERSONINFO_H
