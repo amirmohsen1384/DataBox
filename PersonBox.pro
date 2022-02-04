@@ -6,6 +6,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++11
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 SOURCES += \
+    sources/infoviewer.cpp \
     sources/dialogs.cpp \
     sources/exceptions.cpp \
     sources/filehandling.cpp \
@@ -26,11 +27,13 @@ HEADERS += \
     headers/photoviewer.h \
     headers/rootwindow.h \
     headers/personinfo.h \
-    headers/infosheet.h
+    headers/infosheet.h \
+    headers/infoviewer.h
 FORMS += \
     gui/infoeditor.ui \
     gui/rootwindow.ui \
-    gui/infosheet.ui
+    gui/infosheet.ui \
+    gui/infoviewer.ui
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
