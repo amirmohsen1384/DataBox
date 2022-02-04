@@ -2,24 +2,24 @@
 #include <QFileDialog>
 QStringList Dialogs::Open(QWidget *parent)
 {
-    QFileDialog openDialog(parent);
-    openDialog.setAcceptMode(QFileDialog::AcceptOpen);
-    openDialog.setNameFilter("PersonBox files (*.pbd)");
-    openDialog.setFileMode(QFileDialog::ExistingFiles);
-    if(openDialog.exec() == QDialog::Accepted)
-        return openDialog.selectedFiles();
+    QFileDialog dialog(parent);
+    dialog.setAcceptMode(QFileDialog::AcceptOpen);
+    dialog.setNameFilter("PersonBox files (*.pbd)");
+    dialog.setFileMode(QFileDialog::ExistingFiles);
+    if(dialog.exec() == QDialog::Accepted)
+        return dialog.selectedFiles();
     else
         return QStringList();
 }
 QString Dialogs::Save(QWidget *parent)
 {
-    QFileDialog saveDialog(parent);
-    saveDialog.setAcceptMode(QFileDialog::AcceptSave);
-    saveDialog.setNameFilter("PersonBox data files (*.pbd)");
-    saveDialog.setFileMode(QFileDialog::AnyFile);
-    saveDialog.setDefaultSuffix("pbd");
-    if(saveDialog.exec() == QDialog::Accepted)
-        return saveDialog.selectedFiles().constFirst();
+    QFileDialog dialog(parent);
+    dialog.setAcceptMode(QFileDialog::AcceptSave);
+    dialog.setNameFilter("PersonBox data files (*.pbd)");
+    dialog.setFileMode(QFileDialog::AnyFile);
+    dialog.setDefaultSuffix("pbd");
+    if(dialog.exec() == QDialog::Accepted)
+        return dialog.selectedFiles().constFirst();
     else
         return QString();
 }
