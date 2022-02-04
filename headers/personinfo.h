@@ -36,8 +36,9 @@ public slots:
     void setNationality(const QString &value);
     void setPhoto(const QPixmap &value);
 public:
-    PersonInfo(QObject *parent = nullptr);
-    PersonInfo(const PersonInfo &target, QObject *parent = nullptr);
+    explicit PersonInfo(QObject *parent = nullptr);
+    explicit PersonInfo(const PersonInfo &target, QObject *parent = nullptr);
+
     PersonInfo& operator=(const PersonInfo &dataItem);
     friend QDataStream& operator<<(QDataStream &stream, const PersonInfo &target);
     friend QDataStream& operator>>(QDataStream &stream, PersonInfo &target);
