@@ -2,7 +2,7 @@
 #include "ui_rootwindow.h"
 #include <QMessageBox>
 #include "../headers/infoeditor.h"
-#include "../headers/infomonitor.h"
+#include "headers/infoviewer.h"
 #include "../headers/messages.h"
 
 bool RootWindow::checkInRange(int index) const
@@ -148,8 +148,7 @@ void RootWindow::showItem(const InfoItem *information)
 {
     if(!information->isPrivate())
     {
-        InfoMonitor monitor(*information, this);
-        monitor.setFont(QFont("Segoe UI", 10, QFont::Bold));
+        InfoViewer monitor(information->info, this);
         monitor.exec();
     }
     else
