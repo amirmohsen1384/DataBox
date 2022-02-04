@@ -15,7 +15,7 @@ class InfoViewer : public QDialog
     Q_DISABLE_COPY_MOVE(InfoViewer)
 private:
     void displayInfo(const PersonInfo &information);
-    void connectSignals(const PersonInfo *information);
+    void connectPropertiesToView(const PersonInfo *information);
     void setupUi();
 public:
     explicit InfoViewer(QWidget *parent = nullptr);
