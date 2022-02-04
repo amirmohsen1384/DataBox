@@ -18,14 +18,14 @@ private:
     QString bornProvince;
     QPixmap photo;
 public:
-    QString getFirstName() const;
-    QString getLastName() const;
-    QString getFatherName() const;
-    QString getGender() const;
-    QDate getBirthday() const;
-    QString getNationality() const;
-    QString getBornProvince() const;
-    QPixmap getPhoto() const;
+    const QString& getFirstName() const;
+    const QString& getLastName() const;
+    const QString& getFatherName() const;
+    const QString& getGender() const;
+    const QDate& getBirthday() const;
+    const QString& getNationality() const;
+    const QString& getBornProvince() const;
+    const QPixmap& getPhoto() const;
 public slots:
     void setFirstName(const QString &value);
     void setLastName(const QString &value);

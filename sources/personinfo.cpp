@@ -3,53 +3,55 @@
 
 PersonInfo::PersonInfo(QObject *parent) : QObject(parent) {}
 PersonInfo::PersonInfo(const PersonInfo &target, QObject *parent) : QObject(parent) { *this = target; }
-QString PersonInfo::getFirstName() const { return firstName; }
-QString PersonInfo::getLastName() const { return lastName; }
-QString PersonInfo::getFatherName() const { return fatherName; }
-QString PersonInfo::getGender() const { return gender; }
-QString PersonInfo::getNationality() const { return nationality; }
-QDate PersonInfo::getBirthday() const { return birthday; }
-QString PersonInfo::getBornProvince() const { return bornProvince; }
-QPixmap PersonInfo::getPhoto() const { return photo; }
+
+const QString& PersonInfo::getFirstName() const { return firstName; }
+const QString&  PersonInfo::getLastName() const { return lastName; }
+const QString& PersonInfo::getFatherName() const { return fatherName; }
+const QString& PersonInfo::getGender() const { return gender; }
+const QString& PersonInfo::getNationality() const { return nationality; }
+const QDate& PersonInfo::getBirthday() const { return birthday; }
+const QString& PersonInfo::getBornProvince() const { return bornProvince; }
+const QPixmap& PersonInfo::getPhoto() const { return photo; }
+
 void PersonInfo::setFirstName(const QString &value)
 {
     firstName = value;
-    emit firstNameChanged(value);
+    emit firstNameChanged(firstName);
 }
 void PersonInfo::setLastName(const QString &value)
 {
     lastName = value;
-    emit lastNameChanged(value);
+    emit lastNameChanged(lastName);
 }
 void PersonInfo::setFatherName(const QString &value)
 {
     fatherName = value;;
-    emit fatherNameChanged(value);  
+    emit fatherNameChanged(fatherName);
 }
 void PersonInfo::setGender(const QString &value)
 {
     gender = value;
-    emit genderChanged(value);   
+    emit genderChanged(gender);
 }
 void PersonInfo::setBirthday(const QDate &value)
 {
     birthday = value;;
-    emit birthdayChanged(value);    
+    emit birthdayChanged(birthday);
 }
 void PersonInfo::setNationality(const QString &value)
 {
     nationality = value;
-    emit nationalityChanged(value);    
+    emit nationalityChanged(nationality);
 }
 void PersonInfo::setBornProvince(const QString &value)
 {
     bornProvince = value;
-    emit bornProvinceChanged(value);    
+    emit bornProvinceChanged(bornProvince);
 }
 void PersonInfo::setPhoto(const QPixmap &value)
 {
     photo = value;
-    emit photoChanged(value);   
+    emit photoChanged(photo);
 }
 
 PersonInfo& PersonInfo::operator=(const PersonInfo &value)
