@@ -1,9 +1,20 @@
 #include "../headers/personinfo.h"
 #include <QDebug>
 
-PersonInfo::PersonInfo(QObject *parent) : QObject(parent) {}
-PersonInfo::PersonInfo(const PersonInfo &target, QObject *parent) : QObject(parent) { *this = target; }
-
+PersonInfo::PersonInfo(QObject *parent) : QObject(parent)
+{
+    connectToUpdateLastModification();
+}
+PersonInfo::PersonInfo(const PersonInfo &target, QObject *parent) : QObject(parent)
+{
+    *this = target;
+    connectToUpdateLastModification();
+}
+void PersonInfo::updateLastModification()
+{
+    lastModification = QDateTime::currentDateTime();
+    emit lastModificationChanged(lastModification);
+}
 const QString& PersonInfo::getFirstName() const { return firstName; }
 const QString&  PersonInfo::getLastName() const { return lastName; }
 const QString& PersonInfo::getFatherName() const { return fatherName; }
@@ -12,6 +23,8 @@ const QString& PersonInfo::getNationality() const { return nationality; }
 const QDate& PersonInfo::getBirthday() const { return birthday; }
 const QString& PersonInfo::getBornProvince() const { return bornProvince; }
 const QPixmap& PersonInfo::getPhoto() const { return photo; }
+const QDateTime &PersonInfo::getCreation() const { return creation; }
+const QDateTime &PersonInfo::getLastModification() const { return lastModification; }
 
 void PersonInfo::setFirstName(const QString &value)
 {
@@ -65,6 +78,22 @@ PersonInfo& PersonInfo::operator=(const PersonInfo &value)
     setNationality(value.nationality);
     setPhoto(value.photo);
     return *this;
+}
+void PersonInfo::connectToUpdateLastModification()
+{
+#define UPDATE_LAST_MODIFICATION_WHEN(SIGNAL) \
+    connect(this, &PersonInfo::SIGNAL, this, &PersonInfo::updateLastModification);
+
+    UPDATE_LAST_MODIFICATION_WHEN(firstNameChanged)
+    UPDATE_LAST_MODIFICATION_WHEN(lastNameChanged)
+    UPDATE_LAST_MODIFICATION_WHEN(fatherNameChanged)
+    UPDATE_LAST_MODIFICATION_WHEN(birthdayChanged)
+    UPDATE_LAST_MODIFICATION_WHEN(bornProvinceChanged)
+    UPDATE_LAST_MODIFICATION_WHEN(genderChanged)
+    UPDATE_LAST_MODIFICATION_WHEN(nationalityChanged)
+    UPDATE_LAST_MODIFICATION_WHEN(photoChanged)
+
+#undef UPDATE_LAST_MODIFICATION_WHEN
 }
 QDataStream& operator<<(QDataStream &stream, const PersonInfo &target)
 {

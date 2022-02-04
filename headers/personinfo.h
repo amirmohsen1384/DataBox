@@ -17,6 +17,10 @@ private:
     QString nationality;
     QString bornProvince;
     QPixmap photo;
+    QDateTime creation = QDateTime::currentDateTime();
+    QDateTime lastModification = QDateTime::currentDateTime();
+private:
+    void updateLastModification();
 public:
     const QString& getFirstName() const;
     const QString& getLastName() const;
@@ -26,6 +30,8 @@ public:
     const QString& getNationality() const;
     const QString& getBornProvince() const;
     const QPixmap& getPhoto() const;
+    const QDateTime& getCreation() const;
+    const QDateTime& getLastModification() const;
 public slots:
     void setFirstName(const QString &value);
     void setLastName(const QString &value);
@@ -44,6 +50,8 @@ public:
     friend QDataStream& operator>>(QDataStream &stream, PersonInfo &target);
     friend bool operator==(const PersonInfo &one, const PersonInfo &two);
     friend bool operator!=(const PersonInfo &one, const PersonInfo &two);
+
+    void connectToUpdateLastModification();
 signals:
     void firstNameChanged(const QString &value);
     void lastNameChanged(const QString &value);
@@ -53,6 +61,7 @@ signals:
     void bornProvinceChanged(const QString &value);
     void nationalityChanged(const QString &value);
     void photoChanged(const QPixmap &value);
+    void lastModificationChanged(const QDateTime &value);
 };
 
 QDataStream& operator<<(QDataStream &stream, const PersonInfo &target);
@@ -60,5 +69,7 @@ QDataStream& operator>>(QDataStream &stream, PersonInfo &target);
 bool operator==(const PersonInfo &one, const PersonInfo &two);
 bool operator!=(const PersonInfo &one, const PersonInfo &two);
 QString connectFirstAndLastName(const QString &firstName, const QString &lastName);
+
+Q_DECLARE_METATYPE(PersonInfo)
 
 #endif // PERSONINFO_H
