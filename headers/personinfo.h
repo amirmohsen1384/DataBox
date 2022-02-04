@@ -1,24 +1,27 @@
 #ifndef PERSONINFO_H
 #define PERSONINFO_H
+
 #include <QObject>
 #include <QPixmap>
 #include <QDateTime>
+
 class PersonInfo : public QObject
 {
     Q_OBJECT
-public:
-    typedef enum {Male = 0x00, Female = 0x01} GenderType;
 private:
-    QString firstName, lastName, fatherName;
-    PersonInfo::GenderType gender = PersonInfo::Male;
+    QString firstName;
+    QString lastName;
+    QString fatherName;
+    QString gender = "Male";
     QDate birthday = QDate::currentDate();
-    QString nationality, bornProvince;
+    QString nationality;
+    QString bornProvince;
     QPixmap photo;
 public:
     QString getFirstName() const;
     QString getLastName() const;
     QString getFatherName() const;
-    PersonInfo::GenderType getGender() const;
+    QString getGender() const;
     QDate getBirthday() const;
     QString getNationality() const;
     QString getBornProvince() const;
@@ -27,7 +30,7 @@ public slots:
     void setFirstName(const QString &value);
     void setLastName(const QString &value);
     void setFatherName(const QString &value);
-    void setGender(const PersonInfo::GenderType &value);
+    void setGender(const QString &value);
     void setBirthday(const QDate &value);
     void setBornProvince(const QString &value);
     void setNationality(const QString &value);
@@ -44,16 +47,17 @@ signals:
     void firstNameChanged(const QString &value);
     void lastNameChanged(const QString &value);
     void fatherNameChanged(const QString &value);
-    void genderChanged(const PersonInfo::GenderType &value);
+    void genderChanged(const QString &value);
     void birthdayChanged(const QDate &value);
     void bornProvinceChanged(const QString &value);
     void nationalityChanged(const QString &value);
     void photoChanged(const QPixmap &value);
 };
+
 QDataStream& operator<<(QDataStream &stream, const PersonInfo &target);
 QDataStream& operator>>(QDataStream &stream, PersonInfo &target);
 bool operator==(const PersonInfo &one, const PersonInfo &two);
 bool operator!=(const PersonInfo &one, const PersonInfo &two);
 QString connectFirstAndLastName(const QString &firstName, const QString &lastName);
-QString genderToString(const PersonInfo::GenderType &gender);
+
 #endif // PERSONINFO_H

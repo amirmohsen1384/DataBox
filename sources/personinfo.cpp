@@ -6,7 +6,7 @@ PersonInfo::PersonInfo(const PersonInfo &target, QObject *parent) : QObject(pare
 QString PersonInfo::getFirstName() const { return firstName; }
 QString PersonInfo::getLastName() const { return lastName; }
 QString PersonInfo::getFatherName() const { return fatherName; }
-PersonInfo::GenderType PersonInfo::getGender() const { return gender; }
+QString PersonInfo::getGender() const { return gender; }
 QString PersonInfo::getNationality() const { return nationality; }
 QDate PersonInfo::getBirthday() const { return birthday; }
 QString PersonInfo::getBornProvince() const { return bornProvince; }
@@ -26,7 +26,7 @@ void PersonInfo::setFatherName(const QString &value)
     fatherName = value;;
     emit fatherNameChanged(value);  
 }
-void PersonInfo::setGender(const PersonInfo::GenderType &value)
+void PersonInfo::setGender(const QString &value)
 {
     gender = value;
     emit genderChanged(value);   
@@ -66,13 +66,13 @@ PersonInfo& PersonInfo::operator=(const PersonInfo &value)
 }
 QDataStream& operator<<(QDataStream &stream, const PersonInfo &target)
 {
-    stream << target.firstName << target.lastName << target.fatherName << static_cast<quint16>(target.gender);
+    stream << target.firstName << target.lastName << target.fatherName << target.gender;
     stream << target.birthday << target.nationality << target.bornProvince << target.photo;
     return stream;
 }
 QDataStream& operator>>(QDataStream &stream, PersonInfo &target)
 {
-    stream >> target.firstName >> target.lastName >> target.fatherName >> reinterpret_cast<quint16&>(target.gender);
+    stream >> target.firstName >> target.lastName >> target.fatherName >> target.gender;
     stream >> target.birthday >> target.nationality >> target.bornProvince >> target.photo;
     return stream;
 }
@@ -105,8 +105,4 @@ QString connectFirstAndLastName(const QString &firstName, const QString &lastNam
         result.append(!firstName.isEmpty() ? ' ' + lastName : lastName);
 
     return result;
-}
-QString genderToString(const PersonInfo::GenderType &gender)
-{
-    return gender == PersonInfo::Male ? "Male" : "Female";
 }

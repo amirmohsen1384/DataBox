@@ -41,7 +41,7 @@ InfoMonitor::InfoMonitor(const InfoItem &information, QWidget *parent) : QDialog
     if(!hiddenInfo.testFlag(InfoItem::HiddenInfoFlag::HideGender))
     {
         mainWidget.constructGender();
-        mainWidget.setGender(genderToString(data.getGender()));
+        mainWidget.setGender(data.getGender());
     }
     if(!hiddenInfo.testFlag(InfoItem::HiddenInfoFlag::HideNationality))
     {

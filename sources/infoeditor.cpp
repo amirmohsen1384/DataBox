@@ -11,7 +11,7 @@ void InfoEditor::initializeInformation(const InfoItem *infoItem)
     ui->containerFirstName->setText(information.getFirstName());
     ui->containerLastName->setText(information.getLastName());
     ui->containerFatherName->setText(information.getFatherName());
-    ui->containerGender->setCurrentIndex(information.getGender());
+    ui->containerGender->setCurrentText(information.getGender());
     ui->containerBirthday->setDate(information.getBirthday());
     ui->containerNationality->setText(information.getNationality());
     ui->containerBornProvince->setText(information.getBornProvince());
@@ -36,9 +36,6 @@ void InfoEditor::setInitialProperties()
     containerPhoto = new PhotoViewer;
     containerPhoto->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
     ui->photoLayout->insertWidget(0, containerPhoto);
-    // Set data to the combobox containing gender
-    ui->containerGender->setItemData(0, PersonInfo::Male);
-    ui->containerGender->setItemData(1, PersonInfo::Female);
     // Connect signals to related slots
     connect(ui->containerFirstName, &QLineEdit::textChanged, this, &InfoEditor::updateInfoTitle);
     connect(ui->containerLastName, &QLineEdit::textChanged, this, &InfoEditor::updateInfoTitle);
@@ -70,7 +67,7 @@ bool InfoEditor::applyInformation()
     currentInformation->info.setFatherName(ui->containerFatherName->text());
     currentInformation->info.setBirthday(ui->containerBirthday->date());
     currentInformation->info.setBornProvince(ui->containerBornProvince->text());
-    currentInformation->info.setGender(static_cast<PersonInfo::GenderType>(ui->containerGender->currentData().toInt()));
+    currentInformation->info.setGender(ui->containerGender->currentText());
     currentInformation->info.setNationality(ui->containerNationality->text());
     currentInformation->info.setPhoto(containerPhoto->getCurrentPhoto());
     currentInformation->setHiddenInfo(InfoItem::HideFirstName, ui->hideFirstName->isChecked());
@@ -138,7 +135,7 @@ void InfoEditor::on_resetBirthdayButton_clicked()
 }
 void InfoEditor::on_resetGenderButton_clicked()
 {
-    ui->containerGender->setCurrentIndex(defaultInformation.info.getGender() == PersonInfo::Male ? 0 : 1);
+    ui->containerGender->setCurrentText(defaultInformation.info.getGender());
     ui->hideGender->setChecked(defaultInformation.getHiddenInfo().testFlag(InfoItem::HideGender));
 }
 void InfoEditor::on_resetNationalityButton_clicked()
