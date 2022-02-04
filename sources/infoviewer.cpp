@@ -35,11 +35,11 @@ void InfoViewer::connectSignals(const PersonInfo *information)
 
 #undef CONNECT_PROPERTY_TO_VIEW
 }
-InfoViewer::InfoViewer(QWidget *parent) : QWidget(parent)
+InfoViewer::InfoViewer(QWidget *parent) : QDialog(parent)
 {
     setupUi();
 }
-InfoViewer::InfoViewer(const PersonInfo &information, QWidget *parent) : QWidget(parent)
+InfoViewer::InfoViewer(const PersonInfo &information, QWidget *parent) : QDialog(parent)
 {
     setupUi();
     displayInfo(information);
@@ -55,7 +55,7 @@ void InfoViewer::setupUi()
     ui->setupUi(this);
     photoViewer = new PhotoViewer;
     photoViewer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    ui->layoutPhoto->insertWidget(0, photoViewer);
+    ui->mainLayout->addWidget(photoViewer);
 }
 void InfoViewer::setFirstName(const QString &value)
 {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>InfoViewer</class>
- <widget class="QWidget" name="InfoViewer">
+ <widget class="QDialog" name="InfoViewer">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QHBoxLayout" name="mainLayout">
    <item>
     <layout class="QGridLayout" name="layoutInformation">
      <item row="1" column="0">
@@ -139,17 +139,6 @@
       <widget class="QLabel" name="labelLastModification">
        <property name="text">
         <string/>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QVBoxLayout" name="layoutPhoto">
-     <item>
-      <widget class="QPushButton" name="buttonSavePhoto">
-       <property name="text">
-        <string>Save Photo</string>
        </property>
       </widget>
      </item>

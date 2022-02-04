@@ -1,13 +1,13 @@
 #ifndef INFOVIEWER_H
 #define INFOVIEWER_H
 
-#include <QWidget>
+#include <QDialog>
 
 namespace Ui { class InfoViewer; }
 class PhotoViewer;
 class PersonInfo;
 
-class InfoViewer : public QWidget
+class InfoViewer : public QDialog
 {
     Q_OBJECT
     Ui::InfoViewer *ui{};
