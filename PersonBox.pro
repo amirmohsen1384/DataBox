@@ -14,7 +14,6 @@ SOURCES += \
     sources/infoeditor.cpp \
     sources/messages.cpp \
     sources/photoviewer.cpp \
-    sources/infoitem.cpp \
     sources/main.cpp \
     sources/personinfo.cpp \
     sources/rootwindow.cpp
@@ -22,7 +21,6 @@ HEADERS += \
     headers/dialogs.h \
     headers/exceptions.h \
     headers/infoeditor.h \
-    headers/infoitem.h \
     headers/messages.h \
     headers/photoviewer.h \
     headers/rootwindow.h \
