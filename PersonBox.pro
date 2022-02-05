@@ -8,14 +8,14 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 SOURCES += \
     sources/infoviewer.cpp \
     sources/exceptions.cpp \
-    sources/filehandling.cpp \
     sources/infosheet.cpp \
     sources/infoeditor.cpp \
     sources/messages.cpp \
     sources/photoviewer.cpp \
     sources/main.cpp \
     sources/personinfo.cpp \
-    sources/rootwindow.cpp
+    sources/rootwindow.cpp \
+    sources/streamhandler.cpp
 HEADERS += \
     headers/exceptions.h \
     headers/infoeditor.h \
