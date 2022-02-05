@@ -3,11 +3,10 @@ QT += gui
 QT += multimedia
 QT += multimediawidgets
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-CONFIG += c++11
+CONFIG += c++17
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 SOURCES += \
     sources/infoviewer.cpp \
-    sources/dialogs.cpp \
     sources/exceptions.cpp \
     sources/filehandling.cpp \
     sources/infosheet.cpp \
@@ -18,7 +17,6 @@ SOURCES += \
     sources/personinfo.cpp \
     sources/rootwindow.cpp
 HEADERS += \
-    headers/dialogs.h \
     headers/exceptions.h \
     headers/infoeditor.h \
     headers/messages.h \
