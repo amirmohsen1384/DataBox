@@ -29,10 +29,16 @@
   </property>
   <layout class="QVBoxLayout" name="mainLayout">
    <item>
-    <widget class="QListWidget" name="infoList">
+    <widget class="QLineEdit" name="containerSearch">
+     <property name="placeholderText">
+      <string>Type here to search</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QListWidget" name="containerData">
      <property name="font">
       <font>
-       <weight>75</weight>
        <bold>true</bold>
        <stylestrategy>PreferDefault</stylestrategy>
       </font>
@@ -45,6 +51,9 @@
      </property>
      <property name="lineWidth">
       <number>2</number>
+     </property>
+     <property name="sortingEnabled">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

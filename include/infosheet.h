@@ -1,46 +1,45 @@
 #ifndef INFOSHEET_H
 #define INFOSHEET_H
+
 #include <QWidget>
-#include "infoitem.h"
-typedef QList<InfoItem> InfoItemList;
-typedef QListIterator<InfoItem> InfoItemListIterator;
+#include <QListWidgetItem>
+
 namespace Ui { class InfoSheet; }
 class InfoSheet : public QWidget
 {
     Q_OBJECT
-    InfoItemList mainContainer;
-    Ui::InfoSheet *ui = nullptr;
-private:
-    bool checkInRange(int row) const;
-    void updateVisualList();
-    void setInitalProperties();
-private slots:
-    void activateItem(QListWidgetItem *item);
-public:
     QString recentFileName;
-    InfoSheet(QWidget *parent = nullptr);
-    InfoSheet(const InfoItemList &initalList, QWidget *parent = nullptr);
-    InfoSheet(const InfoSheet &initalSheet, QWidget *parent = nullptr);
-    InfoSheet& operator=(const InfoSheet &other);
+    Ui::InfoSheet *ui{};
+private:
+    void initializeProperties();
+    Q_DISABLE_COPY_MOVE(InfoSheet)
+public:
+    explicit InfoSheet(QWidget *parent = nullptr);
+    explicit InfoSheet(const QList<QListWidgetItem*> &items, QWidget *parent = nullptr);
     ~InfoSheet();
-    void add(const InfoItem &information);
-    void add(const InfoItemList &infoList);
-    const InfoItem* getItemAt(int row) const;
-    InfoItem* getItemAt(int row);
-    const InfoItem* getCurrentItem() const;
-    InfoItem* getCurrentItem();
-    int getCurrentRow() const;
-    QList<int> getSelectedRows() const;
-    QList<InfoItem*> getSelectedItems();
-    bool remove(int row);
+
+    void add(QListWidgetItem *item);
+    void add(const QList<QListWidgetItem*> &items);
+
+    QListWidgetItem* itemAt(int row);
+    int itemRow(QListWidgetItem *item) const;
+
+    QListWidgetItem* currentItem();
+    int currentRow() const;
+
+    QList<QListWidgetItem*> selectedItems();
+
+    void remove(int row);
+    void removeSelectedItems();
     void wipe();
+
     bool isEmpty() const;
-    int getSize() const;
-    friend QDataStream& operator<<(QDataStream &stream, const InfoSheet &containter);
-    friend QDataStream& operator>>(QDataStream &stream, InfoSheet &container);
+    int count() const;
+
+    const QString &getRecentFileName() const;
+    void setRecentFileName(const QString &value);
 signals:
-    void itemActivated(InfoItem *item);
+    void itemActivated(QListWidgetItem *item);
 };
-QDataStream& operator<<(QDataStream &stream, const InfoSheet &sheet);
-QDataStream& operator>>(QDataStream &stream, InfoSheet &sheet);
+
 #endif // INFOSHEET_H

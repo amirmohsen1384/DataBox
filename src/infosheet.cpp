@@ -1,163 +1,79 @@
 #include "include/infosheet.h"
 #include "ui_infosheet.h"
 
-bool InfoSheet::checkInRange(int row) const
+const QString &InfoSheet::getRecentFileName() const
 {
-    return (row >= 0 && row < mainContainer.size());
+    return recentFileName;
 }
-void InfoSheet::updateVisualList()
+void InfoSheet::setRecentFileName(const QString &value)
 {
-    ui->infoList->clear();
-    InfoItemListIterator iterator(mainContainer);
-    while(iterator.hasNext())
-        iterator.next().addToQListWidget(ui->infoList);
+    recentFileName = value;
 }
-void InfoSheet::setInitalProperties()
+void InfoSheet::initializeProperties()
 {
-    connect(ui->infoList, &QListWidget::itemActivated, this, &InfoSheet::activateItem);
-}
-void InfoSheet::activateItem(QListWidgetItem *item)
-{
-    emit itemActivated(getItemAt(ui->infoList->row(item)));
-}
-InfoSheet::InfoSheet(QWidget *parent) : QWidget(parent), ui(new Ui::InfoSheet)
-{
+    ui = new Ui::InfoSheet;
     ui->setupUi(this);
-    setInitalProperties();
+    connect(ui->containerData, &QListWidget::itemActivated, this, &InfoSheet::itemActivated);
 }
-InfoSheet::InfoSheet(const InfoItemList &initalList, QWidget *parent) : QWidget(parent), ui(new Ui::InfoSheet)
+InfoSheet::InfoSheet(QWidget *parent) : QWidget(parent) { initializeProperties(); }
+InfoSheet::InfoSheet(const QList<QListWidgetItem*> &list, QWidget *parent) : QWidget(parent)
 {
-    ui->setupUi(this);
-    setInitalProperties();
-    add(initalList);
-}
-InfoSheet::InfoSheet(const InfoSheet &initalSheet, QWidget *parent) : QWidget(parent), ui(new Ui::InfoSheet)
-{
-    ui->setupUi(this);
-    setInitalProperties();
-    add(initalSheet.mainContainer);
-}
-InfoSheet &InfoSheet::operator=(const InfoSheet &other)
-{
-    add(other.mainContainer);
-    return *this;
+    initializeProperties();
+    add(list);
 }
 InfoSheet::~InfoSheet()
 {
     delete ui;
 }
-void InfoSheet::add(const InfoItem &information)
+void InfoSheet::add(QListWidgetItem *item)
 {
-    int position = mainContainer.size() - 1;
-    while(position >= 0 && information.getItemText() < mainContainer.at(position).getItemText())
-        --position;
-
-    mainContainer.insert(position + 1, information);
-    mainContainer.at(position + 1).insertToQListWidget(ui->infoList, position + 1);
+    ui->containerData->addItem(item);
 }
-void InfoSheet::add(const InfoItemList &infoList)
+void InfoSheet::add(const QList<QListWidgetItem*> &items)
 {
-    InfoItemListIterator iterator(infoList);
+    QListIterator<QListWidgetItem*> iterator(items);
     while(iterator.hasNext())
-        add(iterator.next());
+        ui->containerData->addItem(iterator.next());
 }
-const InfoItem *InfoSheet::getItemAt(int row) const
+QListWidgetItem* InfoSheet::itemAt(int row)
 {
-    if(!checkInRange(row))
-        return nullptr;
-
-    return &mainContainer.at(row);
+    return ui->containerData->item(row);
 }
-
-InfoItem *InfoSheet::getItemAt(int row)
+int InfoSheet::itemRow(QListWidgetItem *item) const
 {
-    if(!checkInRange(row))
-        return nullptr;
-
-    return &mainContainer[row];
+    return ui->containerData->row(item);
 }
-const InfoItem *InfoSheet::getCurrentItem() const
+QListWidgetItem* InfoSheet::currentItem()
 {
-    if(mainContainer.isEmpty())
-        return nullptr;
-
-    int row = ui->infoList->currentRow();
-    if(row == -1)
-        return nullptr;
-
-    return &mainContainer.at(row);
-
+    return ui->containerData->currentItem();
 }
-InfoItem *InfoSheet::getCurrentItem()
+int InfoSheet::currentRow() const
 {
-    if(mainContainer.isEmpty())
-        return nullptr;
-
-    int row = ui->infoList->currentRow();
-    if(row == -1)
-        return nullptr;
-
-    return &mainContainer[row];
+    return ui->containerData->currentRow();
 }
-int InfoSheet::getCurrentRow() const
+QList<QListWidgetItem*> InfoSheet::selectedItems()
 {
-    if(mainContainer.isEmpty())
-        return -1;
-
-    return ui->infoList->currentRow();
+    return ui->containerData->selectedItems();
 }
-QList<int> InfoSheet::getSelectedRows() const
+void InfoSheet::remove(int row)
 {
-    QList<int> result;
-    InfoItemListIterator iterator(mainContainer);
-    for(int row = 0; iterator.hasNext(); ++row, iterator.next())
-    {
-        if(iterator.peekNext().isChecked())
-            result.push_back(row);
-    }
-    return result;
+    delete ui->containerData->item(row);
 }
-QList<InfoItem*> InfoSheet::getSelectedItems()
+void InfoSheet::removeSelectedItems()
 {
-    QList<InfoItem*> result;
-    QMutableListIterator<InfoItem> iterator(mainContainer);
+    QListIterator<QListWidgetItem*> iterator(ui->containerData->selectedItems());
     while(iterator.hasNext())
-    {
-        if(iterator.peekNext().isChecked())
-            result.push_back(&iterator.peekNext());
-        iterator.next();
-    }
-    return result;
-}
-bool InfoSheet::remove(int row)
-{
-    if(!checkInRange(row))
-        return false;
-
-    mainContainer.removeAt(row);
-    return true;
+        delete iterator.next();
 }
 void InfoSheet::wipe()
 {
-    mainContainer.clear();
+    ui->containerData->clear();
 }
 bool InfoSheet::isEmpty() const
 {
-    return mainContainer.isEmpty();
+    return ui->containerData->count() == 0;
 }
-int InfoSheet::getSize() const
+int InfoSheet::count() const
 {
-    return mainContainer.size();
-}
-QDataStream& operator<<(QDataStream &stream, const InfoSheet &sheet)
-{
-    stream << sheet.mainContainer;
-    return stream;
-}
-QDataStream& operator>>(QDataStream &stream, InfoSheet &sheet)
-{
-    sheet.mainContainer.clear();
-    stream >> sheet.mainContainer;
-    sheet.updateVisualList();
-    return stream;
+    return ui->containerData->count();
 }
