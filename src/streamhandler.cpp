@@ -1,6 +1,5 @@
 #include <QSaveFile>
 #include <QFileDialog>
-#include "ui_rootwindow.h"
 #include <QListWidgetItem>
 #include "include/exceptions.h"
 namespace Dialog

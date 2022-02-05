@@ -14,20 +14,17 @@ SOURCES += \
     src/photoviewer.cpp \
     src/main.cpp \
     src/personinfo.cpp \
-    src/rootwindow.cpp \
     src/streamhandler.cpp
 HEADERS += \
     include/exceptions.h \
     include/infoeditor.h \
     include/messages.h \
     include/photoviewer.h \
-    include/rootwindow.h \
     include/personinfo.h \
     include/infosheet.h \
     include/infoviewer.h
 FORMS += \
     gui/infoeditor.ui \
-    gui/rootwindow.ui \
     gui/infosheet.ui \
     gui/infoviewer.ui
 qnx: target.path = /tmp/$${TARGET}/bin
