@@ -1,13 +1,13 @@
 <RCC>
     <qresource prefix="/icons">
-        <file>resources/icons/Add.ico</file>
-        <file>resources/icons/Delete.ico</file>
-        <file>resources/icons/Edit.ico</file>
-        <file>resources/icons/New.ico</file>
-        <file>resources/icons/Open.ico</file>
-        <file>resources/icons/Save.ico</file>
-        <file>resources/icons/Save As.ico</file>
-        <file>resources/icons/Trash.ico</file>
-        <file>resources/icons/Show.ico</file>
+        <file>icons/Add.ico</file>
+        <file>icons/Delete.ico</file>
+        <file>icons/Edit.ico</file>
+        <file>icons/New.ico</file>
+        <file>icons/Open.ico</file>
+        <file>icons/Save As.ico</file>
+        <file>icons/Save.ico</file>
+        <file>icons/Show.ico</file>
+        <file>icons/Trash.ico</file>
     </qresource>
 </RCC>

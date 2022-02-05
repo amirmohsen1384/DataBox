@@ -88,7 +88,7 @@
   <action name="actionNew">
    <property name="icon">
     <iconset resource="../resources.qrc">
-     <normaloff>:/icons/resources/icons/New.ico</normaloff>:/icons/resources/icons/New.ico</iconset>
+     <normaloff>:/icons/icons/New.ico</normaloff>:/icons/icons/New.ico</iconset>
    </property>
    <property name="text">
     <string>New</string>
@@ -103,7 +103,7 @@
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="../resources.qrc">
-     <normaloff>:/icons/resources/icons/Open.ico</normaloff>:/icons/resources/icons/Open.ico</iconset>
+     <normaloff>:/icons/icons/Open.ico</normaloff>:/icons/icons/Open.ico</iconset>
    </property>
    <property name="text">
     <string>Open</string>
@@ -118,7 +118,7 @@
   <action name="actionSave">
    <property name="icon">
     <iconset resource="../resources.qrc">
-     <normaloff>:/icons/resources/icons/Save.ico</normaloff>:/icons/resources/icons/Save.ico</iconset>
+     <normaloff>:/icons/icons/Save.ico</normaloff>:/icons/icons/Save.ico</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -133,7 +133,7 @@
   <action name="actionSaveAs">
    <property name="icon">
     <iconset resource="../resources.qrc">
-     <normaloff>:/icons/resources/icons/Save As.ico</normaloff>:/icons/resources/icons/Save As.ico</iconset>
+     <normaloff>:/icons/icons/Save As.ico</normaloff>:/icons/icons/Save As.ico</iconset>
    </property>
    <property name="text">
     <string>Save As</string>
@@ -145,7 +145,7 @@
   <action name="actionAdd">
    <property name="icon">
     <iconset resource="../resources.qrc">
-     <normaloff>:/icons/resources/icons/Add.ico</normaloff>:/icons/resources/icons/Add.ico</iconset>
+     <normaloff>:/icons/icons/Add.ico</normaloff>:/icons/icons/Add.ico</iconset>
    </property>
    <property name="text">
     <string>Add</string>
@@ -160,7 +160,7 @@
   <action name="actionEdit">
    <property name="icon">
     <iconset resource="../resources.qrc">
-     <normaloff>:/icons/resources/icons/Edit.ico</normaloff>:/icons/resources/icons/Edit.ico</iconset>
+     <normaloff>:/icons/icons/Edit.ico</normaloff>:/icons/icons/Edit.ico</iconset>
    </property>
    <property name="text">
     <string>Edit</string>
@@ -175,7 +175,7 @@
   <action name="actionRemove">
    <property name="icon">
     <iconset resource="../resources.qrc">
-     <normaloff>:/icons/resources/icons/Delete.ico</normaloff>:/icons/resources/icons/Delete.ico</iconset>
+     <normaloff>:/icons/icons/Delete.ico</normaloff>:/icons/icons/Delete.ico</iconset>
    </property>
    <property name="text">
     <string>Remove</string>
@@ -190,7 +190,7 @@
   <action name="actionWipe">
    <property name="icon">
     <iconset resource="../resources.qrc">
-     <normaloff>:/icons/resources/icons/Trash.ico</normaloff>:/icons/resources/icons/Trash.ico</iconset>
+     <normaloff>:/icons/icons/Trash.ico</normaloff>:/icons/icons/Trash.ico</iconset>
    </property>
    <property name="text">
     <string>Wipe</string>
@@ -205,7 +205,7 @@
   <action name="actionShow">
    <property name="icon">
     <iconset resource="../resources.qrc">
-     <normaloff>:/icons/resources/icons/Show.ico</normaloff>:/icons/resources/icons/Show.ico</iconset>
+     <normaloff>:/icons/icons/Show.ico</normaloff>:/icons/icons/Show.ico</iconset>
    </property>
    <property name="text">
     <string>Show</string>
