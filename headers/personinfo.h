@@ -59,9 +59,13 @@ signals:
     void photoChanged(const QPixmap &value);
     void lastModificationChanged(const QDateTime &value);
 };
+
+typedef QList<PersonInfo> PersonInfoList;
+
 QDataStream& operator<<(QDataStream &stream, const PersonInfo &target);
 QDataStream& operator>>(QDataStream &stream, PersonInfo &target);
 bool operator==(const PersonInfo &one, const PersonInfo &two);
 bool operator!=(const PersonInfo &one, const PersonInfo &two);
+
 Q_DECLARE_METATYPE(PersonInfo)
 #endif // PERSONINFO_H
