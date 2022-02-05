@@ -1,146 +1,95 @@
-#include "../headers/rootwindow.h"
-#include "ui_rootwindow.h"
-#include "../headers/dialogs.h"
-#include "../headers/messages.h"
-#include "../headers/exceptions.h"
 #include <QSaveFile>
-#include <QFileInfo>
-#include <QFile>
-#define MAGIC_NUMBER 0xDA43EF756FFDBC5
-QDataStream& writeMagicNumber(QDataStream &stream)
+#include <QFileDialog>
+#include "ui_rootwindow.h"
+#include <QListWidgetItem>
+#include "headers/exceptions.h"
+namespace Dialog
 {
-    stream << static_cast<quint64>(MAGIC_NUMBER);
-    if(stream.status() != QDataStream::Ok)
-        throw WriteFailedException();
-
-    return stream;
-}
-quint64 readMagicNumber(QDataStream &stream)
-{
-    quint64 magicNumber;
-    stream >> static_cast<quint64&>(magicNumber);
-    if(stream.status() != QDataStream::Ok)
-        throw CorruptFileException();
-
-    else if(magicNumber != MAGIC_NUMBER)
-        throw UnsupportedFormatException();
-
-    return magicNumber;
-}
-void updateInfoSheetFileName(InfoSheet &sheet, const QString &fileName)
-{
-    sheet.recentFileName = fileName;
-    sheet.setWindowTitle(QFileInfo(fileName).fileName());
-}
-InfoSheet* readSheetFromFile(const QString &fileName, InfoSheet *first = nullptr)
-{
-    InfoSheet *workingSheet = first;
-    if(workingSheet == nullptr)
-        workingSheet = new InfoSheet;
-
-    QFile file(fileName);
-    try
+    QStringList open(QWidget *parent)
     {
-        if(!file.open(QFile::ReadOnly))
-            throw OpenFailedException();
-
-        QDataStream stream(&file);
-        readMagicNumber(stream);
-        if((stream >> *workingSheet).status() != QDataStream::Ok)
-            throw CorruptFileException();
+        QFileDialog dialog(parent);
+        dialog.setAcceptMode(QFileDialog::AcceptOpen);
+        dialog.setNameFilter("PersonBox files (*.pbd)");
+        dialog.setFileMode(QFileDialog::ExistingFiles);
+        return dialog.exec() == QDialog::Accepted ? dialog.selectedFiles() : QStringList();
     }
-    catch(const AbstractException &exception)
+    QString save(QWidget *parent)
     {
-        exception.showMessage();
-        if(first == nullptr)
-            delete workingSheet;
-        else
-            first->wipe();
-        return nullptr;
+        QFileDialog dialog(parent);
+        dialog.setAcceptMode(QFileDialog::AcceptSave);
+        dialog.setNameFilter("PersonBox data files (*.pbd)");
+        dialog.setFileMode(QFileDialog::AnyFile);
+        dialog.setDefaultSuffix("pbd");
+        return dialog.exec() == QDialog::Accepted ? dialog.selectedFiles().constFirst() : QString();
     }
-    catch(...)
-    {
-        Messages::unknownError();
-        return nullptr;
-    }
-    updateInfoSheetFileName(*workingSheet, file.fileName());
-    return workingSheet;
 }
-InfoSheet* writeSheetToFile(const QString &filename, InfoSheet &target)
+namespace MagicNumber
 {
-    QSaveFile file(filename);
-    try
+    const quint64 magicNumber = 0xDA43EF756FFDBC5;
+    void write(QDataStream &stream)
     {
-        if(!file.open(QFile::WriteOnly))
-            throw OpenFailedException();
-
-        QDataStream stream(&file);
-        writeMagicNumber(stream);
-        if((stream << target).status() != QDataStream::Ok)
+        stream << static_cast<quint64>(magicNumber);
+        if(stream.status() != QDataStream::Ok)
             throw WriteFailedException();
     }
-    catch(const AbstractException &exception)
+    void read(QDataStream &stream)
     {
-        exception.showMessage();
-        file.cancelWriting();
-        return nullptr;
+        quint64 readNumber;
+        stream >> static_cast<quint64&>(readNumber);
+        if(stream.status() != QDataStream::Ok)
+            throw CorruptFileException();
+
+        else if(readNumber != magicNumber)
+            throw UnsupportedFormatException();
     }
-    catch(...)
-    {
-        Messages::unknownError();
-        return nullptr;
-    }
-    file.commit();
-    updateInfoSheetFileName(target, file.fileName());
-    return &target;
 }
-void RootWindow::on_actionOpen_triggered()
+void saveDataToFile(const QString &fileName, const QList<QListWidgetItem*> &target)
 {
-    QStringList files = Dialogs::Open(this);
-    QStringListIterator iterator(files);
-    if(!sheetContainer.isEmpty())
-    {
-        InfoSheet *lastSheet = sheetContainer.last();
-        if(lastSheet->isEmpty() && iterator.hasNext())
-        {
-            readSheetFromFile(iterator.next(), lastSheet);
-            ui->sheetViewer->setTabText(ui->sheetViewer->count() - 1, lastSheet->windowTitle());
-        }
-    }
+    QSaveFile file(fileName);
+    if(!file.open(QIODevice::WriteOnly))
+        throw OpenFailedException();
+
+    QDataStream stream(&file);
+
+    MagicNumber::write(stream);
+    if((stream << static_cast<quint64>(target.size())).status() != QDataStream::Ok)
+        throw WriteFailedException();
+
+    QListIterator<QListWidgetItem*> iterator(target);
     while(iterator.hasNext())
     {
-        InfoSheet *sheet = readSheetFromFile(iterator.next());
-        if(sheet != nullptr)
-            createNewSheet(sheet);
+        if((stream << *iterator.next()).status() != QDataStream::Ok)
+            throw WriteFailedException();
     }
+    file.commit();
 }
-void RootWindow::on_actionSave_triggered()
+void loadDataFromFile(const QString &fileName, QList<QListWidgetItem*> &target)
 {
-    InfoSheet *currentSheet = getCurrentSheet();
-    if(currentSheet == nullptr)
+    QFile file(fileName);
+    if(!file.open(QIODevice::ReadOnly))
+        throw OpenFailedException();
+
+    QDataStream stream(&file);
+
+    MagicNumber::read(stream);
+
+    quint64 size{};
+    if((stream >> static_cast<quint64&>(size)).status() != QDataStream::Ok)
+        throw CorruptFileException();
+
+    target.clear();
+    target.reserve(size);
+
+    QListWidgetItem *item{};
+    for(quint64 i = 0; i < size; ++i)
     {
-        Messages::noSheetFound(this);
-        return;
+        item = new QListWidgetItem;
+
+        if((stream >> *item).status() != QDataStream::Ok)
+            throw CorruptFileException();
+
+        target.append(item);
     }
-    QString targetFileName = !currentSheet->recentFileName.isEmpty() ? currentSheet->recentFileName : Dialogs::Save(this);
-    if(!targetFileName.isEmpty())
-    {
-        writeSheetToFile(targetFileName, *currentSheet);
-        ui->sheetViewer->setTabText(getCurrentIndex(), currentSheet->windowTitle());
-    }
-}
-void RootWindow::on_actionSaveAs_triggered()
-{
-    InfoSheet *currentSheet = getCurrentSheet();
-    if(currentSheet == nullptr)
-    {
-        Messages::noSheetFound(this);
-        return;
-    }
-    QString targetFileName = Dialogs::Save(this);
-    if(!targetFileName.isEmpty())
-    {
-        writeSheetToFile(targetFileName, *currentSheet);
-        ui->sheetViewer->setTabText(getCurrentIndex(), currentSheet->windowTitle());
-    }
+
+    file.close();
 }
