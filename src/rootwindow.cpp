@@ -1,9 +1,9 @@
-#include "../headers/rootwindow.h"
-#include "ui_rootwindow.h"
 #include <QMessageBox>
-#include "../headers/infoeditor.h"
-#include "headers/infoviewer.h"
-#include "../headers/messages.h"
+#include "ui_rootwindow.h"
+#include "include/rootwindow.h"
+#include "include/infoeditor.h"
+#include "include/infoviewer.h"
+#include "include/messages.h"
 
 bool RootWindow::checkInRange(int index) const
 {

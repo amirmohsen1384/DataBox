@@ -1,4 +1,4 @@
-#include "../headers/photoviewer.h"
+#include "include/photoviewer.h"
 #include <QPainter>
 #include <QPaintEvent>
 #include <QImageReader>

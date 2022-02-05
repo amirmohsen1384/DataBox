@@ -1,7 +1,7 @@
-#include "headers/infoviewer.h"
+#include "include/infoviewer.h"
 #include "ui_infoviewer.h"
-#include "headers/photoviewer.h"
-#include "headers/personinfo.h"
+#include "include/photoviewer.h"
+#include "include/personinfo.h"
 
 void InfoViewer::displayInfo(const PersonInfo &information)
 {

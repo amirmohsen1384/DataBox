@@ -1,6 +1,6 @@
 #include <QFileDialog>
-#include "headers/infoeditor.h"
-#include "headers/messages.h"
+#include "include/infoeditor.h"
+#include "include/messages.h"
 #include "ui_infoeditor.h"
 void InfoEditor::initializeInformation(const PersonInfo &info)
 {

@@ -1,4 +1,4 @@
-#include "../headers/personinfo.h"
+#include "include/personinfo.h"
 #include <QDebug>
 
 PersonInfo::PersonInfo(QObject *parent) : QObject(parent)

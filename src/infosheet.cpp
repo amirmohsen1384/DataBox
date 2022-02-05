@@ -1,4 +1,4 @@
-#include "headers/infosheet.h"
+#include "include/infosheet.h"
 #include "ui_infosheet.h"
 
 bool InfoSheet::checkInRange(int row) const

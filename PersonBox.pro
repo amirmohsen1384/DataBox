@@ -6,25 +6,25 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 SOURCES += \
-    sources/infoviewer.cpp \
-    sources/exceptions.cpp \
-    sources/infosheet.cpp \
-    sources/infoeditor.cpp \
-    sources/messages.cpp \
-    sources/photoviewer.cpp \
-    sources/main.cpp \
-    sources/personinfo.cpp \
-    sources/rootwindow.cpp \
-    sources/streamhandler.cpp
+    src/infoviewer.cpp \
+    src/exceptions.cpp \
+    src/infosheet.cpp \
+    src/infoeditor.cpp \
+    src/messages.cpp \
+    src/photoviewer.cpp \
+    src/main.cpp \
+    src/personinfo.cpp \
+    src/rootwindow.cpp \
+    src/streamhandler.cpp
 HEADERS += \
-    headers/exceptions.h \
-    headers/infoeditor.h \
-    headers/messages.h \
-    headers/photoviewer.h \
-    headers/rootwindow.h \
-    headers/personinfo.h \
-    headers/infosheet.h \
-    headers/infoviewer.h
+    include/exceptions.h \
+    include/infoeditor.h \
+    include/messages.h \
+    include/photoviewer.h \
+    include/rootwindow.h \
+    include/personinfo.h \
+    include/infosheet.h \
+    include/infoviewer.h
 FORMS += \
     gui/infoeditor.ui \
     gui/rootwindow.ui \

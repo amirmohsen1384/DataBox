@@ -2,7 +2,7 @@
 #include <QFileDialog>
 #include "ui_rootwindow.h"
 #include <QListWidgetItem>
-#include "headers/exceptions.h"
+#include "include/exceptions.h"
 namespace Dialog
 {
     QStringList open(QWidget *parent)
