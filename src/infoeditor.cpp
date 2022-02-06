@@ -13,7 +13,12 @@ void InfoEditor::initializeInformation(const PersonInfo &info)
     ENTER_TEXTUAL_PROPERTY(Nationality)
     ENTER_TEXTUAL_PROPERTY(BornProvince)
 
-    ui->containerGender->setCurrentText(info.getGender());
+    QString gender = info.getGender();
+    if(gender == "Male")
+        ui->radioButtonMale->setChecked(true);
+    else if(gender == "Female")
+        ui->radioButtonFemale->setChecked(true);
+
     ui->containerBirthday->setDate(info.getBirthday());
     photoViewer->setCurrentPhoto(info.getPhoto());
 
@@ -22,19 +27,27 @@ void InfoEditor::initializeInformation(const PersonInfo &info)
 void InfoEditor::setupUi()
 {
     ui = new Ui::InfoEditor;
+    ui->setupUi(this);
+
     photoViewer = new PhotoViewer;
-    photoViewer->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
+    photoViewer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     ui->photoLayout->insertWidget(0, photoViewer);
+
     connect(ui->buttonOk, &QPushButton::clicked, this, &InfoEditor::accept);
     connect(ui->buttonCancel, &QPushButton::clicked, this, &InfoEditor::reject);
 }
 void InfoEditor::accept()
-{
+{ 
     if(ui->containerFirstName->text().isEmpty())
-        ui->containerFirstName->setPlaceholderText("<p style=\"color:red;\"><b>This should be filled.</p></b>");
+    {
+        const QString errorString = "This should be filled.";
 
-    else if(ui->containerLastName->text().isEmpty())
-        ui->containerLastName->setPlaceholderText("<p style=\"color:red;\"><b>This should be filled.</p></b>");
+        ui->containerFirstName->setPlaceholderText(errorString);
+        if(ui->containerLastName->text().isEmpty())
+            ui->containerLastName->setPlaceholderText(errorString);
+
+        return;
+    }
 
 #define APPLY_TEXTUAL_PROPERTY(PROPERTY) \
     currentInfo->set##PROPERTY(ui->container##PROPERTY->text());
@@ -45,11 +58,17 @@ void InfoEditor::accept()
     APPLY_TEXTUAL_PROPERTY(BornProvince)
     APPLY_TEXTUAL_PROPERTY(Nationality)
 
+    if(ui->radioButtonMale->isChecked())
+        currentInfo->setGender("Male");
+
+    else if(ui->radioButtonFemale->isChecked())
+        currentInfo->setGender("Female");
+
     currentInfo->setBirthday(ui->containerBirthday->date());
-    currentInfo->setGender(ui->containerGender->currentText());
     currentInfo->setPhoto(photoViewer->getCurrentPhoto());
 
 #undef APPLY_TEXTUAL_PROPERTY
+    QDialog::accept();
 }
 InfoEditor::InfoEditor(PersonInfo &information, QWidget *parent) : QDialog(parent)
 {
@@ -73,5 +92,49 @@ InfoEditor::InfoEditor(QWidget *parent) : QDialog(parent)
 {
     setupUi();
     currentInfo = new PersonInfo;
-    defaultInfo = *currentInfo;
 }
+
+#define RESET_TEXTUAL_PROPERTY(PROPERTY) \
+    ui->container##PROPERTY->setText(defaultInfo.get##PROPERTY());
+
+void InfoEditor::on_buttonResetFirstName_clicked()
+{
+    RESET_TEXTUAL_PROPERTY(FirstName)
+}
+void InfoEditor::on_buttonResetLastName_clicked()
+{
+    RESET_TEXTUAL_PROPERTY(LastName)
+}
+void InfoEditor::on_buttonResetFatherName_clicked()
+{
+    RESET_TEXTUAL_PROPERTY(FatherName)
+}
+void InfoEditor::on_buttonResetBirthday_clicked()
+{
+    ui->containerBirthday->setDate(defaultInfo.getBirthday());
+}
+void InfoEditor::on_buttonResetNationality_clicked()
+{
+    RESET_TEXTUAL_PROPERTY(Nationality)
+}
+void InfoEditor::on_buttonResetBornProvince_clicked()
+{
+    RESET_TEXTUAL_PROPERTY(BornProvince)
+}
+void InfoEditor::on_buttonResetGender_clicked()
+{
+    QString gender = defaultInfo.getGender();
+    if(gender == "Male")
+    {
+        ui->radioButtonMale->setChecked(true);
+    }
+    else if(gender == "Female")
+    {
+        ui->radioButtonFemale->setChecked(true);
+    }
+}
+void InfoEditor::on_buttonResetPhoto_clicked()
+{
+    photoViewer->setCurrentPhoto(defaultInfo.getPhoto());
+}
+

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>586</width>
-    <height>407</height>
+    <width>590</width>
+    <height>377</height>
    </rect>
   </property>
   <property name="font">
@@ -20,33 +20,7 @@
    <string/>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="2" column="2" rowspan="5">
-    <widget class="QGroupBox" name="photoContainer">
-     <property name="title">
-      <string>Photo</string>
-     </property>
-     <layout class="QVBoxLayout" name="photoLayout">
-      <property name="topMargin">
-       <number>1</number>
-      </property>
-      <item>
-       <widget class="QPushButton" name="buttonBrowsePC">
-        <property name="text">
-         <string>Browse PC</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="resetPhotoButton">
-        <property name="text">
-         <string>Reset</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="2" column="0" rowspan="5" colspan="2">
+   <item row="0" column="0">
     <widget class="QGroupBox" name="infoLayout">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -57,15 +31,15 @@
      <property name="title">
       <string>Personal information</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0">
+     <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0,0">
       <property name="sizeConstraint">
        <enum>QLayout::SetNoConstraint</enum>
       </property>
       <property name="spacing">
        <number>7</number>
       </property>
-      <item row="4" column="0">
-       <widget class="QLabel" name="labelGender">
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelFirstName">
         <property name="sizePolicy">
          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -73,15 +47,67 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Gender:</string>
+         <string>First name:</string>
         </property>
         <property name="buddy">
-         <cstring>containerGender</cstring>
+         <cstring>containerFirstName</cstring>
         </property>
        </widget>
       </item>
-      <item row="5" column="2">
-       <widget class="QPushButton" name="resetNationalityButton">
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="containerFatherName">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>50</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="buttonResetFirstName">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Reset</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="labelNationality">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Nationality:</string>
+        </property>
+        <property name="buddy">
+         <cstring>containerNationality</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QPushButton" name="buttonResetFatherName">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Reset</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="2">
+       <widget class="QPushButton" name="buttonResetGender">
         <property name="sizePolicy">
          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -100,61 +126,6 @@
           <horstretch>50</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="containerFatherName">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-          <horstretch>50</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0">
-       <widget class="QLabel" name="labelBornProvince">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Born province:</string>
-        </property>
-        <property name="buddy">
-         <cstring>containerBornProvince</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="2">
-       <widget class="QPushButton" name="resetBornProvinceButton">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Reset</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="labelLastName">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Last name:</string>
-        </property>
-        <property name="buddy">
-         <cstring>containerLastName</cstring>
         </property>
        </widget>
       </item>
@@ -190,8 +161,47 @@
         </property>
        </widget>
       </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="buttonResetLastName">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Reset</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelLastName">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Last name:</string>
+        </property>
+        <property name="buddy">
+         <cstring>containerLastName</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="containerLastName">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>50</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
       <item row="4" column="2">
-       <widget class="QPushButton" name="resetGenderButton">
+       <widget class="QPushButton" name="buttonResetNationality">
         <property name="sizePolicy">
          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -200,39 +210,6 @@
         </property>
         <property name="text">
          <string>Reset</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QLineEdit" name="containerNationality">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-          <horstretch>50</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="2">
-       <widget class="QPushButton" name="resetBirthdayButton">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Reset</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="1">
-       <widget class="QLineEdit" name="containerBornProvince">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-          <horstretch>50</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
         </property>
        </widget>
       </item>
@@ -252,21 +229,8 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="resetLastNameButton">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Reset</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="labelNationality">
+      <item row="7" column="0">
+       <widget class="QLabel" name="labelGender">
         <property name="sizePolicy">
          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -274,57 +238,8 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Nationality:</string>
+         <string>Gender:</string>
         </property>
-        <property name="buddy">
-         <cstring>containerNationality</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QPushButton" name="resetFatherNameButton">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Reset</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QPushButton" name="resetFirstNameButton">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Reset</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QComboBox" name="containerGender">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-          <horstretch>50</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <item>
-         <property name="text">
-          <string>Male</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Female</string>
-         </property>
-        </item>
        </widget>
       </item>
       <item row="3" column="0">
@@ -343,8 +258,50 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="containerLastName">
+      <item row="3" column="2">
+       <widget class="QPushButton" name="buttonResetBirthday">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Reset</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="QPushButton" name="buttonResetBornProvince">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Reset</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="labelBornProvince">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Born province:</string>
+        </property>
+        <property name="buddy">
+         <cstring>containerBornProvince</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="containerNationality">
         <property name="sizePolicy">
          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
           <horstretch>50</horstretch>
@@ -353,26 +310,67 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="labelFirstName">
+      <item row="5" column="1">
+       <widget class="QLineEdit" name="containerBornProvince">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>50</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <layout class="QHBoxLayout" name="layoutGenderChoices">
+        <item>
+         <widget class="QRadioButton" name="radioButtonMale">
+          <property name="text">
+           <string>Male</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="radioButtonFemale">
+          <property name="text">
+           <string>Female</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QGroupBox" name="photoContainer">
+     <property name="title">
+      <string>Photo</string>
+     </property>
+     <layout class="QVBoxLayout" name="photoLayout">
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="buttonBrowsePC">
         <property name="text">
-         <string>First name:</string>
+         <string>Browse PC</string>
         </property>
-        <property name="buddy">
-         <cstring>containerFirstName</cstring>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="buttonResetPhoto">
+        <property name="text">
+         <string>Reset</string>
         </property>
        </widget>
       </item>
      </layout>
     </widget>
    </item>
-   <item row="7" column="0" colspan="3">
+   <item row="1" column="0" colspan="2">
     <layout class="QHBoxLayout" name="buttonContainer">
      <property name="topMargin">
       <number>0</number>
@@ -420,21 +418,48 @@
   <tabstop>containerLastName</tabstop>
   <tabstop>containerFatherName</tabstop>
   <tabstop>containerBirthday</tabstop>
-  <tabstop>containerGender</tabstop>
-  <tabstop>containerNationality</tabstop>
-  <tabstop>containerBornProvince</tabstop>
   <tabstop>buttonBrowsePC</tabstop>
   <tabstop>buttonOk</tabstop>
   <tabstop>buttonCancel</tabstop>
-  <tabstop>resetFirstNameButton</tabstop>
-  <tabstop>resetLastNameButton</tabstop>
-  <tabstop>resetFatherNameButton</tabstop>
-  <tabstop>resetBirthdayButton</tabstop>
-  <tabstop>resetGenderButton</tabstop>
-  <tabstop>resetNationalityButton</tabstop>
-  <tabstop>resetBornProvinceButton</tabstop>
+  <tabstop>buttonResetFirstName</tabstop>
+  <tabstop>buttonResetLastName</tabstop>
+  <tabstop>buttonResetFatherName</tabstop>
+  <tabstop>buttonResetBirthday</tabstop>
   <tabstop>buttonResetAll</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>buttonOk</sender>
+   <signal>clicked()</signal>
+   <receiver>InfoEditor</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>372</x>
+     <y>297</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>250</x>
+     <y>160</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonCancel</sender>
+   <signal>clicked()</signal>
+   <receiver>InfoEditor</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>453</x>
+     <y>297</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>250</x>
+     <y>160</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
