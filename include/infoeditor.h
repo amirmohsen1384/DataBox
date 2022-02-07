@@ -9,6 +9,7 @@ class InfoEditor : public QDialog
     PersonInfo defaultInfo, currentInfo;
     Ui::InfoEditor *ui{};
     class PhotoViewer *photoViewer{};
+    Q_DISABLE_COPY_MOVE(InfoEditor)
 private:
     void initializeInformation(const PersonInfo &infoItem);
     void setupUi();
