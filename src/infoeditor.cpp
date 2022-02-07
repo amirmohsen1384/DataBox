@@ -2,6 +2,7 @@
 #include "include/infoeditor.h"
 #include "include/messages.h"
 #include "ui_infoeditor.h"
+#include "photoviewer.h"
 void InfoEditor::initializeInformation(const PersonInfo &info)
 {
 #define ENTER_TEXTUAL_PROPERTY(PROPERTY) \
@@ -50,7 +51,7 @@ void InfoEditor::accept()
     }
 
 #define APPLY_TEXTUAL_PROPERTY(PROPERTY) \
-    currentInfo->set##PROPERTY(ui->container##PROPERTY->text());
+    currentInfo.set##PROPERTY(ui->container##PROPERTY->text());
 
     APPLY_TEXTUAL_PROPERTY(FirstName)
     APPLY_TEXTUAL_PROPERTY(LastName)
@@ -59,25 +60,25 @@ void InfoEditor::accept()
     APPLY_TEXTUAL_PROPERTY(Nationality)
 
     if(ui->radioButtonMale->isChecked())
-        currentInfo->setGender("Male");
+        currentInfo.setGender("Male");
 
     else if(ui->radioButtonFemale->isChecked())
-        currentInfo->setGender("Female");
+        currentInfo.setGender("Female");
 
-    currentInfo->setBirthday(ui->containerBirthday->date());
-    currentInfo->setPhoto(photoViewer->getCurrentPhoto());
+    currentInfo.setBirthday(ui->containerBirthday->date());
+    currentInfo.setPhoto(photoViewer->getCurrentPhoto());
 
 #undef APPLY_TEXTUAL_PROPERTY
     QDialog::accept();
 }
-InfoEditor::InfoEditor(PersonInfo &information, QWidget *parent) : QDialog(parent)
+InfoEditor::InfoEditor(const PersonInfo &information, QWidget *parent) : QDialog(parent)
 {
     setupUi();
-    currentInfo = &information;
+    currentInfo = information;
     defaultInfo = information;
     initializeInformation(information);
 }
-const PersonInfo &InfoEditor::retrieve() const { return *currentInfo; }
+const PersonInfo &InfoEditor::retrieve() const { return currentInfo; }
 InfoEditor::~InfoEditor() { delete ui; }
 void InfoEditor::on_buttonBrowsePC_clicked()
 {
@@ -88,11 +89,7 @@ void InfoEditor::on_buttonBrowsePC_clicked()
     if(dialog.exec() == QDialog::Accepted)
         photoViewer->setCurrentPhoto(dialog.selectedFiles().constFirst());
 }
-InfoEditor::InfoEditor(QWidget *parent) : QDialog(parent)
-{
-    setupUi();
-    currentInfo = new PersonInfo;
-}
+InfoEditor::InfoEditor(QWidget *parent) : QDialog(parent) { setupUi(); }
 
 #define RESET_TEXTUAL_PROPERTY(PROPERTY) \
     ui->container##PROPERTY->setText(defaultInfo.get##PROPERTY());
