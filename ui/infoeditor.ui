@@ -418,14 +418,22 @@
   <tabstop>containerLastName</tabstop>
   <tabstop>containerFatherName</tabstop>
   <tabstop>containerBirthday</tabstop>
+  <tabstop>containerNationality</tabstop>
+  <tabstop>containerBornProvince</tabstop>
+  <tabstop>radioButtonMale</tabstop>
+  <tabstop>radioButtonFemale</tabstop>
   <tabstop>buttonBrowsePC</tabstop>
   <tabstop>buttonOk</tabstop>
-  <tabstop>buttonCancel</tabstop>
   <tabstop>buttonResetFirstName</tabstop>
   <tabstop>buttonResetLastName</tabstop>
   <tabstop>buttonResetFatherName</tabstop>
   <tabstop>buttonResetBirthday</tabstop>
+  <tabstop>buttonResetNationality</tabstop>
+  <tabstop>buttonResetBornProvince</tabstop>
+  <tabstop>buttonResetGender</tabstop>
+  <tabstop>buttonResetPhoto</tabstop>
   <tabstop>buttonResetAll</tabstop>
+  <tabstop>buttonCancel</tabstop>
  </tabstops>
  <resources/>
  <connections>
