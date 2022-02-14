@@ -8,7 +8,6 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 SOURCES += \
     src/infoviewer.cpp \
     src/exceptions.cpp \
-    src/infosheet.cpp \
     src/infoeditor.cpp \
     src/messages.cpp \
     src/photoviewer.cpp \
@@ -21,15 +20,11 @@ HEADERS += \
     include/messages.h \
     include/photoviewer.h \
     include/personinfo.h \
-    include/infosheet.h \
     include/infoviewer.h
 FORMS += \
     gui/infoeditor.ui \
-    gui/infosheet.ui \
     gui/infoviewer.ui
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-RESOURCES += \
-    resources.qrc
+RESOURCES += resources.qrc
