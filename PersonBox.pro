@@ -9,14 +9,12 @@ SOURCES += \
     src/infoviewer.cpp \
     src/exceptions.cpp \
     src/infoeditor.cpp \
-    src/messages.cpp \
     src/photoviewer.cpp \
     src/personinfo.cpp \
     src/streamhandler.cpp
 HEADERS += \
     include/exceptions.h \
     include/infoeditor.h \
-    include/messages.h \
     include/photoviewer.h \
     include/personinfo.h \
     include/infoviewer.h
