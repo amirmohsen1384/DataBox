@@ -2,7 +2,39 @@
 #include "include/infoeditor.h"
 #include "include/messages.h"
 #include "ui_infoeditor.h"
-#include "photoviewer.h"
+#include "include/photoviewer.h"
+
+void InfoEditor::setupUi()
+{
+    ui = new Ui::InfoEditor;
+    ui->setupUi(this);
+
+    photoViewer = new PhotoViewer;
+    photoViewer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    ui->photoLayout->insertWidget(0, photoViewer);
+
+    enableResetFeature();
+    connect(ui->buttonBrowsePC, &QPushButton::clicked, this, [=]()
+    {
+        QFileDialog dialog;
+        dialog.setAcceptMode(QFileDialog::AcceptOpen);
+        dialog.setNameFilters({"JPG files (*.jpg *.jpeg)", "PNG files (*.png)", "BMP files (*.bmp)"});
+        dialog.setFileMode(QFileDialog::ExistingFile);
+        if(dialog.exec())
+            photoViewer->setCurrentPhoto(dialog.selectedFiles().constFirst());
+    });
+
+    connect(ui->buttonOk, &QPushButton::clicked, this, &InfoEditor::accept);
+    connect(ui->buttonCancel, &QPushButton::clicked, this, &InfoEditor::reject);
+}
+InfoEditor::InfoEditor(QWidget *parent) : QDialog(parent) { setupUi(); }
+InfoEditor::InfoEditor(const PersonInfo &information, QWidget *parent) : QDialog(parent)
+{
+    setupUi();
+    current = information;
+    initializeInformation(information);
+}
+InfoEditor::~InfoEditor() { delete ui; }
 void InfoEditor::initializeInformation(const PersonInfo &info)
 {
 #define ENTER_TEXTUAL_PROPERTY(PROPERTY) \
@@ -25,33 +57,24 @@ void InfoEditor::initializeInformation(const PersonInfo &info)
 
 #undef ENTER_TEXTUAL_PROPERTY
 }
-void InfoEditor::setupUi()
-{
-    ui = new Ui::InfoEditor;
-    ui->setupUi(this);
 
-    photoViewer = new PhotoViewer;
-    photoViewer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-    ui->photoLayout->insertWidget(0, photoViewer);
-
-    connect(ui->buttonOk, &QPushButton::clicked, this, &InfoEditor::accept);
-    connect(ui->buttonCancel, &QPushButton::clicked, this, &InfoEditor::reject);
-}
 void InfoEditor::accept()
 { 
-    if(ui->containerFirstName->text().isEmpty())
     {
         const QString errorString = "This should be filled.";
-
-        ui->containerFirstName->setPlaceholderText(errorString);
+        if(ui->containerFirstName->text().isEmpty())
+        {
+            ui->containerFirstName->setPlaceholderText(errorString);
+            return;
+        }
         if(ui->containerLastName->text().isEmpty())
+        {
             ui->containerLastName->setPlaceholderText(errorString);
-
-        return;
+            return;
+        }
     }
-
 #define APPLY_TEXTUAL_PROPERTY(PROPERTY) \
-    currentInfo.set##PROPERTY(ui->container##PROPERTY->text());
+    current.set##PROPERTY(ui->container##PROPERTY->text());
 
     APPLY_TEXTUAL_PROPERTY(FirstName)
     APPLY_TEXTUAL_PROPERTY(LastName)
@@ -59,79 +82,66 @@ void InfoEditor::accept()
     APPLY_TEXTUAL_PROPERTY(BornProvince)
     APPLY_TEXTUAL_PROPERTY(Nationality)
 
+#undef APPLY_TEXTUAL_PROPERTY
+
     if(ui->radioButtonMale->isChecked())
-        currentInfo.setGender("Male");
+        current.setGender("Male");
 
     else if(ui->radioButtonFemale->isChecked())
-        currentInfo.setGender("Female");
+        current.setGender("Female");
 
-    currentInfo.setBirthday(ui->containerBirthday->date());
-    currentInfo.setPhoto(photoViewer->getCurrentPhoto());
+    current.setBirthday(ui->containerBirthday->date());
+    current.setPhoto(photoViewer->getCurrentPhoto());
 
-#undef APPLY_TEXTUAL_PROPERTY
     QDialog::accept();
 }
-InfoEditor::InfoEditor(const PersonInfo &information, QWidget *parent) : QDialog(parent)
+void InfoEditor::enableResetFeature()
 {
-    setupUi();
-    currentInfo = information;
-    defaultInfo = information;
-    initializeInformation(information);
-}
-const PersonInfo &InfoEditor::retrieve() const { return currentInfo; }
-InfoEditor::~InfoEditor() { delete ui; }
-void InfoEditor::on_buttonBrowsePC_clicked()
-{
-    QFileDialog dialog;
-    dialog.setAcceptMode(QFileDialog::AcceptOpen);
-    dialog.setNameFilters({"JPG files (*.jpg *.jpeg)", "PNG files (*.png)", "BMP files (*.bmp)"});
-    dialog.setFileMode(QFileDialog::ExistingFile);
-    if(dialog.exec() == QDialog::Accepted)
-        photoViewer->setCurrentPhoto(dialog.selectedFiles().constFirst());
-}
-InfoEditor::InfoEditor(QWidget *parent) : QDialog(parent) { setupUi(); }
-
 #define RESET_TEXTUAL_PROPERTY(PROPERTY) \
-    ui->container##PROPERTY->setText(defaultInfo.get##PROPERTY());
+    ui->container##PROPERTY->setText(current.get##PROPERTY());
 
-void InfoEditor::on_buttonResetFirstName_clicked()
-{
-    RESET_TEXTUAL_PROPERTY(FirstName)
-}
-void InfoEditor::on_buttonResetLastName_clicked()
-{
-    RESET_TEXTUAL_PROPERTY(LastName)
-}
-void InfoEditor::on_buttonResetFatherName_clicked()
-{
-    RESET_TEXTUAL_PROPERTY(FatherName)
-}
-void InfoEditor::on_buttonResetBirthday_clicked()
-{
-    ui->containerBirthday->setDate(defaultInfo.getBirthday());
-}
-void InfoEditor::on_buttonResetNationality_clicked()
-{
-    RESET_TEXTUAL_PROPERTY(Nationality)
-}
-void InfoEditor::on_buttonResetBornProvince_clicked()
-{
-    RESET_TEXTUAL_PROPERTY(BornProvince)
-}
-void InfoEditor::on_buttonResetGender_clicked()
-{
-    QString gender = defaultInfo.getGender();
-    if(gender == "Male")
+    connect(ui->buttonResetFirstName, &QPushButton::clicked, this, [=]()
     {
-        ui->radioButtonMale->setChecked(true);
-    }
-    else if(gender == "Female")
+        RESET_TEXTUAL_PROPERTY(FirstName)
+    });
+    connect(ui->buttonResetLastName, &QPushButton::clicked, this, [=]()
     {
-        ui->radioButtonFemale->setChecked(true);
-    }
-}
-void InfoEditor::on_buttonResetPhoto_clicked()
-{
-    photoViewer->setCurrentPhoto(defaultInfo.getPhoto());
-}
+        RESET_TEXTUAL_PROPERTY(LastName)
+    });
+    connect(ui->buttonResetFatherName, &QPushButton::clicked, this, [=]()
+    {
+        RESET_TEXTUAL_PROPERTY(FatherName)
+    });
+    connect(ui->buttonResetNationality, &QPushButton::clicked, this, [=]()
+    {
+        RESET_TEXTUAL_PROPERTY(Nationality)
+    });
+    connect(ui->buttonResetBornProvince, &QPushButton::clicked, this, [=]()
+    {
+        RESET_TEXTUAL_PROPERTY(BornProvince)
+    });
 
+#undef RESET_TEXTUAL_PROPERTY
+
+    connect(ui->buttonResetBirthday, &QPushButton::clicked, this, [=]()
+    {
+        ui->containerBirthday->setDate(current.getBirthday());
+    });
+    connect(ui->buttonResetGender, &QPushButton::clicked, this, [=]()
+    {
+        QString gender = current.getGender();
+        if(gender == "Male")
+        {
+            ui->radioButtonMale->setChecked(true);
+        }
+        else if(gender == "Female")
+        {
+            ui->radioButtonFemale->setChecked(true);
+        }
+    });
+    connect(ui->buttonResetPhoto, &QPushButton::clicked, this, [=]()
+    {
+        photoViewer->setCurrentPhoto(current.getPhoto());
+    });
+}
+const PersonInfo &InfoEditor::retrieve() const { return current; }

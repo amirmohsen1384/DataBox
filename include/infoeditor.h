@@ -6,25 +6,16 @@ namespace Ui { class InfoEditor; }
 class InfoEditor : public QDialog
 {
     Q_OBJECT
-    PersonInfo defaultInfo, currentInfo;
+    PersonInfo current;
     Ui::InfoEditor *ui{};
     class PhotoViewer *photoViewer{};
     Q_DISABLE_COPY_MOVE(InfoEditor)
 private:
+    void enableResetFeature();
     void initializeInformation(const PersonInfo &infoItem);
     void setupUi();
 protected:
     void accept() override;
-private slots:
-    void on_buttonBrowsePC_clicked();
-    void on_buttonResetFirstName_clicked();
-    void on_buttonResetLastName_clicked();
-    void on_buttonResetFatherName_clicked();
-    void on_buttonResetBirthday_clicked();
-    void on_buttonResetNationality_clicked();
-    void on_buttonResetBornProvince_clicked();
-    void on_buttonResetGender_clicked();
-    void on_buttonResetPhoto_clicked();
 public:
     explicit InfoEditor(QWidget *parent = nullptr);
     InfoEditor(const PersonInfo &information, QWidget *parent = nullptr);
