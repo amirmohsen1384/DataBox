@@ -1,8 +1,8 @@
-#include <QFileDialog>
+#include "include/photoviewer.h"
 #include "include/infoeditor.h"
 #include "include/messages.h"
 #include "ui_infoeditor.h"
-#include "include/photoviewer.h"
+#include <QFileDialog>
 
 void InfoEditor::setupUi()
 {
@@ -45,20 +45,22 @@ void InfoEditor::initializeInformation(const PersonInfo &info)
     ENTER_TEXTUAL_PROPERTY(FatherName)
     ENTER_TEXTUAL_PROPERTY(Nationality)
     ENTER_TEXTUAL_PROPERTY(BornProvince)
+
     if(info.getGender() == PersonInfo::GenderContainer::Male)
     {
-        ui->radioButtonMale->setEnabled(true);
+        ui->radioButtonMale->setChecked(true);
+        ui->radioButtonFemale->setChecked(false);
     }
     else
     {
-        ui->radioButtonFemale->setEnabled(true);
+        ui->radioButtonFemale->setChecked(true);
+        ui->radioButtonMale->setChecked(false);
     }
     ui->containerBirthday->setDate(info.getBirthday());
     photoViewer->setCurrentPhoto(info.getPhoto());
 
 #undef ENTER_TEXTUAL_PROPERTY
 }
-
 void InfoEditor::accept()
 { 
     {
@@ -82,14 +84,10 @@ void InfoEditor::accept()
     APPLY_TEXTUAL_PROPERTY(FatherName)
     APPLY_TEXTUAL_PROPERTY(BornProvince)
     APPLY_TEXTUAL_PROPERTY(Nationality)
-    if(ui->radioButtonMale->isEnabled())
-    {
+    if(ui->radioButtonMale->isChecked())
         current.setGender(PersonInfo::GenderContainer::Male);
-    }
     else
-    {
         current.setGender(PersonInfo::GenderContainer::Female);
-    }
 
 #undef APPLY_TEXTUAL_PROPERTY
 
@@ -134,11 +132,13 @@ void InfoEditor::enableResetFeature()
     {
         if(current.getGender() == PersonInfo::GenderContainer::Male)
         {
-            ui->radioButtonMale->setEnabled(true);
+            ui->radioButtonMale->setChecked(true);
+            ui->radioButtonFemale->setChecked(false);
         }
         else
         {
             ui->radioButtonFemale->setEnabled(true);
+            ui->radioButtonMale->setChecked(false);
         }
     });
     connect(ui->buttonResetPhoto, &QPushButton::clicked, this, [=]()

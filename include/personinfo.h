@@ -17,7 +17,6 @@ private:
     QString nationality;
     QString bornProvince;
     QPixmap photo;
-    QDateTime creation = QDateTime::currentDateTime();
     QDateTime lastModification = QDateTime::currentDateTime();
 private:
     void updateLastModification();
@@ -30,7 +29,6 @@ public:
     const QString& getNationality() const;
     const QString& getBornProvince() const;
     const QPixmap& getPhoto() const;
-    const QDateTime& getCreation() const;
     const QDateTime& getLastModification() const;
 public slots:
     void setFirstName(const QString &value);
@@ -43,7 +41,7 @@ public slots:
     void setPhoto(const QPixmap &value);
 public:
     explicit PersonInfo(QObject *parent = nullptr);
-    explicit PersonInfo(const PersonInfo &target, QObject *parent = nullptr);
+    PersonInfo(const PersonInfo &target, QObject *parent = nullptr);
     PersonInfo& operator=(const PersonInfo &dataItem);
     friend QDataStream& operator<<(QDataStream &stream, const PersonInfo &target);
     friend QDataStream& operator>>(QDataStream &stream, PersonInfo &target);

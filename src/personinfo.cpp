@@ -23,7 +23,6 @@ const QString& PersonInfo::getNationality() const { return nationality; }
 const QDate& PersonInfo::getBirthday() const { return birthday; }
 const QString& PersonInfo::getBornProvince() const { return bornProvince; }
 const QPixmap& PersonInfo::getPhoto() const { return photo; }
-const QDateTime &PersonInfo::getCreation() const { return creation; }
 const QDateTime &PersonInfo::getLastModification() const { return lastModification; }
 
 void PersonInfo::setFirstName(const QString &value)

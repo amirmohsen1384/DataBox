@@ -19,7 +19,7 @@ private:
     void setupUi();
 public:
     explicit InfoViewer(QWidget *parent = nullptr);
-    explicit InfoViewer(const PersonInfo &information, QWidget *parent = nullptr);
+    InfoViewer(const PersonInfo &information, QWidget *parent = nullptr);
     ~InfoViewer();
 public slots:
     void setFirstName(const QString &value);
@@ -30,7 +30,6 @@ public slots:
     void setGender(const PersonInfo::GenderContainer &value);
     void setNationality(const QString &value);
     void setPhoto(const QPixmap &value);
-    void setCreation(const QDateTime &value);
     void setLastModification(const QDateTime &value);
 };
 
