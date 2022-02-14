@@ -1,6 +1,5 @@
 #include <QSaveFile>
 #include <QFileDialog>
-#include <QListWidgetItem>
 #include "include/exceptions.h"
 namespace Dialog
 {
@@ -41,54 +40,4 @@ namespace MagicNumber
         else if(readNumber != magicNumber)
             throw UnsupportedFormatException();
     }
-}
-void saveDataToFile(const QString &fileName, const QList<QListWidgetItem*> &target)
-{
-    QSaveFile file(fileName);
-    if(!file.open(QIODevice::WriteOnly))
-        throw OpenFailedException();
-
-    QDataStream stream(&file);
-
-    MagicNumber::write(stream);
-    if((stream << static_cast<quint64>(target.size())).status() != QDataStream::Ok)
-        throw WriteFailedException();
-
-    QListIterator<QListWidgetItem*> iterator(target);
-    while(iterator.hasNext())
-    {
-        if((stream << *iterator.next()).status() != QDataStream::Ok)
-            throw WriteFailedException();
-    }
-    file.commit();
-}
-void loadDataFromFile(const QString &fileName, QList<QListWidgetItem*> &target)
-{
-    QFile file(fileName);
-    if(!file.open(QIODevice::ReadOnly))
-        throw OpenFailedException();
-
-    QDataStream stream(&file);
-
-    MagicNumber::read(stream);
-
-    quint64 size{};
-    if((stream >> static_cast<quint64&>(size)).status() != QDataStream::Ok)
-        throw CorruptFileException();
-
-    target.clear();
-    target.reserve(size);
-
-    QListWidgetItem *item{};
-    for(quint64 i = 0; i < size; ++i)
-    {
-        item = new QListWidgetItem;
-
-        if((stream >> *item).status() != QDataStream::Ok)
-            throw CorruptFileException();
-
-        target.append(item);
-    }
-
-    file.close();
 }
