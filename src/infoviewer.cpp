@@ -1,7 +1,6 @@
 #include "include/infoviewer.h"
-#include "ui_infoviewer.h"
 #include "include/photoviewer.h"
-#include "include/personinfo.h"
+#include "ui_infoviewer.h"
 
 void InfoViewer::displayInfo(const PersonInfo &information)
 {
@@ -80,9 +79,21 @@ void InfoViewer::setBornProvince(const QString &value)
 {
     ui->labelBornProvince->setText(value);
 }
-void InfoViewer::setGender(const QString &value)
+void InfoViewer::setGender(const PersonInfo::GenderContainer &value)
 {
-    ui->labelGender->setText(value);
+    switch(value)
+    {
+    case PersonInfo::GenderContainer::Male:
+    {
+        ui->labelGender->setText("Male");
+        break;
+    }
+    case PersonInfo::GenderContainer::Female:
+    {
+        ui->labelGender->setText("Female");
+        break;
+    }
+    }
 }
 void InfoViewer::setNationality(const QString &value)
 {

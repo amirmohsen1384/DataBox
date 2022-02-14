@@ -6,11 +6,13 @@
 class PersonInfo : public QObject
 {
     Q_OBJECT
+public:
+    enum class GenderContainer {Male = 0x00, Female = 0x02};
 private:
     QString firstName;
     QString lastName;
     QString fatherName;
-    QString gender = "Male";
+    GenderContainer gender = GenderContainer::Male;
     QDate birthday = QDate::currentDate();
     QString nationality;
     QString bornProvince;
@@ -23,7 +25,7 @@ public:
     const QString& getFirstName() const;
     const QString& getLastName() const;
     const QString& getFatherName() const;
-    const QString& getGender() const;
+    const PersonInfo::GenderContainer &getGender() const;
     const QDate& getBirthday() const;
     const QString& getNationality() const;
     const QString& getBornProvince() const;
@@ -34,7 +36,7 @@ public slots:
     void setFirstName(const QString &value);
     void setLastName(const QString &value);
     void setFatherName(const QString &value);
-    void setGender(const QString &value);
+    void setGender(const PersonInfo::GenderContainer &value);
     void setBirthday(const QDate &value);
     void setBornProvince(const QString &value);
     void setNationality(const QString &value);
@@ -52,7 +54,7 @@ signals:
     void firstNameChanged(const QString &value);
     void lastNameChanged(const QString &value);
     void fatherNameChanged(const QString &value);
-    void genderChanged(const QString &value);
+    void genderChanged(const PersonInfo::GenderContainer &value);
     void birthdayChanged(const QDate &value);
     void bornProvinceChanged(const QString &value);
     void nationalityChanged(const QString &value);

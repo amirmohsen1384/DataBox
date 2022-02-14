@@ -2,10 +2,10 @@
 #define INFOVIEWER_H
 
 #include <QDialog>
+#include "personinfo.h"
 
 namespace Ui { class InfoViewer; }
 class PhotoViewer;
-class PersonInfo;
 
 class InfoViewer : public QDialog
 {
@@ -27,7 +27,7 @@ public slots:
     void setFatherName(const QString &value);
     void setBirthday(const QDate &value);
     void setBornProvince(const QString &value);
-    void setGender(const QString &value);
+    void setGender(const PersonInfo::GenderContainer &value);
     void setNationality(const QString &value);
     void setPhoto(const QPixmap &value);
     void setCreation(const QDateTime &value);

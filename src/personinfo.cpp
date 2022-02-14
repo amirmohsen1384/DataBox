@@ -18,7 +18,7 @@ void PersonInfo::updateLastModification()
 const QString& PersonInfo::getFirstName() const { return firstName; }
 const QString&  PersonInfo::getLastName() const { return lastName; }
 const QString& PersonInfo::getFatherName() const { return fatherName; }
-const QString& PersonInfo::getGender() const { return gender; }
+const PersonInfo::GenderContainer& PersonInfo::getGender() const { return gender; }
 const QString& PersonInfo::getNationality() const { return nationality; }
 const QDate& PersonInfo::getBirthday() const { return birthday; }
 const QString& PersonInfo::getBornProvince() const { return bornProvince; }
@@ -41,7 +41,7 @@ void PersonInfo::setFatherName(const QString &value)
     fatherName = value;;
     emit fatherNameChanged(fatherName);
 }
-void PersonInfo::setGender(const QString &value)
+void PersonInfo::setGender(const PersonInfo::GenderContainer &value)
 {
     gender = value;
     emit genderChanged(gender);
@@ -97,13 +97,13 @@ void PersonInfo::connectToUpdateLastModification()
 }
 QDataStream& operator<<(QDataStream &stream, const PersonInfo &target)
 {
-    stream << target.firstName << target.lastName << target.fatherName << target.gender;
+    stream << target.firstName << target.lastName << target.fatherName << static_cast<quint16>(target.gender);
     stream << target.birthday << target.nationality << target.bornProvince << target.photo;
     return stream;
 }
 QDataStream& operator>>(QDataStream &stream, PersonInfo &target)
 {
-    stream >> target.firstName >> target.lastName >> target.fatherName >> target.gender;
+    stream >> target.firstName >> target.lastName >> target.fatherName >> reinterpret_cast<quint16&>(target.gender);
     stream >> target.birthday >> target.nationality >> target.bornProvince >> target.photo;
     return stream;
 }

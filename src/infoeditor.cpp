@@ -45,13 +45,14 @@ void InfoEditor::initializeInformation(const PersonInfo &info)
     ENTER_TEXTUAL_PROPERTY(FatherName)
     ENTER_TEXTUAL_PROPERTY(Nationality)
     ENTER_TEXTUAL_PROPERTY(BornProvince)
-
-    QString gender = info.getGender();
-    if(gender == "Male")
-        ui->radioButtonMale->setChecked(true);
-    else if(gender == "Female")
-        ui->radioButtonFemale->setChecked(true);
-
+    if(info.getGender() == PersonInfo::GenderContainer::Male)
+    {
+        ui->radioButtonMale->setEnabled(true);
+    }
+    else
+    {
+        ui->radioButtonFemale->setEnabled(true);
+    }
     ui->containerBirthday->setDate(info.getBirthday());
     photoViewer->setCurrentPhoto(info.getPhoto());
 
@@ -81,14 +82,16 @@ void InfoEditor::accept()
     APPLY_TEXTUAL_PROPERTY(FatherName)
     APPLY_TEXTUAL_PROPERTY(BornProvince)
     APPLY_TEXTUAL_PROPERTY(Nationality)
+    if(ui->radioButtonMale->isEnabled())
+    {
+        current.setGender(PersonInfo::GenderContainer::Male);
+    }
+    else
+    {
+        current.setGender(PersonInfo::GenderContainer::Female);
+    }
 
 #undef APPLY_TEXTUAL_PROPERTY
-
-    if(ui->radioButtonMale->isChecked())
-        current.setGender("Male");
-
-    else if(ui->radioButtonFemale->isChecked())
-        current.setGender("Female");
 
     current.setBirthday(ui->containerBirthday->date());
     current.setPhoto(photoViewer->getCurrentPhoto());
@@ -129,14 +132,13 @@ void InfoEditor::enableResetFeature()
     });
     connect(ui->buttonResetGender, &QPushButton::clicked, this, [=]()
     {
-        QString gender = current.getGender();
-        if(gender == "Male")
+        if(current.getGender() == PersonInfo::GenderContainer::Male)
         {
-            ui->radioButtonMale->setChecked(true);
+            ui->radioButtonMale->setEnabled(true);
         }
-        else if(gender == "Female")
+        else
         {
-            ui->radioButtonFemale->setChecked(true);
+            ui->radioButtonFemale->setEnabled(true);
         }
     });
     connect(ui->buttonResetPhoto, &QPushButton::clicked, this, [=]()
