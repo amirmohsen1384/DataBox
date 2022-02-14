@@ -22,8 +22,8 @@ HEADERS += \
     include/personinfo.h \
     include/infoviewer.h
 FORMS += \
-    gui/infoeditor.ui \
-    gui/infoviewer.ui
+    ui/infoeditor.ui \
+    ui/infoviewer.ui
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
