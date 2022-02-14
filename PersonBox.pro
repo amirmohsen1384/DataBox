@@ -11,7 +11,6 @@ SOURCES += \
     src/infoeditor.cpp \
     src/messages.cpp \
     src/photoviewer.cpp \
-    src/main.cpp \
     src/personinfo.cpp \
     src/streamhandler.cpp
 HEADERS += \
@@ -27,4 +26,4 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-RESOURCES += resources.qrc
+RESOURCES +=
