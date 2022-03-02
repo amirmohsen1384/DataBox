@@ -1,6 +1,5 @@
 #include "include/photoviewer.h"
 #include "include/infoeditor.h"
-#include "include/messages.h"
 #include "ui_infoeditor.h"
 #include <QFileDialog>
 

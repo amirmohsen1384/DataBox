@@ -1,20 +1,7 @@
 #include "include/personinfo.h"
-#include <QDebug>
 
-PersonInfo::PersonInfo(QObject *parent) : QObject(parent)
-{
-    connectToUpdateLastModification();
-}
-PersonInfo::PersonInfo(const PersonInfo &target, QObject *parent) : QObject(parent)
-{
-    *this = target;
-    connectToUpdateLastModification();
-}
-void PersonInfo::updateLastModification()
-{
-    lastModification = QDateTime::currentDateTime();
-    emit lastModificationChanged(lastModification);
-}
+PersonInfo::PersonInfo(QObject *parent) : QObject(parent) {}
+PersonInfo::PersonInfo(const PersonInfo &target, QObject *parent) : QObject(parent) { *this = target; }
 const QString& PersonInfo::getFirstName() const { return firstName; }
 const QString&  PersonInfo::getLastName() const { return lastName; }
 const QString& PersonInfo::getFatherName() const { return fatherName; }
@@ -23,87 +10,73 @@ const QString& PersonInfo::getNationality() const { return nationality; }
 const QDate& PersonInfo::getBirthday() const { return birthday; }
 const QString& PersonInfo::getBornProvince() const { return bornProvince; }
 const QPixmap& PersonInfo::getPhoto() const { return photo; }
+const QDateTime &PersonInfo::getCreation() const { return creation; }
 const QDateTime &PersonInfo::getLastModification() const { return lastModification; }
-
 void PersonInfo::setFirstName(const QString &value)
 {
     firstName = value;
-    emit firstNameChanged(firstName);
+    lastModification = QDateTime::currentDateTime();
 }
 void PersonInfo::setLastName(const QString &value)
 {
     lastName = value;
-    emit lastNameChanged(lastName);
+    lastModification = QDateTime::currentDateTime();
 }
 void PersonInfo::setFatherName(const QString &value)
 {
-    fatherName = value;;
-    emit fatherNameChanged(fatherName);
+    fatherName = value;
+    lastModification = QDateTime::currentDateTime();
 }
 void PersonInfo::setGender(const PersonInfo::GenderContainer &value)
 {
     gender = value;
-    emit genderChanged(gender);
+    lastModification = QDateTime::currentDateTime();
 }
 void PersonInfo::setBirthday(const QDate &value)
 {
-    birthday = value;;
-    emit birthdayChanged(birthday);
+    birthday = value;
+    lastModification = QDateTime::currentDateTime();
 }
 void PersonInfo::setNationality(const QString &value)
 {
     nationality = value;
-    emit nationalityChanged(nationality);
+    lastModification = QDateTime::currentDateTime();
 }
 void PersonInfo::setBornProvince(const QString &value)
 {
     bornProvince = value;
-    emit bornProvinceChanged(bornProvince);
+    lastModification = QDateTime::currentDateTime();
 }
 void PersonInfo::setPhoto(const QPixmap &value)
 {
     photo = value;
-    emit photoChanged(photo);
+    lastModification = QDateTime::currentDateTime();
 }
-
 PersonInfo& PersonInfo::operator=(const PersonInfo &value)
 {
-    setFirstName(value.firstName);
-    setLastName(value.lastName);
-    setFatherName(value.fatherName);
-    setGender(value.gender);
-    setBirthday(value.birthday);
-    setBornProvince(value.bornProvince);
-    setNationality(value.nationality);
-    setPhoto(value.photo);
+    firstName = value.firstName;
+    lastName = value.lastName;
+    fatherName = value.fatherName;
+    gender = value.gender;
+    birthday = value.birthday;
+    nationality = value.nationality;
+    bornProvince = value.bornProvince;
+    photo = value.photo;
+    lastModification = QDateTime::currentDateTime();
     return *this;
-}
-void PersonInfo::connectToUpdateLastModification()
-{
-#define UPDATE_LAST_MODIFICATION_WHEN(SIGNAL) \
-    connect(this, &PersonInfo::SIGNAL, this, &PersonInfo::updateLastModification);
-
-    UPDATE_LAST_MODIFICATION_WHEN(firstNameChanged)
-    UPDATE_LAST_MODIFICATION_WHEN(lastNameChanged)
-    UPDATE_LAST_MODIFICATION_WHEN(fatherNameChanged)
-    UPDATE_LAST_MODIFICATION_WHEN(birthdayChanged)
-    UPDATE_LAST_MODIFICATION_WHEN(bornProvinceChanged)
-    UPDATE_LAST_MODIFICATION_WHEN(genderChanged)
-    UPDATE_LAST_MODIFICATION_WHEN(nationalityChanged)
-    UPDATE_LAST_MODIFICATION_WHEN(photoChanged)
-
-#undef UPDATE_LAST_MODIFICATION_WHEN
 }
 QDataStream& operator<<(QDataStream &stream, const PersonInfo &target)
 {
     stream << target.firstName << target.lastName << target.fatherName << static_cast<quint16>(target.gender);
     stream << target.birthday << target.nationality << target.bornProvince << target.photo;
+    stream << target.creation << target.lastModification;
     return stream;
 }
 QDataStream& operator>>(QDataStream &stream, PersonInfo &target)
 {
     stream >> target.firstName >> target.lastName >> target.fatherName >> reinterpret_cast<quint16&>(target.gender);
     stream >> target.birthday >> target.nationality >> target.bornProvince >> target.photo;
+    stream >> target.creation >> target.lastModification;
     return stream;
 }
 bool operator==(const PersonInfo &one, const PersonInfo &two)

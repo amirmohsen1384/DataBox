@@ -19,23 +19,7 @@ void InfoViewer::displayInfo(const PersonInfo &information)
 
 #undef DISPLAY_PROPERTY
 }
-void InfoViewer::connectPropertiesToView(const PersonInfo *information)
-{
-#define CONNECT_PROPERTY_TO_VIEW(SIGNAL, SETTER) \
-    connect(information, &PersonInfo::SIGNAL, this, &InfoViewer::SETTER);
 
-    CONNECT_PROPERTY_TO_VIEW(firstNameChanged, setFirstName)
-    CONNECT_PROPERTY_TO_VIEW(lastNameChanged, setLastName)
-    CONNECT_PROPERTY_TO_VIEW(fatherNameChanged, setFatherName)
-    CONNECT_PROPERTY_TO_VIEW(birthdayChanged, setBirthday)
-    CONNECT_PROPERTY_TO_VIEW(bornProvinceChanged, setBornProvince)
-    CONNECT_PROPERTY_TO_VIEW(genderChanged, setGender)
-    CONNECT_PROPERTY_TO_VIEW(nationalityChanged, setNationality)
-    CONNECT_PROPERTY_TO_VIEW(photoChanged, setPhoto)
-    CONNECT_PROPERTY_TO_VIEW(lastModificationChanged, setLastModification)
-
-#undef CONNECT_PROPERTY_TO_VIEW
-}
 InfoViewer::InfoViewer(QWidget *parent) : QDialog(parent)
 {
     setupUi();
@@ -44,7 +28,6 @@ InfoViewer::InfoViewer(const PersonInfo &information, QWidget *parent) : QDialog
 {
     setupUi();
     displayInfo(information);
-    connectPropertiesToView(&information);
 }
 InfoViewer::~InfoViewer()
 {
