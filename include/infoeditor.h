@@ -11,14 +11,13 @@ class InfoEditor : public QDialog
     class PhotoViewer *photoViewer{};
     Q_DISABLE_COPY_MOVE(InfoEditor)
 private:
-    void enableResetFeature();
-    void initializeInformation(const PersonInfo &infoItem);
     void setupUi();
+    void initEditor(const PersonInfo &infoItem);
 protected:
     void accept() override;
 public:
     explicit InfoEditor(QWidget *parent = nullptr);
-    InfoEditor(const PersonInfo &information, QWidget *parent = nullptr);
+    explicit InfoEditor(const PersonInfo &information, QWidget *parent = nullptr);
     const PersonInfo &retrieve() const;
     ~InfoEditor();
 };
