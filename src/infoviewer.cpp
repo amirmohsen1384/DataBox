@@ -30,6 +30,7 @@ InfoViewer::InfoViewer(const PersonInfo &information, QWidget *parent) : QDialog
 }
 InfoViewer::~InfoViewer()
 {
+    delete photoViewer;
     delete ui;
 }
 void InfoViewer::setupUi()
