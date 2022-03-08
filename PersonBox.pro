@@ -1,8 +1,4 @@
-QT += core
-QT += gui
-QT += multimedia
-QT += multimediawidgets
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += core gui widgets
 CONFIG += c++17
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 SOURCES += \
