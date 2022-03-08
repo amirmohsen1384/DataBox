@@ -1,9 +1,7 @@
 # PersonBox
-**PersonBox** is a project developed by Qt, and its goal is to store your favorite persons' information and work with them more conveniently.
-Actually, this program tries to mimic a real database which can add, edit, remove or show information.
+**PersonBox** is a project powered by Qt, and stores persons' information and works with them more conveniently.
 
-# Information used in this program
-This is a list of information used by the program:
+# Information handled in the program:
 1. **First name**
 2. **Last name**
 3. **Father's name**
@@ -12,7 +10,7 @@ This is a list of information used by the program:
 6. **Nationality**
 7. **Born province**
 
-It's important to enter at least **First name** and **Last name**. In addition, a text titled as **Info text** will be gotten to show the item with this text in the list.
+It's important to enter both **First name** and **Last name**.
 
 # Compile the project
 You need to use Qt 5.12 or later, to compile this project. It can be compiled and used on Windows, Linux or Mac. Therefore, the following steps can be followed on all of these operating systems.
@@ -33,3 +31,5 @@ You need to use Qt 5.12 or later, to compile this project. It can be compiled an
 ## To report a bug
 1. Try the lastest version of the program to make sure the bug is still present.
 2. Make sure another person has not already opened the issue.
+
+Last modification: 9:30 PM March 8 2022
