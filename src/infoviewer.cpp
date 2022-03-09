@@ -15,6 +15,7 @@ void InfoViewer::initViewer(const PersonInfo &information)
     DISPLAY_PROPERTY(Gender)
     DISPLAY_PROPERTY(Nationality)
     DISPLAY_PROPERTY(Photo)
+    DISPLAY_PROPERTY(Creation)
     DISPLAY_PROPERTY(LastModification)
 
 #undef DISPLAY_PROPERTY
@@ -82,6 +83,10 @@ void InfoViewer::setNationality(const QString &value)
 void InfoViewer::setPhoto(const QPixmap &value)
 {
     photoViewer->setCurrentPhoto(value);
+}
+void InfoViewer::setCreation(const QDateTime &value)
+{
+    ui->labelCreation->setText(value.toString());
 }
 void InfoViewer::setLastModification(const QDateTime &value)
 {
