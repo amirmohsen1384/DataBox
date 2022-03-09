@@ -9,6 +9,8 @@ class PersonInfo : public QObject
 {
     Q_OBJECT
 public:
+    typedef QList<PersonInfo> List;
+    typedef QListIterator<PersonInfo> ListIterator;
     enum class GenderContainer {Male = 0x00, Female = 0x01}; Q_ENUM(GenderContainer)
 private:
     QString firstName;
@@ -22,6 +24,13 @@ private:
     QDateTime creation = QDateTime::currentDateTime();
     QDateTime lastModification = QDateTime::currentDateTime();
 public:
+    explicit PersonInfo(QObject *parent = nullptr);
+    PersonInfo(const PersonInfo &target, QObject *parent = nullptr);
+    PersonInfo& operator=(const PersonInfo &dataItem);
+    friend QDataStream& operator<<(QDataStream &stream, const PersonInfo &target);
+    friend QDataStream& operator>>(QDataStream &stream, PersonInfo &target);
+    friend bool operator==(const PersonInfo &one, const PersonInfo &two);
+    friend bool operator!=(const PersonInfo &one, const PersonInfo &two);
     const QString& getFirstName() const;
     const QString& getLastName() const;
     const QString& getFatherName() const;
@@ -41,17 +50,7 @@ public slots:
     void setBornProvince(const QString &value);
     void setNationality(const QString &value);
     void setPhoto(const QPixmap &value);
-public:
-    explicit PersonInfo(QObject *parent = nullptr);
-    PersonInfo(const PersonInfo &target, QObject *parent = nullptr);
-    PersonInfo& operator=(const PersonInfo &dataItem);
-    friend QDataStream& operator<<(QDataStream &stream, const PersonInfo &target);
-    friend QDataStream& operator>>(QDataStream &stream, PersonInfo &target);
-    friend bool operator==(const PersonInfo &one, const PersonInfo &two);
-    friend bool operator!=(const PersonInfo &one, const PersonInfo &two);
 };
-
-typedef QList<PersonInfo> PersonInfoList;
 
 QDataStream& operator<<(QDataStream &stream, const PersonInfo &target);
 QDataStream& operator>>(QDataStream &stream, PersonInfo &target);
