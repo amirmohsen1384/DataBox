@@ -32,4 +32,6 @@ You need to use Qt 5.12 or later, to compile this project. It can be compiled an
 1. Try the lastest version of the program to make sure the bug is still present.
 2. Make sure another person has not already opened the issue.
 
-Last modification: 9:30 PM March 8 2022
+icons are powered by [icons8](https://icons8.com)
+
+Last modification: 2:22 PM March 9 2022
