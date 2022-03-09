@@ -59,7 +59,7 @@ void InfoEditor::setupUi()
     {
         photoViewer->setCurrentPhoto(container.getPhoto());
     });
-    connect(ui->buttonBrowsePC, &QPushButton::clicked, this, [=]()
+    connect(ui->buttonLocalBrowser, &QPushButton::clicked, this, [=]()
     {
         QFileDialog dialog;
         dialog.setAcceptMode(QFileDialog::AcceptOpen);

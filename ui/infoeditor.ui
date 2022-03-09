@@ -56,6 +56,9 @@
       </item>
       <item row="1" column="2">
        <widget class="QToolButton" name="buttonResetLastName">
+        <property name="toolTip">
+         <string>Reset the last name to its inital value</string>
+        </property>
         <property name="text">
          <string>...</string>
         </property>
@@ -105,6 +108,9 @@
       </item>
       <item row="4" column="2">
        <widget class="QToolButton" name="buttonResetNationality">
+        <property name="toolTip">
+         <string>Reset the nationality to its inital value</string>
+        </property>
         <property name="text">
          <string>...</string>
         </property>
@@ -122,6 +128,9 @@
       </item>
       <item row="2" column="2">
        <widget class="QToolButton" name="buttonResetFatherName">
+        <property name="toolTip">
+         <string>Reset the father's name to its inital value</string>
+        </property>
         <property name="text">
          <string>...</string>
         </property>
@@ -207,6 +216,9 @@
       </item>
       <item row="7" column="2" colspan="2">
        <widget class="QToolButton" name="buttonResetGender">
+        <property name="toolTip">
+         <string>Reset the gender to its inital value</string>
+        </property>
         <property name="text">
          <string>...</string>
         </property>
@@ -274,6 +286,9 @@
       </item>
       <item row="0" column="2">
        <widget class="QToolButton" name="buttonResetFirstName">
+        <property name="toolTip">
+         <string>Reset the first name to its inital value</string>
+        </property>
         <property name="text">
          <string>...</string>
         </property>
@@ -323,6 +338,9 @@
       </item>
       <item row="3" column="2">
        <widget class="QToolButton" name="buttonResetBirthday">
+        <property name="toolTip">
+         <string>Reset the birthday to its inital value</string>
+        </property>
         <property name="text">
          <string>...</string>
         </property>
@@ -340,6 +358,9 @@
       </item>
       <item row="5" column="2">
        <widget class="QToolButton" name="buttonResetBornProvince">
+        <property name="toolTip">
+         <string>Reset the born province to its inital value</string>
+        </property>
         <property name="text">
          <string>...</string>
         </property>
@@ -394,6 +415,9 @@
      </property>
      <item>
       <widget class="QPushButton" name="buttonResetAll">
+       <property name="toolTip">
+        <string>Reset all values to their inital value</string>
+       </property>
        <property name="text">
         <string>&amp;Reset to default</string>
        </property>
@@ -437,15 +461,35 @@
       <item>
        <layout class="QHBoxLayout" name="layoutPhotoController">
         <item>
-         <widget class="QPushButton" name="buttonBrowsePC">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QToolButton" name="buttonLocalBrowser">
+          <property name="toolTip">
+           <string>Browse a photo in the local storage</string>
           </property>
           <property name="text">
-           <string>Browse PC</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset resource="icons/resource.qrc">
+            <normaloff>:/icons/open file.png</normaloff>:/icons/open file.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -456,6 +500,9 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Reset the photo to its inital value</string>
           </property>
           <property name="text">
            <string>...</string>
@@ -471,6 +518,19 @@
            </size>
           </property>
          </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </item>
@@ -488,7 +548,6 @@
   <tabstop>containerBornProvince</tabstop>
   <tabstop>radioButtonMale</tabstop>
   <tabstop>radioButtonFemale</tabstop>
-  <tabstop>buttonBrowsePC</tabstop>
   <tabstop>buttonOk</tabstop>
   <tabstop>buttonCancel</tabstop>
   <tabstop>buttonResetAll</tabstop>
