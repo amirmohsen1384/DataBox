@@ -10,11 +10,11 @@ void InfoEditor::initGenderFromContainer()
     switch(container.getGender())
     {
     case PersonInfo::GenderContainer::Male: {
-       ui->radioButtonMale->setEnabled(true);
+       ui->radioButtonMale->setChecked(true);
        break;
     }
     case PersonInfo::GenderContainer::Female: {
-        ui->radioButtonFemale->setEnabled(true);
+        ui->radioButtonFemale->setChecked(true);
         break;
     }
     }
