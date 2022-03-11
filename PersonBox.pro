@@ -3,6 +3,7 @@ CONFIG += c++17
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 SOURCES += \
     src/infoviewer.cpp \
+    src/infomodel.cpp \
     src/exceptions.cpp \
     src/infoeditor.cpp \
     src/photoviewer.cpp \
@@ -10,6 +11,7 @@ SOURCES += \
     src/streamhandler.cpp
 HEADERS += \
     include/exceptions.h \
+    include/infomodel.h \
     include/infoeditor.h \
     include/photoviewer.h \
     include/personinfo.h \

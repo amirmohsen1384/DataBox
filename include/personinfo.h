@@ -23,6 +23,7 @@ private:
     QPixmap photo;
     QDateTime creation = QDateTime::currentDateTime();
     QDateTime lastModification = QDateTime::currentDateTime();
+    friend class InfoModel;
 public:
     explicit PersonInfo(QObject *parent = nullptr);
     PersonInfo(const PersonInfo &target, QObject *parent = nullptr);
