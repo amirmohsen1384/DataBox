@@ -2,14 +2,14 @@
 #define INFOEDITOR_H
 
 #include <QDialog>
-#include "personinfo.h"
+#include "infocontainer.h"
 
 namespace Ui { class InfoEditor; }
 
 class InfoEditor : public QDialog
 {
     Q_OBJECT
-    PersonInfo &container;
+    InfoContainer &container;
     Ui::InfoEditor *ui{};
     class PhotoViewer *photoViewer{};
 private:
@@ -20,7 +20,7 @@ private:
 protected:
     void accept() override;
 public:
-    explicit InfoEditor(PersonInfo &information, QWidget *parent = nullptr);
+    explicit InfoEditor(InfoContainer &information, QWidget *parent = nullptr);
     ~InfoEditor();
 };
 

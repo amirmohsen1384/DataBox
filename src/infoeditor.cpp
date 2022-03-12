@@ -9,11 +9,11 @@ void InfoEditor::initGenderFromContainer()
 {
     switch(container.getGender())
     {
-    case PersonInfo::GenderContainer::Male: {
+    case InfoContainer::GenderContainer::Male: {
        ui->radioButtonMale->setChecked(true);
        break;
     }
-    case PersonInfo::GenderContainer::Female: {
+    case InfoContainer::GenderContainer::Female: {
         ui->radioButtonFemale->setChecked(true);
         break;
     }
@@ -83,7 +83,7 @@ void InfoEditor::setupUi()
 
 #undef DEFINE_RESET_ALL_CONNECTION
 }
-InfoEditor::InfoEditor(PersonInfo &information, QWidget *parent) : QDialog(parent), container(information)
+InfoEditor::InfoEditor(InfoContainer &information, QWidget *parent) : QDialog(parent), container(information)
 {
     setupUi();
     initEditor();
@@ -128,10 +128,10 @@ void InfoEditor::accept()
 
 #undef APPLY_TEXTUAL_PROPERTY
     if(ui->radioButtonMale->isChecked()) {
-        container.setGender(PersonInfo::GenderContainer::Male);
+        container.setGender(InfoContainer::GenderContainer::Male);
     }
     else if(ui->radioButtonFemale->isChecked()) {
-        container.setGender(PersonInfo::GenderContainer::Female);
+        container.setGender(InfoContainer::GenderContainer::Female);
     }
     container.setBirthday(ui->containerBirthday->date());
     container.setPhoto(photoViewer->getCurrentPhoto());

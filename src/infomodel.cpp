@@ -19,7 +19,7 @@ QModelIndex InfoModel::index(int row, const InfoColumn &column) const
 {
     return QStandardItemModel::index(row, static_cast<int>(column));
 }
-void InfoModel::setInformation(int row, const PersonInfo &info)
+void InfoModel::setInformation(int row, const InfoContainer &info)
 {
     typedef QStandardItemModel Base;
     QStandardItem *item{};
@@ -39,10 +39,10 @@ void InfoModel::setInformation(int row, const PersonInfo &info)
         genderBinary.setValue(info.gender);
         switch(info.gender)
         {
-        case PersonInfo::GenderContainer::Male:
+        case InfoContainer::GenderContainer::Male:
             genderText = "Male";
             break;
-        case PersonInfo::GenderContainer::Female:
+        case InfoContainer::GenderContainer::Female:
             genderText = "Female";
             break;
         }
@@ -68,10 +68,10 @@ void InfoModel::setInformation(int row, const PersonInfo &info)
         Base::setItem(row, static_cast<int>(InfoColumn::LastModification), item);
     }
 }
-PersonInfo InfoModel::information(int row) const
+InfoContainer InfoModel::information(int row) const
 {
     typedef QStandardItemModel Base;
-    PersonInfo information;
+    InfoContainer information;
     QStandardItem *item{};
     {
         item = Base::item(row, static_cast<int>(InfoColumn::FirstName));
@@ -85,7 +85,7 @@ PersonInfo InfoModel::information(int row) const
     }
     {
         item = Base::item(row, static_cast<int>(InfoColumn::Gender));
-        information.gender = item->data(static_cast<int>(BackgroundInfoRole::Gender)).value<PersonInfo::GenderContainer>();
+        information.gender = item->data(static_cast<int>(BackgroundInfoRole::Gender)).value<InfoContainer::GenderContainer>();
         information.bornProvince = item->data(static_cast<int>(BackgroundInfoRole::BornProvince)).toString();
     }
     {

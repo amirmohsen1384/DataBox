@@ -2,7 +2,7 @@
 #define INFOMODEL_H
 
 #include <QStandardItemModel>
-#include "include/personinfo.h"
+#include "include/infocontainer.h"
 
 class InfoModel : public QStandardItemModel
 {
@@ -35,8 +35,8 @@ public:
     using QStandardItemModel::index;
     QModelIndex index(int row, const InfoColumn &column) const;
 
-    void setInformation(int row, const PersonInfo &info);
-    PersonInfo information(int row) const;
+    void setInformation(int row, const InfoContainer &info);
+    InfoContainer information(int row) const;
 };
 
 #endif // INFOMODEL_H

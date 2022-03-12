@@ -2,7 +2,7 @@
 #include "include/photoviewer.h"
 #include "ui_infoviewer.h"
 
-void InfoViewer::initViewer(const PersonInfo &information)
+void InfoViewer::initViewer(const InfoContainer &information)
 {
 #define DISPLAY_PROPERTY(PROPERTY) \
     set##PROPERTY(information.get##PROPERTY());
@@ -24,7 +24,7 @@ InfoViewer::InfoViewer(QWidget *parent) : QDialog(parent)
 {
     setupUi();
 }
-InfoViewer::InfoViewer(const PersonInfo &information, QWidget *parent) : QDialog(parent)
+InfoViewer::InfoViewer(const InfoContainer &information, QWidget *parent) : QDialog(parent)
 {
     setupUi();
     initViewer(information);
@@ -62,15 +62,15 @@ void InfoViewer::setBornProvince(const QString &value)
 {
     ui->labelBornProvince->setText(value);
 }
-void InfoViewer::setGender(const PersonInfo::GenderContainer &value)
+void InfoViewer::setGender(const InfoContainer::GenderContainer &value)
 {
     switch(value)
     {
-    case PersonInfo::GenderContainer::Male: {
+    case InfoContainer::GenderContainer::Male: {
         ui->labelGender->setText("Male");
         break;
     }
-    case PersonInfo::GenderContainer::Female: {
+    case InfoContainer::GenderContainer::Female: {
         ui->labelGender->setText("Female");
         break;
     }
