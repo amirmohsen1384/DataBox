@@ -31,6 +31,8 @@ public:
     friend QDataStream& operator>>(QDataStream &stream, InfoContainer &target);
     friend bool operator==(const InfoContainer &one, const InfoContainer &two);
     friend bool operator!=(const InfoContainer &one, const InfoContainer &two);
+    operator QVariant() const;
+
     const QString& getFirstName() const;
     const QString& getLastName() const;
     const QString& getFatherName() const;
