@@ -31,6 +31,7 @@ public:
     friend QDataStream& operator>>(QDataStream &stream, InfoContainer &target);
     friend bool operator==(const InfoContainer &one, const InfoContainer &two);
     friend bool operator!=(const InfoContainer &one, const InfoContainer &two);
+    friend class InfoEditor;
     operator QVariant() const;
 
     const QString& getFirstName() const;
@@ -43,7 +44,7 @@ public:
     const QPixmap& getPhoto() const;
     const QDateTime& getCreation() const;
     const QDateTime& getLastModification() const;
-public slots:
+
     void setFirstName(const QString &value);
     void setLastName(const QString &value);
     void setFatherName(const QString &value);
@@ -52,6 +53,7 @@ public slots:
     void setBornProvince(const QString &value);
     void setNationality(const QString &value);
     void setPhoto(const QPixmap &value);
+    void clear();
 };
 
 QDataStream& operator<<(QDataStream &stream, const InfoContainer &target);

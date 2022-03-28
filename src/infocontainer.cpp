@@ -92,6 +92,18 @@ void InfoContainer::setPhoto(const QPixmap &value)
     photo = value;
     lastModification = QDateTime::currentDateTime();
 }
+void InfoContainer::clear()
+{
+    firstName.clear();
+    lastName.clear();
+    fatherName.clear();
+    gender = GenderContainer::Male;
+    birthday = QDate::currentDate();
+    nationality.clear();
+    bornProvince.clear();
+    photo = QPixmap();
+    lastModification = QDateTime::currentDateTime();
+}
 InfoContainer& InfoContainer::operator=(const InfoContainer &value)
 {
     firstName = value.firstName;
