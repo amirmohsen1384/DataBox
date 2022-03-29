@@ -30,13 +30,14 @@ void InfoEditor::resetBirthday()
 }
 void InfoEditor::resetGender()
 {
+    using enum InfoContainer::GenderContainer;
     switch(resetContainer.gender)
     {
-    case InfoContainer::GenderContainer::Male: {
+    case Male: {
        ui->radioButtonMale->setChecked(true);
        break;
     }
-    case InfoContainer::GenderContainer::Female: {
+    case Female: {
         ui->radioButtonFemale->setChecked(true);
         break;
     }
@@ -125,11 +126,14 @@ void InfoEditor::accept()
     resultContainer.firstName = ui->containerFirstName->text();
     resultContainer.lastName = ui->containerLastName->text();
     resultContainer.fatherName = ui->containerFatherName->text();
-    if(ui->radioButtonMale->isChecked()) {
-        resultContainer.gender = InfoContainer::GenderContainer::Male;
-    }
-    else if(ui->radioButtonFemale->isChecked()) {
-        resultContainer.gender = InfoContainer::GenderContainer::Female;
+    {
+        using enum InfoContainer::GenderContainer;
+        if(ui->radioButtonMale->isChecked()) {
+            resultContainer.gender = Male;
+        }
+        else if(ui->radioButtonFemale->isChecked()) {
+            resultContainer.gender = Female;
+        }
     }
     resultContainer.birthday = ui->containerBirthday->date();
     resultContainer.bornProvince = ui->containerBornProvince->text();
