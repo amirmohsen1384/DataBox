@@ -9,9 +9,7 @@ class InfoContainer : public QObject
 {
     Q_OBJECT
 public:
-    typedef QList<InfoContainer> List;
-    typedef QListIterator<InfoContainer> ListIterator;
-    enum class GenderContainer {Male = 0x00, Female = 0x01}; Q_ENUM(GenderContainer)
+    enum class GenderContainer {Male = 0x01, Female = 0x02}; Q_ENUM(GenderContainer)
 private:
     QString firstName;
     QString lastName;
@@ -25,14 +23,18 @@ private:
     QDateTime lastModification = QDateTime::currentDateTime();
 public:
     explicit InfoContainer(QObject *parent = nullptr);
-    InfoContainer(const InfoContainer &value, QObject *parent = nullptr);
-    InfoContainer& operator=(const InfoContainer &dataItem);
+    explicit InfoContainer(const InfoContainer &value, QObject *parent = nullptr);
+    InfoContainer& operator=(const InfoContainer &value);
+
     friend QDataStream& operator<<(QDataStream &stream, const InfoContainer &target);
     friend QDataStream& operator>>(QDataStream &stream, InfoContainer &target);
+
     friend bool operator==(const InfoContainer &one, const InfoContainer &two);
     friend bool operator!=(const InfoContainer &one, const InfoContainer &two);
-    friend class InfoEditor;
+
     operator QVariant() const;
+
+    friend class InfoEditor;
 
     const QString& getFirstName() const;
     const QString& getLastName() const;
@@ -53,8 +55,10 @@ public:
     void setBornProvince(const QString &value);
     void setNationality(const QString &value);
     void setPhoto(const QPixmap &value);
-    void clear();
 };
+
+typedef QList<InfoContainer> InfoList;
+typedef QListIterator<InfoContainer> InfoListIterator;
 
 QDataStream& operator<<(QDataStream &stream, const InfoContainer &target);
 QDataStream& operator>>(QDataStream &stream, InfoContainer &target);

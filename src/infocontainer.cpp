@@ -10,6 +10,7 @@ InfoContainer::InfoContainer(const InfoContainer &value, QObject *parent) : QObj
     birthday = value.birthday;
     nationality = value.nationality;
     bornProvince = value.bornProvince;
+    lastModification = value.lastModification;
     photo = value.photo;
 }
 const QString& InfoContainer::getFirstName() const
@@ -92,18 +93,6 @@ void InfoContainer::setPhoto(const QPixmap &value)
     photo = value;
     lastModification = QDateTime::currentDateTime();
 }
-void InfoContainer::clear()
-{
-    firstName.clear();
-    lastName.clear();
-    fatherName.clear();
-    gender = GenderContainer::Male;
-    birthday = QDate::currentDate();
-    nationality.clear();
-    bornProvince.clear();
-    photo = QPixmap();
-    lastModification = QDateTime::currentDateTime();
-}
 InfoContainer& InfoContainer::operator=(const InfoContainer &value)
 {
     firstName = value.firstName;
@@ -120,9 +109,9 @@ InfoContainer& InfoContainer::operator=(const InfoContainer &value)
 }
 InfoContainer::operator QVariant() const
 {
-    QVariant variant;
-    variant.setValue(*this);
-    return variant;
+    QVariant data;
+    data.setValue(*this);
+    return data;
 }
 QDataStream& operator<<(QDataStream &stream, const InfoContainer &target)
 {
@@ -140,23 +129,24 @@ QDataStream& operator>>(QDataStream &stream, InfoContainer &target)
 }
 bool operator==(const InfoContainer &one, const InfoContainer &two)
 {
-    if(one.firstName != two.firstName)
+    if(one.firstName != two.firstName) {
         return false;
-    else if(one.lastName != two.lastName)
+    } else if(one.lastName != two.lastName) {
         return false;
-    else if(one.fatherName != two.fatherName)
+    } else if(one.fatherName != two.fatherName) {
         return false;
-    else if(one.birthday != two.birthday)
+    } else if(one.birthday != two.birthday) {
         return false;
-    else if(one.gender != two.gender)
+    } else if(one.gender != two.gender) {
         return false;
-    else if(one.nationality != two.nationality)
+    } else if(one.nationality != two.nationality) {
         return false;
-    else if(one.bornProvince != two.bornProvince)
+    } else if(one.bornProvince != two.bornProvince) {
         return false;
-    else if(one.photo.toImage() != two.photo.toImage())
+    } else if(one.photo.toImage() != two.photo.toImage()) {
         return false;
-
-    return true;
+    } else {
+        return true;
+    }
 }
 bool operator!=(const InfoContainer &one, const InfoContainer &two) { return !(one == two); }
