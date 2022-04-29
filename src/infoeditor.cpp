@@ -54,6 +54,7 @@ void InfoEditor::resetBornProvince()
 void InfoEditor::resetPhoto()
 {
     containerPhoto->setCurrentPhoto(data.photo);
+    resize(sizeHint());
 }
 void InfoEditor::resetEditor()
 {
@@ -88,10 +89,15 @@ void InfoEditor::setupEditor()
     connect(ui->buttonResetAll, &QPushButton::clicked, this, &InfoEditor::resetEditor);
     connect(ui->buttonLocalBrowser, &QPushButton::clicked, this, [this]()
     {
-        QFileDialog fileBrowser(this, "Select a photo to continue", QDir::homePath());
+        QDir homeDir = QDir::homePath();
+        homeDir.cd("Pictures");
+
+        QFileDialog fileBrowser(this, "Select a photo to continue");
+        fileBrowser.setDirectory(homeDir);
         fileBrowser.setAcceptMode(QFileDialog::AcceptOpen);
         fileBrowser.setNameFilters({"JPG files (*.jpg *.jpeg)", "PNG files (*.png)", "BMP files (*.bmp)"});
         fileBrowser.setFileMode(QFileDialog::ExistingFile);
+
         if(fileBrowser.exec()) {
             containerPhoto->setCurrentPhoto(fileBrowser.selectedFiles().constFirst());
         }
