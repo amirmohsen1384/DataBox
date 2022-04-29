@@ -32,6 +32,8 @@ public:
     friend bool operator==(const InfoContainer &one, const InfoContainer &two);
     friend bool operator!=(const InfoContainer &one, const InfoContainer &two);
 
+    friend QDebug operator<<(QDebug dbg, const InfoContainer &target);
+
     operator QVariant() const;
 
     friend class InfoEditor;
@@ -64,6 +66,7 @@ QDataStream& operator<<(QDataStream &stream, const InfoContainer &target);
 QDataStream& operator>>(QDataStream &stream, InfoContainer &target);
 bool operator==(const InfoContainer &one, const InfoContainer &two);
 bool operator!=(const InfoContainer &one, const InfoContainer &two);
+QDebug operator<<(QDebug debugger, const InfoContainer &target);
 
 Q_DECLARE_METATYPE(InfoContainer)
 
