@@ -78,14 +78,20 @@ void InfoEditor::setupEditor()
 
     ui->containerBirthday->setDate(QDate::currentDate());
 
-    connect(ui->buttonResetFirstName, &QPushButton::clicked, this, &InfoEditor::resetFirstName);
-    connect(ui->buttonResetLastName, &QPushButton::clicked, this, &InfoEditor::resetLastName);
-    connect(ui->buttonResetFatherName, &QPushButton::clicked, this, &InfoEditor::resetFatherName);
-    connect(ui->buttonResetGender, &QPushButton::clicked, this, &InfoEditor::resetGender);
-    connect(ui->buttonResetBirthday, &QPushButton::clicked, this, &InfoEditor::resetBirthday);
-    connect(ui->buttonResetNationality, &QPushButton::clicked, this, &InfoEditor::resetNationality);
-    connect(ui->buttonResetBornProvince, &QPushButton::clicked, this, &InfoEditor::resetBornProvince);
-    connect(ui->buttonResetPhoto, &QPushButton::clicked, this, &InfoEditor::resetPhoto);
+#define INIT_RESET_PROPERTY(PROPERTY) \
+    connect(ui->buttonReset##PROPERTY, &QPushButton::clicked, this, &InfoEditor::reset##PROPERTY);
+
+    INIT_RESET_PROPERTY(FirstName)
+    INIT_RESET_PROPERTY(LastName)
+    INIT_RESET_PROPERTY(FatherName)
+    INIT_RESET_PROPERTY(Gender)
+    INIT_RESET_PROPERTY(Birthday)
+    INIT_RESET_PROPERTY(BornProvince)
+    INIT_RESET_PROPERTY(Nationality)
+    INIT_RESET_PROPERTY(Photo)
+
+#undef INIT_RESET_PROPERTY
+
     connect(ui->buttonResetAll, &QPushButton::clicked, this, &InfoEditor::resetEditor);
     connect(ui->buttonLocalBrowser, &QPushButton::clicked, this, [this]()
     {
@@ -119,15 +125,19 @@ void InfoEditor::setData(const InfoContainer &target)
 void InfoEditor::accept()
 { 
     {
-        const QString errorString = "This should be filled.";
-        if(ui->containerFirstName->text().isEmpty()) {
-            ui->containerFirstName->setPlaceholderText(errorString);
-            return;
-        }
-        else if(ui->containerLastName->text().isEmpty()) {
-            ui->containerLastName->setPlaceholderText(errorString);
-            return;
-        }
+        const QString error = "This has not been filled yet.";
+#define VALIDATE_PROPERTY(PROPERTY) \
+    if(ui->container##PROPERTY->text().isEmpty()) { \
+        ui->container##PROPERTY->setPlaceholderText(error); \
+        return; }
+
+        VALIDATE_PROPERTY(FirstName)
+        VALIDATE_PROPERTY(LastName)
+        VALIDATE_PROPERTY(FatherName)
+        VALIDATE_PROPERTY(BornProvince)
+        VALIDATE_PROPERTY(Nationality)
+
+#undef VALIDATE_PROPERTY
     }
     data.firstName = ui->containerFirstName->text();
     data.lastName = ui->containerLastName->text();
