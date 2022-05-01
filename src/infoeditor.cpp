@@ -95,17 +95,20 @@ void InfoEditor::setupEditor()
     connect(ui->buttonResetAll, &QPushButton::clicked, this, &InfoEditor::resetEditor);
     connect(ui->buttonLocalBrowser, &QPushButton::clicked, this, [this]()
     {
-        QDir homeDir = QDir::homePath();
-        homeDir.cd("Pictures");
+        static QDir directory = QDir::homePath();
+        directory.cd("Pictures");
 
-        QFileDialog fileBrowser(this, "Select a photo to continue");
-        fileBrowser.setDirectory(homeDir);
-        fileBrowser.setAcceptMode(QFileDialog::AcceptOpen);
-        fileBrowser.setNameFilters({"JPG files (*.jpg *.jpeg)", "PNG files (*.png)", "BMP files (*.bmp)"});
-        fileBrowser.setFileMode(QFileDialog::ExistingFile);
+        QFileDialog photoBrowser;
+        photoBrowser.setWindowTitle("Select a photo to continue.");
+        photoBrowser.setDirectory(directory);
+        photoBrowser.setAcceptMode(QFileDialog::AcceptOpen);
+        photoBrowser.setNameFilters({"JPG files (*.jpg *.jpeg)", "PNG files (*.png)", "BMP files (*.bmp)"});
+        photoBrowser.setFileMode(QFileDialog::ExistingFile);
 
-        if(fileBrowser.exec()) {
-            containerPhoto->setCurrentPhoto(fileBrowser.selectedFiles().constFirst());
+        if(photoBrowser.exec()) {
+            QString fileName = photoBrowser.selectedFiles().constFirst();
+            containerPhoto->setCurrentPhoto(fileName);
+            directory = QFileInfo(fileName).dir();
         }
     });
 }
