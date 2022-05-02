@@ -414,12 +414,12 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QPushButton" name="buttonResetAll">
+      <widget class="QPushButton" name="buttonResetEditor">
        <property name="toolTip">
         <string>Reset all values to their inital value</string>
        </property>
        <property name="text">
-        <string>&amp;Reset to default</string>
+        <string>&amp;Reset All</string>
        </property>
       </widget>
      </item>
@@ -550,7 +550,7 @@
   <tabstop>radioButtonFemale</tabstop>
   <tabstop>buttonOk</tabstop>
   <tabstop>buttonCancel</tabstop>
-  <tabstop>buttonResetAll</tabstop>
+  <tabstop>buttonResetEditor</tabstop>
   <tabstop>buttonResetFirstName</tabstop>
   <tabstop>buttonResetLastName</tabstop>
   <tabstop>buttonResetFatherName</tabstop>
