@@ -78,29 +78,31 @@ void InfoEditor::setupEditor()
 
     ui->containerBirthday->setDate(QDate::currentDate());
 
-#define INIT_RESET_PROPERTY(PROPERTY) \
+#define INIT_RESET(PROPERTY) \
     connect(ui->buttonReset##PROPERTY, &QPushButton::clicked, this, &InfoEditor::reset##PROPERTY);
 
-    INIT_RESET_PROPERTY(FirstName)
-    INIT_RESET_PROPERTY(LastName)
-    INIT_RESET_PROPERTY(FatherName)
-    INIT_RESET_PROPERTY(Gender)
-    INIT_RESET_PROPERTY(Birthday)
-    INIT_RESET_PROPERTY(BornProvince)
-    INIT_RESET_PROPERTY(Nationality)
-    INIT_RESET_PROPERTY(Photo)
+    INIT_RESET(FirstName)
+    INIT_RESET(LastName)
+    INIT_RESET(FatherName)
+    INIT_RESET(Gender)
+    INIT_RESET(Birthday)
+    INIT_RESET(BornProvince)
+    INIT_RESET(Nationality)
+    INIT_RESET(Photo)
+    INIT_RESET(Editor)
 
-#undef INIT_RESET_PROPERTY
+#undef INIT_RESET
 
-    connect(ui->buttonResetAll, &QPushButton::clicked, this, &InfoEditor::resetEditor);
     connect(ui->buttonLocalBrowser, &QPushButton::clicked, this, [this]()
     {
-        static QDir directory = QDir::homePath();
-        directory.cd("Pictures");
+        QDir tempPicture = QDir::home();
+        tempPicture.cd("Pictures");
+
+        static QDir mainDirectory = tempPicture;
 
         QFileDialog photoBrowser;
         photoBrowser.setWindowTitle("Select a photo to continue.");
-        photoBrowser.setDirectory(directory);
+        photoBrowser.setDirectory(mainDirectory);
         photoBrowser.setAcceptMode(QFileDialog::AcceptOpen);
         photoBrowser.setNameFilters({"JPG files (*.jpg *.jpeg)", "PNG files (*.png)", "BMP files (*.bmp)"});
         photoBrowser.setFileMode(QFileDialog::ExistingFile);
@@ -108,7 +110,7 @@ void InfoEditor::setupEditor()
         if(photoBrowser.exec()) {
             QString fileName = photoBrowser.selectedFiles().constFirst();
             containerPhoto->setCurrentPhoto(fileName);
-            directory = QFileInfo(fileName).dir();
+            mainDirectory = QFileInfo(fileName).dir();
         }
     });
 }
@@ -142,6 +144,7 @@ void InfoEditor::accept()
 
 #undef VALIDATE_PROPERTY
     }
+
     data.firstName = ui->containerFirstName->text();
     data.lastName = ui->containerLastName->text();
     data.fatherName = ui->containerFatherName->text();
