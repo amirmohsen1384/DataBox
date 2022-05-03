@@ -1,7 +1,4 @@
 #include "include/infocontainer.h"
-#include <QDebug>
-
-InfoContainer::InfoContainer(QObject *parent) : QObject(parent) {}
 InfoContainer::InfoContainer(const InfoContainer &value, QObject *parent) : QObject(parent)
 {
     firstName = value.firstName;
@@ -128,20 +125,6 @@ QDataStream& operator>>(QDataStream &stream, InfoContainer &target)
     stream >> target.creation >> target.lastModification;
     return stream;
 }
-QDebug operator<<(QDebug debugger, const InfoContainer &target)
-{
-    QDebug output = debugger.noquote().nospace();
-    output << "First name: " << target.firstName << Qt::endl;
-    output << "Last name: " << target.lastName << Qt::endl;
-    output << "Father name: " << target.fatherName << Qt::endl;
-    output << "Gender: " << (target.gender == InfoContainer::GenderContainer::Male ? "Male" : "Female") << Qt::endl;
-    output << "Birthday: " << target.birthday.toString() << Qt::endl;
-    output << "Nationality: " << target.nationality << Qt::endl;
-    output << "Born province: " << target.bornProvince << Qt::endl;
-    output << "Creation: " << target.creation.toString() << Qt::endl;
-    output << "Last Modification: " << target.lastModification.toString() << Qt::endl;
-    return output;
-}
 bool operator==(const InfoContainer &one, const InfoContainer &two)
 {
     if(one.firstName != two.firstName) {
@@ -165,3 +148,19 @@ bool operator==(const InfoContainer &one, const InfoContainer &two)
     }
 }
 bool operator!=(const InfoContainer &one, const InfoContainer &two) { return !(one == two); }
+
+#include <QDebug>
+QDebug operator<<(QDebug debugger, const InfoContainer &target)
+{
+    QDebug output = debugger.noquote().nospace();
+    output << "First name: " << target.firstName << Qt::endl;
+    output << "Last name: " << target.lastName << Qt::endl;
+    output << "Father name: " << target.fatherName << Qt::endl;
+    output << "Gender: " << (target.gender == InfoContainer::GenderContainer::Male ? "Male" : "Female") << Qt::endl;
+    output << "Birthday: " << target.birthday.toString() << Qt::endl;
+    output << "Nationality: " << target.nationality << Qt::endl;
+    output << "Born province: " << target.bornProvince << Qt::endl;
+    output << "Creation: " << target.creation.toString() << Qt::endl;
+    output << "Last Modification: " << target.lastModification.toString() << Qt::endl;
+    return output;
+}

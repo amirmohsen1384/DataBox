@@ -22,7 +22,7 @@ private:
     QDateTime creation = QDateTime::currentDateTime();
     QDateTime lastModification = QDateTime::currentDateTime();
 public:
-    explicit InfoContainer(QObject *parent = nullptr);
+    explicit InfoContainer(QObject *parent = nullptr) : QObject(parent) {}
     explicit InfoContainer(const InfoContainer &value, QObject *parent = nullptr);
     InfoContainer& operator=(const InfoContainer &value);
 
