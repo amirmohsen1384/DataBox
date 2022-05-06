@@ -67,6 +67,11 @@ void InfoEditor::resetEditor()
     resetBornProvince();
     resetPhoto();
 }
+void InfoEditor::resetContainer()
+{
+    m_container = InfoContainer();
+    resetEditor();
+}
 void InfoEditor::setupEditor()
 {
     ui = new Ui::InfoEditor;

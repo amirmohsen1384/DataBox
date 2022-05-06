@@ -34,6 +34,7 @@ public slots:
     void resetBornProvince();
     void resetPhoto();
     void resetEditor();
+    void resetContainer();
 };
 
 #endif // INFOEDITOR_H
