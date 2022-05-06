@@ -7,31 +7,31 @@ InfoEditor::InfoEditor(QWidget *parent) : QDialog(parent)
 {
     setupEditor();
 }
-InfoEditor::InfoEditor(const InfoContainer &target, QWidget *parent) : QDialog(parent), data(target)
+InfoEditor::InfoEditor(const InfoContainer &target, QWidget *parent) : QDialog(parent), m_container(target)
 {
     setupEditor();
     resetEditor();
 }
 void InfoEditor::resetFirstName()
 {
-    ui->containerFirstName->setText(data.firstName);
+    ui->containerFirstName->setText(m_container.firstName);
 }
 void InfoEditor::resetLastName()
 {
-    ui->containerLastName->setText(data.lastName);
+    ui->containerLastName->setText(m_container.lastName);
 }
 void InfoEditor::resetFatherName()
 {
-    ui->containerFatherName->setText(data.fatherName);
+    ui->containerFatherName->setText(m_container.fatherName);
 }
 void InfoEditor::resetBirthday()
 {
-    ui->containerBirthday->setDate(data.birthday);
+    ui->containerBirthday->setDate(m_container.birthday);
 }
 void InfoEditor::resetGender()
 {
     using enum InfoContainer::GenderContainer;
-    switch(data.gender)
+    switch(m_container.gender)
     {
     case Male: {
        ui->radioButtonMale->setChecked(true);
@@ -45,15 +45,15 @@ void InfoEditor::resetGender()
 }
 void InfoEditor::resetNationality()
 {
-    ui->containerNationality->setText(data.nationality);
+    ui->containerNationality->setText(m_container.nationality);
 }
 void InfoEditor::resetBornProvince()
 {
-    ui->containerBornProvince->setText(data.bornProvince);
+    ui->containerBornProvince->setText(m_container.bornProvince);
 }
 void InfoEditor::resetPhoto()
 {
-    containerPhoto->setCurrentPhoto(data.photo);
+    w_photo->setCurrentPhoto(m_container.photo);
     resize(sizeHint());
 }
 void InfoEditor::resetEditor()
@@ -72,9 +72,9 @@ void InfoEditor::setupEditor()
     ui = new Ui::InfoEditor;
     ui->setupUi(this);
 
-    containerPhoto = new PhotoView(this);
-    containerPhoto->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-    ui->layoutPhoto->insertWidget(0, containerPhoto);
+    w_photo = new PhotoView(this);
+    w_photo->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    ui->layoutPhoto->insertWidget(0, w_photo);
 
     ui->containerBirthday->setDate(QDate::currentDate());
 
@@ -109,7 +109,7 @@ void InfoEditor::setupEditor()
 
         if(photoBrowser.exec()) {
             QString fileName = photoBrowser.selectedFiles().constFirst();
-            containerPhoto->setCurrentPhoto(fileName);
+            w_photo->setCurrentPhoto(fileName);
             mainDirectory = QFileInfo(fileName).dir();
         }
     });
@@ -118,13 +118,13 @@ InfoEditor::~InfoEditor()
 {
     delete ui;
 }
-const InfoContainer &InfoEditor::getData() const
+const InfoContainer &InfoEditor::container() const
 {
-    return data;
+    return m_container;
 }
-void InfoEditor::setData(const InfoContainer &target)
+void InfoEditor::setContainer(const InfoContainer &target)
 {
-    data = target;
+    m_container = target;
     resetEditor();
 }
 void InfoEditor::accept()
@@ -145,22 +145,22 @@ void InfoEditor::accept()
 #undef VALIDATE_PROPERTY
     }
 
-    data.firstName = ui->containerFirstName->text();
-    data.lastName = ui->containerLastName->text();
-    data.fatherName = ui->containerFatherName->text();
+    m_container.firstName = ui->containerFirstName->text();
+    m_container.lastName = ui->containerLastName->text();
+    m_container.fatherName = ui->containerFatherName->text();
     {
         using enum InfoContainer::GenderContainer;
         if(ui->radioButtonMale->isChecked()) {
-            data.gender = Male;
+            m_container.gender = Male;
         }
         else if(ui->radioButtonFemale->isChecked()) {
-            data.gender = Female;
+            m_container.gender = Female;
         }
     }
-    data.birthday = ui->containerBirthday->date();
-    data.bornProvince = ui->containerBornProvince->text();
-    data.nationality = ui->containerNationality->text();
-    data.photo = containerPhoto->currentPhoto();
-    data.lastModification = QDateTime::currentDateTime();
+    m_container.birthday = ui->containerBirthday->date();
+    m_container.bornProvince = ui->containerBornProvince->text();
+    m_container.nationality = ui->containerNationality->text();
+    m_container.photo = w_photo->currentPhoto();
+    m_container.lastModification = QDateTime::currentDateTime();
     QDialog::accept();
 }

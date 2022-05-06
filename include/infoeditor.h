@@ -12,9 +12,9 @@ class InfoEditor : public QDialog
     Q_OBJECT
     Q_DISABLE_COPY_MOVE(InfoEditor)
     void setupEditor();
-    InfoContainer data;
+    InfoContainer m_container;
     Ui::InfoEditor *ui{};
-    PhotoView *containerPhoto{};
+    PhotoView *w_photo{};
 protected:
     void accept() override;
 public:
@@ -22,8 +22,8 @@ public:
     explicit InfoEditor(const InfoContainer &target, QWidget *parent = nullptr);
     ~InfoEditor();
 
-    const InfoContainer& getData() const;
-    void setData(const InfoContainer &target);
+    const InfoContainer& container() const;
+    void setContainer(const InfoContainer &target);
 public slots:
     void resetFirstName();
     void resetLastName();
