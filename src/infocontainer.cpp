@@ -105,12 +105,6 @@ InfoContainer& InfoContainer::operator=(const InfoContainer &value)
     lastModification = value.lastModification;
     return *this;
 }
-InfoContainer::operator QVariant() const
-{
-    QVariant data;
-    data.setValue(*this);
-    return data;
-}
 QDataStream& operator<<(QDataStream &stream, const InfoContainer &target)
 {
     stream << target.firstName << target.lastName << target.fatherName << static_cast<quint16>(target.gender);

@@ -33,9 +33,6 @@ public:
     friend bool operator!=(const InfoContainer &one, const InfoContainer &two);
 
     friend QDebug operator<<(QDebug dbg, const InfoContainer &target);
-
-    operator QVariant() const;
-
     friend class InfoEditor;
 
     const QString& getFirstName() const;
