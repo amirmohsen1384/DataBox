@@ -1,70 +1,69 @@
-#ifndef INFOCONTAINER_H
-#define INFOCONTAINER_H
+#ifndef DATACONTAINER_H
+#define DATACONTAINER_H
 
-#include <QObject>
 #include <QPixmap>
 #include <QDateTime>
 
-class InfoContainer : public QObject
+class DataContainer
 {
-    Q_OBJECT
 public:
-    enum class GenderContainer {Male = 0x01, Female = 0x02}; Q_ENUM(GenderContainer)
+    enum class GenderContainer {Male = 0x01, Female = 0x02};
 private:
-    QString firstName;
-    QString lastName;
-    QString fatherName;
-    GenderContainer gender = GenderContainer::Male;
-    QDate birthday = QDate::currentDate();
-    QString nationality;
-    QString bornProvince;
-    QPixmap photo;
-    QDateTime creation = QDateTime::currentDateTime();
-    QDateTime lastModification = QDateTime::currentDateTime();
+    QString m_firstName;
+    QString m_lastName;
+    QString m_fatherName;
+    GenderContainer m_gender = GenderContainer::Male;
+    QDate m_birthday = QDate::currentDate();
+    QString m_nationality;
+    QString m_bornProvince;
+    QPixmap m_photo;
+    QDateTime m_creation = QDateTime::currentDateTime();
+    QDateTime m_lastModification = QDateTime::currentDateTime();
 public:
-    explicit InfoContainer(QObject *parent = nullptr) : QObject(parent) {}
-    InfoContainer(const InfoContainer &value, QObject *parent = nullptr);
-    InfoContainer& operator=(const InfoContainer &value);
+    DataContainer() {}
+    DataContainer(const DataContainer &value);
+    DataContainer& operator=(const DataContainer &value);
 
-    friend QDataStream& operator<<(QDataStream &stream, const InfoContainer &target);
-    friend QDataStream& operator>>(QDataStream &stream, InfoContainer &target);
+    friend QDataStream& operator<<(QDataStream &stream, const DataContainer &target);
+    friend QDataStream& operator>>(QDataStream &stream, DataContainer &target);
+    friend bool operator==(const DataContainer &one, const DataContainer &two);
+    friend inline bool operator!=(const DataContainer &one, const DataContainer &two);
+    friend QDebug operator<<(QDebug debuggger, const DataContainer &target);
+    friend class DataEditor;
 
-    friend bool operator==(const InfoContainer &one, const InfoContainer &two);
-    friend bool operator!=(const InfoContainer &one, const InfoContainer &two);
+    const QString& firstName() const;
+    const QString& lastName() const;
+    const QString& fatherName() const;
+    const DataContainer::GenderContainer &gender() const;
+    const QDate& birthday() const;
+    const QString& nationality() const;
+    const QString& bornProvince() const;
+    const QPixmap& photo() const;
+    const QDateTime& creation() const;
+    const QDateTime& lastModification() const;
 
-    friend QDebug operator<<(QDebug dbg, const InfoContainer &target);
-    friend class InfoEditor;
-
-    const QString& getFirstName() const;
-    const QString& getLastName() const;
-    const QString& getFatherName() const;
-    const InfoContainer::GenderContainer &getGender() const;
-    const QDate& getBirthday() const;
-    const QString& getNationality() const;
-    const QString& getBornProvince() const;
-    const QPixmap& getPhoto() const;
-    const QDateTime& getCreation() const;
-    const QDateTime& getLastModification() const;
+    QString toFullName() const;
 
     void setFirstName(const QString &value);
     void setLastName(const QString &value);
     void setFatherName(const QString &value);
-    void setGender(const InfoContainer::GenderContainer &value);
+    void setGender(const DataContainer::GenderContainer &value);
     void setBirthday(const QDate &value);
     void setBornProvince(const QString &value);
     void setNationality(const QString &value);
     void setPhoto(const QPixmap &value);
 };
 
-typedef QList<InfoContainer> InfoList;
-typedef QListIterator<InfoContainer> InfoListIterator;
+typedef QList<DataContainer> DataList;
+typedef QListIterator<DataContainer> DataListIterator;
 
-QDataStream& operator<<(QDataStream &stream, const InfoContainer &target);
-QDataStream& operator>>(QDataStream &stream, InfoContainer &target);
-bool operator==(const InfoContainer &one, const InfoContainer &two);
-bool operator!=(const InfoContainer &one, const InfoContainer &two);
-QDebug operator<<(QDebug debugger, const InfoContainer &target);
+QDataStream& operator<<(QDataStream &stream, const DataContainer &target);
+QDataStream& operator>>(QDataStream &stream, DataContainer &target);
+QDebug operator<<(QDebug debugger, const DataContainer &target);
 
-Q_DECLARE_METATYPE(InfoContainer)
+bool operator==(const DataContainer &one, const DataContainer &two);
+inline bool operator!=(const DataContainer &one, const DataContainer &two) { return !(one == two); }
 
-#endif // INFOCONTAINER_H
+Q_DECLARE_METATYPE(DataContainer)
+
+#endif // DATACONTAINER_H

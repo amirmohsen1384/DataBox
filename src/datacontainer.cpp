@@ -1,160 +1,168 @@
-#include "include/infocontainer.h"
-InfoContainer::InfoContainer(const InfoContainer &value, QObject *parent) : QObject(parent)
+#include "include/datacontainer.h"
+DataContainer::DataContainer(const DataContainer &value)
 {
-    firstName = value.firstName;
-    lastName = value.lastName;
-    fatherName = value.fatherName;
-    gender = value.gender;
-    birthday = value.birthday;
-    nationality = value.nationality;
-    bornProvince = value.bornProvince;
-    lastModification = value.lastModification;
-    photo = value.photo;
+    m_firstName = value.m_firstName;
+    m_lastName = value.m_lastName;
+    m_fatherName = value.m_fatherName;
+    m_gender = value.m_gender;
+    m_birthday = value.m_birthday;
+    m_nationality = value.m_nationality;
+    m_bornProvince = value.m_bornProvince;
+    m_lastModification = value.m_lastModification;
+    m_photo = value.m_photo;
 }
-const QString& InfoContainer::getFirstName() const
+const QString& DataContainer::firstName() const
 {
-    return firstName;
+    return m_firstName;
 }
-const QString&  InfoContainer::getLastName() const
+const QString&  DataContainer::lastName() const
 {
-    return lastName;
+    return m_lastName;
 }
-const QString& InfoContainer::getFatherName() const
+const QString& DataContainer::fatherName() const
 {
-    return fatherName;
+    return m_fatherName;
 }
-const InfoContainer::GenderContainer& InfoContainer::getGender() const
+const DataContainer::GenderContainer& DataContainer::gender() const
 {
-    return gender;
+    return m_gender;
 }
-const QString& InfoContainer::getNationality() const
+const QString& DataContainer::nationality() const
 {
-    return nationality;
+    return m_nationality;
 }
-const QDate& InfoContainer::getBirthday() const
+const QDate& DataContainer::birthday() const
 {
-    return birthday;
+    return m_birthday;
 }
-const QString& InfoContainer::getBornProvince() const
+const QString& DataContainer::bornProvince() const
 {
-    return bornProvince;
+    return m_bornProvince;
 }
-const QPixmap& InfoContainer::getPhoto() const
+const QPixmap& DataContainer::photo() const
 {
-    return photo;
+    return m_photo;
 }
-const QDateTime &InfoContainer::getCreation() const
+const QDateTime &DataContainer::creation() const
 {
-    return creation;
+    return m_creation;
 }
-const QDateTime &InfoContainer::getLastModification() const
+const QDateTime &DataContainer::lastModification() const
 {
-    return lastModification;
+    return m_lastModification;
 }
-void InfoContainer::setFirstName(const QString &value)
+QString DataContainer::toFullName() const
 {
-    firstName = value;
-    lastModification = QDateTime::currentDateTime();
+    QString result = m_firstName;
+    if(!m_lastName.isEmpty()) {
+       result.append(QChar(' '));
+       result.append(m_lastName);
+    }
+    return result;
 }
-void InfoContainer::setLastName(const QString &value)
+void DataContainer::setFirstName(const QString &value)
 {
-    lastName = value;
-    lastModification = QDateTime::currentDateTime();
+    m_firstName = value;
+    m_lastModification = QDateTime::currentDateTime();
 }
-void InfoContainer::setFatherName(const QString &value)
+void DataContainer::setLastName(const QString &value)
 {
-    fatherName = value;
-    lastModification = QDateTime::currentDateTime();
+    m_lastName = value;
+    m_lastModification = QDateTime::currentDateTime();
 }
-void InfoContainer::setGender(const InfoContainer::GenderContainer &value)
+void DataContainer::setFatherName(const QString &value)
 {
-    gender = value;
-    lastModification = QDateTime::currentDateTime();
+    m_fatherName = value;
+    m_lastModification = QDateTime::currentDateTime();
 }
-void InfoContainer::setBirthday(const QDate &value)
+void DataContainer::setGender(const DataContainer::GenderContainer &value)
 {
-    birthday = value;
-    lastModification = QDateTime::currentDateTime();
+    m_gender = value;
+    m_lastModification = QDateTime::currentDateTime();
 }
-void InfoContainer::setNationality(const QString &value)
+void DataContainer::setBirthday(const QDate &value)
 {
-    nationality = value;
-    lastModification = QDateTime::currentDateTime();
+    m_birthday = value;
+    m_lastModification = QDateTime::currentDateTime();
 }
-void InfoContainer::setBornProvince(const QString &value)
+void DataContainer::setNationality(const QString &value)
 {
-    bornProvince = value;
-    lastModification = QDateTime::currentDateTime();
+    m_nationality = value;
+    m_lastModification = QDateTime::currentDateTime();
 }
-void InfoContainer::setPhoto(const QPixmap &value)
+void DataContainer::setBornProvince(const QString &value)
 {
-    photo = value;
-    lastModification = QDateTime::currentDateTime();
+    m_bornProvince = value;
+    m_lastModification = QDateTime::currentDateTime();
 }
-InfoContainer& InfoContainer::operator=(const InfoContainer &value)
+void DataContainer::setPhoto(const QPixmap &value)
 {
-    firstName = value.firstName;
-    lastName = value.lastName;
-    fatherName = value.fatherName;
-    gender = value.gender;
-    birthday = value.birthday;
-    nationality = value.nationality;
-    bornProvince = value.bornProvince;
-    photo = value.photo;
-    creation = value.creation;
-    lastModification = value.lastModification;
+    m_photo = value;
+    m_lastModification = QDateTime::currentDateTime();
+}
+DataContainer& DataContainer::operator=(const DataContainer &value)
+{
+    m_firstName = value.m_firstName;
+    m_lastName = value.m_lastName;
+    m_fatherName = value.m_fatherName;
+    m_gender = value.m_gender;
+    m_birthday = value.m_birthday;
+    m_nationality = value.m_nationality;
+    m_bornProvince = value.m_bornProvince;
+    m_photo = value.m_photo;
+    m_creation = value.m_creation;
+    m_lastModification = value.m_lastModification;
     return *this;
 }
-QDataStream& operator<<(QDataStream &stream, const InfoContainer &target)
+QDataStream& operator<<(QDataStream &stream, const DataContainer &target)
 {
-    stream << target.firstName << target.lastName << target.fatherName << static_cast<quint16>(target.gender);
-    stream << target.birthday << target.nationality << target.bornProvince << target.photo;
-    stream << target.creation << target.lastModification;
+    stream << target.m_firstName << target.m_lastName << target.m_fatherName << target.m_gender;
+    stream << target.m_birthday << target.m_nationality << target.m_bornProvince << target.m_photo;
+    stream << target.m_creation << target.m_lastModification;
     return stream;
 }
-QDataStream& operator>>(QDataStream &stream, InfoContainer &target)
+QDataStream& operator>>(QDataStream &stream, DataContainer &target)
 {
-    stream >> target.firstName >> target.lastName >> target.fatherName >> reinterpret_cast<quint16&>(target.gender);
-    stream >> target.birthday >> target.nationality >> target.bornProvince >> target.photo;
-    stream >> target.creation >> target.lastModification;
+    stream >> target.m_firstName >> target.m_lastName >> target.m_fatherName >> target.m_gender;
+    stream >> target.m_birthday >> target.m_nationality >> target.m_bornProvince >> target.m_photo;
+    stream >> target.m_creation >> target.m_lastModification;
     return stream;
 }
-bool operator==(const InfoContainer &one, const InfoContainer &two)
+bool operator==(const DataContainer &one, const DataContainer &two)
 {
-    if(one.firstName != two.firstName) {
+    if(one.m_gender != two.m_gender) {
         return false;
-    } else if(one.lastName != two.lastName) {
+    } else if(one.m_firstName != two.m_firstName) {
         return false;
-    } else if(one.fatherName != two.fatherName) {
+    } else if(one.m_lastName != two.m_lastName) {
         return false;
-    } else if(one.birthday != two.birthday) {
+    } else if(one.m_fatherName != two.m_fatherName) {
         return false;
-    } else if(one.gender != two.gender) {
+    } else if(one.m_birthday != two.m_birthday) {
         return false;
-    } else if(one.nationality != two.nationality) {
+    }  else if(one.m_nationality != two.m_nationality) {
         return false;
-    } else if(one.bornProvince != two.bornProvince) {
+    } else if(one.m_bornProvince != two.m_bornProvince) {
         return false;
-    } else if(one.photo.toImage() != two.photo.toImage()) {
+    } else if(one.m_photo.toImage() != two.m_photo.toImage()) {
         return false;
     } else {
         return true;
     }
 }
-bool operator!=(const InfoContainer &one, const InfoContainer &two) { return !(one == two); }
 
 #include <QDebug>
-QDebug operator<<(QDebug debugger, const InfoContainer &target)
+QDebug operator<<(QDebug debugger, const DataContainer &target)
 {
-    QDebug output = debugger.noquote().nospace();
-    output << "First name: " << target.firstName << Qt::endl;
-    output << "Last name: " << target.lastName << Qt::endl;
-    output << "Father name: " << target.fatherName << Qt::endl;
-    output << "Gender: " << (target.gender == InfoContainer::GenderContainer::Male ? "Male" : "Female") << Qt::endl;
-    output << "Birthday: " << target.birthday.toString() << Qt::endl;
-    output << "Nationality: " << target.nationality << Qt::endl;
-    output << "Born province: " << target.bornProvince << Qt::endl;
-    output << "Creation: " << target.creation.toString() << Qt::endl;
-    output << "Last Modification: " << target.lastModification.toString() << Qt::endl;
-    return output;
+    debugger.noquote().nospace();
+    debugger << "First name: " << target.m_firstName << Qt::endl;
+    debugger << "Last name: " << target.m_lastName << Qt::endl;
+    debugger << "Father name: " << target.m_fatherName << Qt::endl;
+    debugger << "Gender: " << (target.m_gender == DataContainer::GenderContainer::Male ? "Male" : "Female") << Qt::endl;
+    debugger << "Birthday: " << target.m_birthday.toString() << Qt::endl;
+    debugger << "Nationality: " << target.m_nationality << Qt::endl;
+    debugger << "Born province: " << target.m_bornProvince << Qt::endl;
+    debugger << "Creation: " << target.m_creation.toString() << Qt::endl;
+    debugger << "Last Modification: " << target.m_lastModification.toString() << Qt::endl;
+    return debugger;
 }
