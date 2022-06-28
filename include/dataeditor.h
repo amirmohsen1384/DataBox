@@ -1,30 +1,29 @@
-#ifndef INFOEDITOR_H
-#define INFOEDITOR_H
+#ifndef DATAEDITOR_H
+#define DATAEDITOR_H
 
 #include <QDialog>
-#include "infocontainer.h"
+#include "datacontainer.h"
 
-namespace Ui { class InfoEditor; }
+namespace Ui { class DataEditor; }
 class PhotoView;
 
-class InfoEditor : public QDialog
+class DataEditor : public QDialog
 {
     Q_OBJECT
-    Q_DISABLE_COPY_MOVE(InfoEditor)
+    Q_DISABLE_COPY_MOVE(DataEditor)
     void setupEditor();
-    InfoContainer m_container;
-    Ui::InfoEditor *ui{};
+    DataContainer m_container;
+    Ui::DataEditor *ui{};
     PhotoView *w_photo{};
-protected:
-    void accept() override;
 public:
-    explicit InfoEditor(QWidget *parent = nullptr);
-    explicit InfoEditor(const InfoContainer &target, QWidget *parent = nullptr);
-    ~InfoEditor();
+    explicit DataEditor(QWidget *parent = nullptr);
+    explicit DataEditor(const DataContainer &target, QWidget *parent = nullptr);
+    ~DataEditor();
 
-    const InfoContainer& container() const;
-    void setContainer(const InfoContainer &target);
+    const DataContainer& container() const;
+    void setContainer(const DataContainer &target);
 public slots:
+    void accept() override;
     void resetFirstName();
     void resetLastName();
     void resetFatherName();
@@ -37,4 +36,4 @@ public slots:
     void resetContainer();
 };
 
-#endif // INFOEDITOR_H
+#endif // DATAEDITOR_H
