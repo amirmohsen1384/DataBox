@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>InfoEditor</class>
- <widget class="QDialog" name="InfoEditor">
+ <class>DataEditor</class>
+ <widget class="QDialog" name="DataEditor">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -483,7 +483,7 @@
           </property>
           <property name="icon">
            <iconset resource="icons/resource.qrc">
-            <normaloff>:/icons/open file.png</normaloff>:/icons/open file.png</iconset>
+            <normaloff>:/icons/open.png</normaloff>:/icons/open.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -567,7 +567,7 @@
   <connection>
    <sender>buttonOk</sender>
    <signal>clicked()</signal>
-   <receiver>InfoEditor</receiver>
+   <receiver>DataEditor</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -583,7 +583,7 @@
   <connection>
    <sender>buttonCancel</sender>
    <signal>clicked()</signal>
-   <receiver>InfoEditor</receiver>
+   <receiver>DataEditor</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
