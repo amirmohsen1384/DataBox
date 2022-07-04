@@ -1,5 +1,5 @@
 #include "include/dataeditor.h"
-#include "include/photoview.h"
+#include "include/photoviewer.h"
 #include "ui_dataeditor.h"
 #include <QFileDialog>
 
@@ -53,7 +53,7 @@ void DataEditor::resetBornProvince()
 }
 void DataEditor::resetPhoto()
 {
-    w_photo->setCurrentPhoto(m_container.m_photo);
+    w_photo->setPhoto(m_container.m_photo);
     resize(sizeHint());
 }
 void DataEditor::resetEditor()
@@ -77,7 +77,7 @@ void DataEditor::setupEditor()
     ui = new Ui::DataEditor;
     ui->setupUi(this);
 
-    w_photo = new PhotoView(this);
+    w_photo = new PhotoViewer(this);
     w_photo->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     ui->layoutPhoto->insertWidget(0, w_photo);
 
@@ -114,7 +114,7 @@ void DataEditor::setupEditor()
 
         if(photoBrowser.exec()) {
             QString fileName = photoBrowser.selectedFiles().constFirst();
-            w_photo->setCurrentPhoto(fileName);
+            w_photo->setPhoto(fileName);
             mainDirectory = QFileInfo(fileName).dir();
         }
     });
@@ -164,7 +164,7 @@ void DataEditor::accept()
     m_container.m_birthday = ui->containerBirthday->date();
     m_container.m_bornProvince = ui->containerBornProvince->text();
     m_container.m_nationality = ui->containerNationality->text();
-    m_container.m_photo = w_photo->currentPhoto();
+    m_container.m_photo = w_photo->photo();
     m_container.m_lastModification = QDateTime::currentDateTime();
     QDialog::accept();
 }

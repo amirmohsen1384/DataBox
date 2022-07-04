@@ -1,41 +1,31 @@
-#include "include/photoview.h"
-#include <QPainter>
+#include "include/photoviewer.h"
 #include <QPaintEvent>
+#include <QPainter>
 
-void PhotoView::paintEvent(QPaintEvent *event)
+void PhotoViewer::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    QRect area = event->rect();
-
-    if(photo.isNull())
+    if(QRect area = event->rect(); m_photo.isNull()) {
         painter.fillRect(area, Qt::black);
-    else
-        painter.drawPixmap(area, photo);
+    } else {
+        painter.drawPixmap(area, m_photo);
+    }
 }
-QSize PhotoView::minimumSizeHint() const
+QSize PhotoViewer::minimumSizeHint() const
 {
     return QSize(100, 100);
 }
-QSize PhotoView::sizeHint() const
+QSize PhotoViewer::sizeHint() const
 {
     return QSize(220, 300);
 }
-PhotoView::PhotoView(QWidget *parent) : QWidget(parent) {}
-PhotoView::PhotoView(const QPixmap &photo, QWidget *parent) : QWidget(parent)
+const QPixmap &PhotoViewer::photo() const
 {
-    setCurrentPhoto(photo);
+    return m_photo;
 }
-QPixmap PhotoView::currentPhoto() const
+void PhotoViewer::setPhoto(const QPixmap &newPhoto)
 {
-    return photo;
-}
-bool PhotoView::isEmpty() const
-{
-    return photo.isNull();
-}
-void PhotoView::setCurrentPhoto(const QPixmap &newPhoto)
-{
-    photo = newPhoto;
+    m_photo = newPhoto;
     update();
-    emit currentPhotoChanged(photo);
+    emit photoChanged(m_photo);
 }

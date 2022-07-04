@@ -1,27 +1,27 @@
-#ifndef PHOTOVIEW_H
-#define PHOTOVIEW_H
+#ifndef PHOTOVIEWER_H
+#define PHOTOVIEWER_H
 
 #include <QWidget>
 #include <QPixmap>
 
-class PhotoView : public QWidget
+class PhotoViewer : public QWidget
 {
     Q_OBJECT
-    QPixmap photo;
-    Q_DISABLE_COPY_MOVE(PhotoView)
+    Q_DISABLE_COPY_MOVE(PhotoViewer)
 protected:
-    void paintEvent(QPaintEvent *event) override;
-    QSize minimumSizeHint() const override;
-    QSize sizeHint() const override;
+    QPixmap m_photo;
+    virtual void paintEvent(QPaintEvent *event) override;
+    virtual QSize minimumSizeHint() const override;
+    virtual QSize sizeHint() const override;
 public:
-    PhotoView(QWidget *parent = nullptr);
-    PhotoView(const QPixmap &initial, QWidget *parent = nullptr);
-    QPixmap currentPhoto() const;
-    bool isEmpty() const;
+    PhotoViewer(QWidget *parent = nullptr) : QWidget(parent) {}
+    PhotoViewer(const QPixmap &m_init, QWidget *parent = nullptr) : QWidget(parent), m_photo(m_init) {}
+    const QPixmap &photo() const;
+    inline bool isNull() const { return m_photo.isNull(); }
 public slots:
-    void setCurrentPhoto(const QPixmap &newPhoto);
+    void setPhoto(const QPixmap &newPhoto);
 signals:
-    void currentPhotoChanged(const QPixmap &photo);
+    void photoChanged(const QPixmap &photo);
 };
 
-#endif // PHOTOVIEW_H
+#endif // PHOTOVIEWER_H

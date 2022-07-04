@@ -5,7 +5,7 @@
 #include "datacontainer.h"
 
 namespace Ui { class DataEditor; }
-class PhotoView;
+class PhotoViewer;
 
 class DataEditor : public QDialog
 {
@@ -14,7 +14,7 @@ class DataEditor : public QDialog
     void setupEditor();
     DataContainer m_container;
     Ui::DataEditor *ui{};
-    PhotoView *w_photo{};
+    PhotoViewer *w_photo{};
 public:
     explicit DataEditor(QWidget *parent = nullptr);
     explicit DataEditor(const DataContainer &target, QWidget *parent = nullptr);
