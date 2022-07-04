@@ -9,12 +9,12 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 SOURCES += \
     src/datacontainer.cpp \
     src/dataeditor.cpp \
-    src/photoview.cpp
+    src/photoviewer.cpp
 
 HEADERS += \
     include/datacontainer.h \
     include/dataeditor.h \
-    include/photoview.h
+    include/photoviewer.h
 
 FORMS += \
     ui/dataeditor.ui
