@@ -15,6 +15,7 @@ class NamedPhotoViewer : public PhotoViewer
     QColor m_backgroundColor;
     QMarginsF m_margins;
     int m_indent;
+    bool m_fullscreen;
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
 public:
@@ -31,6 +32,7 @@ public:
     QColor backgroundColor() const;
     QMarginsF margins() const;
     int indent() const;
+    bool fullscreenMode() const;
 
     void setFont(const QFont &font, NamedPhotoViewer::Title title);
     void setBrush(const QBrush &brush, NamedPhotoViewer::Title title);
@@ -38,6 +40,7 @@ public:
     void setBackgroundColor(const QColor &color);
     void setMargins(const QMarginsF &margins);
     void setIndent(int value);
+    void setFullscreenMode(bool value);
 signals:
     void fontChanged(QFont font, NamedPhotoViewer::Title title);
     void brushChanged(QBrush brush, NamedPhotoViewer::Title title);
@@ -45,6 +48,7 @@ signals:
     void backgroundColorChanged(QColor color);
     void marginsChanged(QMarginsF margins);
     void indentChanged(int indent);
+    void fullscreenModeChanged(bool value);
 };
 
 #endif // NAMEDPHOTOVIEWER_H
