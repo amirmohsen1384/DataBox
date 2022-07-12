@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>498</width>
-    <height>341</height>
+    <width>601</width>
+    <height>451</height>
    </rect>
   </property>
   <property name="font">
@@ -31,15 +31,82 @@
      <property name="title">
       <string>Personal information</string>
      </property>
-     <layout class="QGridLayout" name="layoutInformation" rowstretch="0,0,0,0,0,0,0,0">
+     <layout class="QGridLayout" name="layoutInformation" rowstretch="0,0,0,0,0,0,0">
       <property name="sizeConstraint">
        <enum>QLayout::SetNoConstraint</enum>
       </property>
       <property name="spacing">
        <number>7</number>
       </property>
-      <item row="4" column="0">
-       <widget class="QLabel" name="labelNationality">
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="containerFatherName">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>50</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <layout class="QHBoxLayout" name="layoutGender">
+        <item>
+         <widget class="QRadioButton" name="radioButtonMale">
+          <property name="text">
+           <string>Male</string>
+          </property>
+          <property name="icon">
+           <iconset resource="icons/resource.qrc">
+            <normaloff>:/icons/man.png</normaloff>:/icons/man.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="radioButtonFemale">
+          <property name="text">
+           <string>Female</string>
+          </property>
+          <property name="icon">
+           <iconset resource="icons/resource.qrc">
+            <normaloff>:/icons/woman.png</normaloff>:/icons/woman.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="containerLastName">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>50</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelFatherName">
         <property name="sizePolicy">
          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -47,10 +114,151 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Nationality:</string>
+         <string>Father's name:</string>
         </property>
         <property name="buddy">
-         <cstring>containerNationality</cstring>
+         <cstring>containerFatherName</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="labelCountry">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Country:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="containerFirstName">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>50</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="2" colspan="2">
+       <widget class="QToolButton" name="buttonResetGender">
+        <property name="toolTip">
+         <string>Reset the gender to its inital value</string>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset resource="icons/resource.qrc">
+          <normaloff>:/icons/reset.png</normaloff>:/icons/reset.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelFirstName">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>First name:</string>
+        </property>
+        <property name="buddy">
+         <cstring>containerFirstName</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelLastName">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Last name:</string>
+        </property>
+        <property name="buddy">
+         <cstring>containerLastName</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QComboBox" name="containerCountry">
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="labelGender">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Gender:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QToolButton" name="buttonResetBirthday">
+        <property name="toolTip">
+         <string>Reset the birthday to its inital value</string>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset resource="icons/resource.qrc">
+          <normaloff>:/icons/reset.png</normaloff>:/icons/reset.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
+       <widget class="QToolButton" name="buttonResetCountry">
+        <property name="toolTip">
+         <string>Reset the nationality to its inital value</string>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset resource="icons/resource.qrc">
+          <normaloff>:/icons/reset.png</normaloff>:/icons/reset.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -74,8 +282,8 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="labelFatherName">
+      <item row="3" column="0">
+       <widget class="QLabel" name="labelBirthday">
         <property name="sizePolicy">
          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -83,204 +291,10 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Father's name:</string>
+         <string>Birthday:</string>
         </property>
         <property name="buddy">
-         <cstring>containerFatherName</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="labelLastName">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Last name:</string>
-        </property>
-        <property name="buddy">
-         <cstring>containerLastName</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="2">
-       <widget class="QToolButton" name="buttonResetNationality">
-        <property name="toolTip">
-         <string>Reset the nationality to its inital value</string>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-        <property name="icon">
-         <iconset resource="icons/resource.qrc">
-          <normaloff>:/icons/reset.png</normaloff>:/icons/reset.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QToolButton" name="buttonResetFatherName">
-        <property name="toolTip">
-         <string>Reset the father's name to its inital value</string>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-        <property name="icon">
-         <iconset resource="icons/resource.qrc">
-          <normaloff>:/icons/reset.png</normaloff>:/icons/reset.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="containerLastName">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-          <horstretch>50</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="clearButtonEnabled">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="containerFirstName">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-          <horstretch>50</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="clearButtonEnabled">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="0">
-       <widget class="QLabel" name="labelGender">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Gender:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="labelBornProvince">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Born province:</string>
-        </property>
-        <property name="buddy">
-         <cstring>containerBornProvince</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="containerFatherName">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-          <horstretch>50</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="clearButtonEnabled">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="2" colspan="2">
-       <widget class="QToolButton" name="buttonResetGender">
-        <property name="toolTip">
-         <string>Reset the gender to its inital value</string>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-        <property name="icon">
-         <iconset resource="icons/resource.qrc">
-          <normaloff>:/icons/reset.png</normaloff>:/icons/reset.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="1">
-       <layout class="QHBoxLayout" name="layoutGender">
-        <item>
-         <widget class="QRadioButton" name="radioButtonMale">
-          <property name="text">
-           <string>Male</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="radioButtonFemale">
-          <property name="text">
-           <string>Female</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="5" column="1">
-       <widget class="QLineEdit" name="containerBornProvince">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-          <horstretch>50</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="clearButtonEnabled">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="labelFirstName">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>First name:</string>
-        </property>
-        <property name="buddy">
-         <cstring>containerFirstName</cstring>
+         <cstring>containerBirthday</cstring>
         </property>
        </widget>
       </item>
@@ -336,10 +350,10 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="2">
-       <widget class="QToolButton" name="buttonResetBirthday">
+      <item row="2" column="2">
+       <widget class="QToolButton" name="buttonResetFatherName">
         <property name="toolTip">
-         <string>Reset the birthday to its inital value</string>
+         <string>Reset the father's name to its inital value</string>
         </property>
         <property name="text">
          <string>...</string>
@@ -353,55 +367,6 @@
           <width>24</width>
           <height>24</height>
          </size>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="2">
-       <widget class="QToolButton" name="buttonResetBornProvince">
-        <property name="toolTip">
-         <string>Reset the born province to its inital value</string>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-        <property name="icon">
-         <iconset resource="icons/resource.qrc">
-          <normaloff>:/icons/reset.png</normaloff>:/icons/reset.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLineEdit" name="containerNationality">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-          <horstretch>50</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="clearButtonEnabled">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="labelBirthday">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Birthday:</string>
-        </property>
-        <property name="buddy">
-         <cstring>containerBirthday</cstring>
         </property>
        </widget>
       </item>
@@ -461,7 +426,7 @@
       <item>
        <layout class="QHBoxLayout" name="layoutPhotoController">
         <item>
-         <spacer name="horizontalSpacer">
+         <spacer name="leftSpacerLayoutPhoto">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -520,7 +485,7 @@
          </widget>
         </item>
         <item>
-         <spacer name="horizontalSpacer_2">
+         <spacer name="rightSpacerLayoutPhoto">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -544,8 +509,6 @@
   <tabstop>containerLastName</tabstop>
   <tabstop>containerFatherName</tabstop>
   <tabstop>containerBirthday</tabstop>
-  <tabstop>containerNationality</tabstop>
-  <tabstop>containerBornProvince</tabstop>
   <tabstop>radioButtonMale</tabstop>
   <tabstop>radioButtonFemale</tabstop>
   <tabstop>buttonOk</tabstop>
@@ -555,8 +518,7 @@
   <tabstop>buttonResetLastName</tabstop>
   <tabstop>buttonResetFatherName</tabstop>
   <tabstop>buttonResetBirthday</tabstop>
-  <tabstop>buttonResetNationality</tabstop>
-  <tabstop>buttonResetBornProvince</tabstop>
+  <tabstop>buttonResetCountry</tabstop>
   <tabstop>buttonResetGender</tabstop>
   <tabstop>buttonResetPhoto</tabstop>
  </tabstops>

@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "datacontainer.h"
+#include "countrymodel.h"
 
 namespace Ui { class DataEditor; }
 class PhotoViewer;
@@ -15,6 +16,11 @@ class DataEditor : public QDialog
     DataContainer m_container;
     Ui::DataEditor *ui{};
     PhotoViewer *w_photo{};
+    CountryModel m_country;
+private:
+    void fillBackground(QPainter *painter);
+protected:
+    void paintEvent(QPaintEvent *event) override;
 public:
     explicit DataEditor(QWidget *parent = nullptr);
     explicit DataEditor(const DataContainer &target, QWidget *parent = nullptr);
@@ -29,8 +35,7 @@ public slots:
     void resetFatherName();
     void resetBirthday();
     void resetGender();
-    void resetNationality();
-    void resetBornProvince();
+    void resetCountry();
     void resetPhoto();
     void resetEditor();
     void resetContainer();

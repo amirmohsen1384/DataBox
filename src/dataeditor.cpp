@@ -1,7 +1,6 @@
 #include "include/dataeditor.h"
 #include "include/photoviewer.h"
 #include "ui_dataeditor.h"
-#include <QFileDialog>
 
 DataEditor::DataEditor(QWidget *parent) : QDialog(parent)
 {
@@ -43,13 +42,9 @@ void DataEditor::resetGender()
     }
     }
 }
-void DataEditor::resetNationality()
+void DataEditor::resetCountry()
 {
-    ui->containerNationality->setText(m_container.m_nationality);
-}
-void DataEditor::resetBornProvince()
-{
-    ui->containerBornProvince->setText(m_container.m_bornProvince);
+    ui->containerCountry->setCurrentText(m_container.m_country);
 }
 void DataEditor::resetPhoto()
 {
@@ -63,8 +58,7 @@ void DataEditor::resetEditor()
     resetFatherName();
     resetBirthday();
     resetGender();
-    resetNationality();
-    resetBornProvince();
+    resetCountry();
     resetPhoto();
 }
 void DataEditor::resetContainer()
@@ -72,6 +66,8 @@ void DataEditor::resetContainer()
     m_container = DataContainer();
     resetEditor();
 }
+
+#include <QFileDialog>
 void DataEditor::setupEditor()
 {
     ui = new Ui::DataEditor;
@@ -82,6 +78,10 @@ void DataEditor::setupEditor()
     ui->layoutPhoto->insertWidget(0, w_photo);
 
     ui->containerBirthday->setDate(QDate::currentDate());
+    ui->containerCountry->setModel(&m_country);
+
+    connect(ui->radioButtonMale, SIGNAL(toggled(bool)), this, SLOT(update()));
+    connect(ui->radioButtonFemale, SIGNAL(toggled(bool)), this, SLOT(update()));
 
 #define INIT_RESET(PROPERTY) \
     connect(ui->buttonReset##PROPERTY, &QPushButton::clicked, this, &DataEditor::reset##PROPERTY);
@@ -91,8 +91,7 @@ void DataEditor::setupEditor()
     INIT_RESET(FatherName)
     INIT_RESET(Gender)
     INIT_RESET(Birthday)
-    INIT_RESET(BornProvince)
-    INIT_RESET(Nationality)
+    INIT_RESET(Country)
     INIT_RESET(Photo)
     INIT_RESET(Editor)
 
@@ -144,8 +143,6 @@ void DataEditor::accept()
         VALIDATE_PROPERTY(FirstName)
         VALIDATE_PROPERTY(LastName)
         VALIDATE_PROPERTY(FatherName)
-        VALIDATE_PROPERTY(BornProvince)
-        VALIDATE_PROPERTY(Nationality)
 
 #undef VALIDATE_PROPERTY
     }
@@ -162,9 +159,32 @@ void DataEditor::accept()
         }
     }
     m_container.m_birthday = ui->containerBirthday->date();
-    m_container.m_bornProvince = ui->containerBornProvince->text();
-    m_container.m_nationality = ui->containerNationality->text();
+    m_container.m_country = ui->containerCountry->currentText();
     m_container.m_photo = w_photo->photo();
-    m_container.m_lastModification = QDateTime::currentDateTime();
+    m_container.updateModified();
     QDialog::accept();
+}
+
+#include <QPainter>
+void DataEditor::fillBackground(QPainter *painter)
+{
+    const qreal start = 0.1;
+
+    QLinearGradient gradient(QPointF(0, 0), QPointF(1, 1));
+    gradient.setCoordinateMode(QGradient::ObjectMode);
+    if(ui->radioButtonMale->isChecked()) {
+        gradient.setColorAt(start, QColorConstants::Svg::lightblue);
+
+    } else if(ui->radioButtonFemale->isChecked()) {
+        gradient.setColorAt(start, QColorConstants::Svg::lightpink);
+
+    }
+    gradient.setColorAt(0.4, Qt::white);
+    painter->fillRect(rect(), gradient);
+}
+void DataEditor::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+    fillBackground(&painter);
+    QWidget::paintEvent(event);
 }
