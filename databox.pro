@@ -7,12 +7,14 @@ CONFIG += c++2a
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 
 SOURCES += \
+    src/countrymodel.cpp \
     src/namedphotoviewer.cpp \
     src/datacontainer.cpp \
     src/dataeditor.cpp \
     src/photoviewer.cpp
 
 HEADERS += \
+    include/countrymodel.h \
     include/datacontainer.h \
     include/dataeditor.h \
     include/namedphotoviewer.h \
