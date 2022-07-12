@@ -2,5 +2,22 @@
     <qresource prefix="/icons">
         <file>reset.png</file>
         <file>open.png</file>
+        <file>man.png</file>
+        <file>woman.png</file>
+        <file>country/America.png</file>
+        <file>country/Argentina.png</file>
+        <file>country/Brazil.png</file>
+        <file>country/Canada.png</file>
+        <file>country/Chile.png</file>
+        <file>country/China.png</file>
+        <file>country/France.png</file>
+        <file>country/Germany.png</file>
+        <file>country/Iran.png</file>
+        <file>country/Japan.png</file>
+        <file>country/Mexico.png</file>
+        <file>country/Peru.png</file>
+        <file>country/Poland.png</file>
+        <file>country/Urugray.png</file>
+        <file>country/Venezuela.png</file>
     </qresource>
 </RCC>
