@@ -14,11 +14,12 @@ private:
     QString m_fatherName;
     GenderContainer m_gender = GenderContainer::Male;
     QDate m_birthday = QDate::currentDate();
-    QString m_nationality;
-    QString m_bornProvince;
+    QString m_country;
     QPixmap m_photo;
-    QDateTime m_creation = QDateTime::currentDateTime();
-    QDateTime m_lastModification = QDateTime::currentDateTime();
+    QDateTime m_created = QDateTime::currentDateTime();
+    QDateTime m_modified = QDateTime::currentDateTime();
+private:
+    inline void updateModified() { m_modified = QDateTime::currentDateTime(); }
 public:
     DataContainer() {}
     DataContainer(const DataContainer &value);
@@ -34,28 +35,26 @@ public:
     const QString& firstName() const;
     const QString& lastName() const;
     const QString& fatherName() const;
-    const DataContainer::GenderContainer &gender() const;
+    const DataContainer::GenderContainer& gender() const;
     const QDate& birthday() const;
-    const QString& nationality() const;
-    const QString& bornProvince() const;
+    const QString& country() const;
     const QPixmap& photo() const;
-    const QDateTime& creation() const;
-    const QDateTime& lastModification() const;
+    const QDateTime& created() const;
+    const QDateTime& modified() const;
 
-    QString toFullName() const;
+    QString fullName() const;
 
     void setFirstName(const QString &value);
     void setLastName(const QString &value);
     void setFatherName(const QString &value);
     void setGender(const DataContainer::GenderContainer &value);
     void setBirthday(const QDate &value);
-    void setBornProvince(const QString &value);
-    void setNationality(const QString &value);
+    void setCountry(const QString &value);
     void setPhoto(const QPixmap &value);
 };
 
-typedef QList<DataContainer> DataList;
-typedef QListIterator<DataContainer> DataListIterator;
+typedef QList<DataContainer> DataContainerList;
+typedef QListIterator<DataContainer> DataContainerListIterator;
 
 QDataStream& operator<<(QDataStream &stream, const DataContainer &target);
 QDataStream& operator>>(QDataStream &stream, DataContainer &target);
