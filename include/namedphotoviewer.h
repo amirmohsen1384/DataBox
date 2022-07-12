@@ -5,50 +5,105 @@
 
 class NamedPhotoViewer : public PhotoViewer
 {
-    Q_OBJECT
-    struct {
-      QFont m_font;
-      QBrush m_brush;
-      QString m_text;
-      QFontMetricsF m_metrics = QFontMetricsF(m_font);
-    } m_info[3];
-    QColor m_backgroundColor;
-    QMarginsF m_margins;
-    int m_indent;
-    bool m_fullscreen;
-protected:
-    virtual void paintEvent(QPaintEvent *event) override;
 public:
-    enum class Title {MinorTitle = 0, MainTitle = 1, Subtitle = 2};
-    NamedPhotoViewer(QWidget *parent = nullptr);
+    enum class SettingsFlag {
+        NoFlag = 0x00,
+        AlignByDirection = 0x01,
+        BetterView = 0x02
+    };
+    Q_DECLARE_FLAGS(SettingsFlags, SettingsFlag);
+private:
+    Q_OBJECT
+    class TitleInfo
+    {
+    public:
+        QString text;
+        QBrush brush = Qt::black;
+        QFont font = QFont("Segoe UI", 10, QFont::Bold);
+        QFontMetricsF metrics = QFontMetricsF(font);
+        Qt::Alignment alignment = Qt::AlignLeft;
+    };
+    enum Title {Primary = 0, Secondary = 1};
+    int m_indent;
+    int m_spacing;
+    TitleInfo primary;
+    TitleInfo secondary;
+    QMarginsF m_margins;
+    bool m_betterViewTitle;
+    QColor m_backgroundColor;
+    SettingsFlags m_settings;
 private:
     void initSettings();
-    void drawTitle(QPainter *painter, const QPointF &point, Title title);
+    QRectF boundingPrimaryRect() const;
+    QRectF boundingSecondaryRect() const;
+    void drawBetterViewTitle(QPainter *painter, QRectF region);
+    void drawTitle(QPainter *painter, const QRectF &rectangle, Title title);
+protected:
+    void leaveEvent(QEvent *event) override;
+    void enterEvent(QEnterEvent *event) override;
+    virtual void paintEvent(QPaintEvent *event) override;
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
 public:
-    QFont font(Title title) const;
-    QBrush brush(Title title) const;
-    QString text(Title title) const;
-    QFontMetricsF metrics(Title title) const;
-    QColor backgroundColor() const;
-    QMarginsF margins() const;
-    int indent() const;
-    bool fullscreenMode() const;
+    NamedPhotoViewer(QWidget *parent = nullptr);
 
-    void setFont(const QFont &font, NamedPhotoViewer::Title title);
-    void setBrush(const QBrush &brush, NamedPhotoViewer::Title title);
-    void setText(const QString &text, NamedPhotoViewer::Title title);
-    void setBackgroundColor(const QColor &color);
-    void setMargins(const QMarginsF &margins);
+    QFont primaryFont() const;
+    QFont secondaryFont() const;
+
+    QBrush primaryBrush() const;
+    QBrush secondaryBrush() const;
+
+    QString primaryText() const;
+    QString secondaryText() const;
+
+    QFontMetricsF primaryMetrics() const;
+    QFontMetricsF secondaryMetrics() const;
+
+    Qt::Alignment primaryAlignment() const;
+    Qt::Alignment secondaryAlignment() const;
+
+    int indent() const;
+    int spacing() const;
+    QMarginsF margins() const;
+    QColor backgroundColor() const;
+    NamedPhotoViewer::SettingsFlags settings() const;
+public slots:
+    void setPrimaryFont(const QFont &font);
+    void setSecondaryFont(const QFont &font);
+
+    void setPrimaryBrush(const QBrush &brush);
+    void setSecondaryBrush(const QBrush &brush);
+
+    void setPrimaryText(const QString &text);
+    void setSecondaryText(const QString &text);
+
+    void setPrimaryAlignment(Qt::Alignment alignment);
+    void setSecondaryAlignment(Qt::Alignment alignment);
+
     void setIndent(int value);
-    void setFullscreenMode(bool value);
+    void setSpacing(int value);
+    void setMargins(const QMarginsF &value);
+    void setBackgroundColor(const QColor &value);
+    void setSettings(NamedPhotoViewer::SettingsFlags flags);
 signals:
-    void fontChanged(QFont font, NamedPhotoViewer::Title title);
-    void brushChanged(QBrush brush, NamedPhotoViewer::Title title);
-    void textChanged(QString text, NamedPhotoViewer::Title title);
-    void backgroundColorChanged(QColor color);
-    void marginsChanged(QMarginsF margins);
+    void primaryFontChanged(QFont font);
+    void secondaryFontChanged(QFont font);
+
+    void primaryBrushChanged(QBrush brush);
+    void secondaryBrushChanged(QBrush brush);
+
+    void primaryTextChanged(QString text);
+    void secondaryTextChanged(QString text);
+
+    void primaryAlignmentChanged(Qt::Alignment alignment);
+    void secondaryAlignmentChanged(Qt::Alignment alignment);
+
     void indentChanged(int indent);
-    void fullscreenModeChanged(bool value);
+    void spacingChanged(int spacing);
+    void marginsChanged(QMarginsF margins);
+    void backgroundColorChanged(QColor color);
+    void settingsChanged(NamedPhotoViewer::SettingsFlags flags);
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(NamedPhotoViewer::SettingsFlags)
 
 #endif // NAMEDPHOTOVIEWER_H
