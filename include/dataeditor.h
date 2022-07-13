@@ -13,14 +13,17 @@ class DataEditor : public QDialog
     Q_OBJECT
     Q_DISABLE_COPY_MOVE(DataEditor)
     void setupEditor();
-    DataContainer m_container;
     Ui::DataEditor *ui{};
     PhotoViewer *w_photo{};
     CountryModel m_country;
+    DataContainer m_container;
 private:
     void fillBackground(QPainter *painter);
+private slots:
+    void openPhotoFileDialog();
 protected:
     void paintEvent(QPaintEvent *event) override;
+    virtual void updateData();
 public:
     explicit DataEditor(QWidget *parent = nullptr);
     explicit DataEditor(const DataContainer &target, QWidget *parent = nullptr);

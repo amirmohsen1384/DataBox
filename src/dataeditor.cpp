@@ -6,10 +6,10 @@ DataEditor::DataEditor(QWidget *parent) : QDialog(parent)
 {
     setupEditor();
 }
-DataEditor::DataEditor(const DataContainer &target, QWidget *parent) : QDialog(parent), m_container(target)
+DataEditor::DataEditor(const DataContainer &target, QWidget *parent) : QDialog(parent)
 {
     setupEditor();
-    resetEditor();
+    setContainer(target);
 }
 void DataEditor::resetFirstName()
 {
@@ -44,7 +44,11 @@ void DataEditor::resetGender()
 }
 void DataEditor::resetCountry()
 {
-    ui->containerCountry->setCurrentText(m_container.m_country);
+    if(!m_container.m_country.isEmpty()) {
+        ui->containerCountry->setCurrentIndex(0);
+    } else {
+        ui->containerCountry->setCurrentText(m_container.m_country);
+    }
 }
 void DataEditor::resetPhoto()
 {
@@ -74,14 +78,15 @@ void DataEditor::setupEditor()
     ui->setupUi(this);
 
     w_photo = new PhotoViewer(this);
-    w_photo->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     ui->layoutPhoto->insertWidget(0, w_photo);
+    w_photo->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
     ui->containerBirthday->setDate(QDate::currentDate());
     ui->containerCountry->setModel(&m_country);
 
-    connect(ui->radioButtonMale, SIGNAL(toggled(bool)), this, SLOT(update()));
-    connect(ui->radioButtonFemale, SIGNAL(toggled(bool)), this, SLOT(update()));
+    connect(ui->radioButtonMale, &QRadioButton::toggled, [this](bool) { this->update(); });
+    connect(ui->radioButtonFemale, &QRadioButton::toggled, [this](bool) { this->update(); });
+    connect(ui->buttonLocalBrowser, &QPushButton::clicked, this, &DataEditor::openPhotoFileDialog);
 
 #define INIT_RESET(PROPERTY) \
     connect(ui->buttonReset##PROPERTY, &QPushButton::clicked, this, &DataEditor::reset##PROPERTY);
@@ -96,27 +101,6 @@ void DataEditor::setupEditor()
     INIT_RESET(Editor)
 
 #undef INIT_RESET
-
-    connect(ui->buttonLocalBrowser, &QPushButton::clicked, this, [this]()
-    {
-        QDir tempPicture = QDir::home();
-        tempPicture.cd("Pictures");
-
-        static QDir mainDirectory = tempPicture;
-
-        QFileDialog photoBrowser;
-        photoBrowser.setWindowTitle("Select a photo to continue.");
-        photoBrowser.setDirectory(mainDirectory);
-        photoBrowser.setAcceptMode(QFileDialog::AcceptOpen);
-        photoBrowser.setNameFilters({"JPG files (*.jpg *.jpeg)", "PNG files (*.png)", "BMP files (*.bmp)"});
-        photoBrowser.setFileMode(QFileDialog::ExistingFile);
-
-        if(photoBrowser.exec()) {
-            QString fileName = photoBrowser.selectedFiles().constFirst();
-            w_photo->setPhoto(fileName);
-            mainDirectory = QFileInfo(fileName).dir();
-        }
-    });
 }
 DataEditor::~DataEditor()
 {
@@ -133,18 +117,26 @@ void DataEditor::setContainer(const DataContainer &target)
 }
 void DataEditor::accept()
 {
+    updateData();
+    QDialog::accept();
+}
+void DataEditor::updateData()
+{
+    bool one = ui->containerFirstName->text().isEmpty();
+    bool two = ui->containerLastName->text().isEmpty();
+    bool three = ui->containerFatherName->text().isEmpty();
+    if(one || two || three)
     {
-        const QString error = "This has not been filled yet.";
-#define VALIDATE_PROPERTY(PROPERTY) \
-    if(ui->container##PROPERTY->text().isEmpty()) { \
-        ui->container##PROPERTY->setPlaceholderText(error); \
-        return; }
-
-        VALIDATE_PROPERTY(FirstName)
-        VALIDATE_PROPERTY(LastName)
-        VALIDATE_PROPERTY(FatherName)
-
-#undef VALIDATE_PROPERTY
+        const QString errorString = "This has not been filled yet.";
+        if(one) {
+            ui->containerFirstName->setPlaceholderText(errorString);
+        }
+        if(two) {
+            ui->containerLastName->setPlaceholderText(errorString);
+        }
+        if(three) {
+            ui->containerFatherName->setPlaceholderText(errorString);
+        }
     }
     m_container.m_firstName = ui->containerFirstName->text();
     m_container.m_lastName = ui->containerLastName->text();
@@ -162,7 +154,6 @@ void DataEditor::accept()
     m_container.m_country = ui->containerCountry->currentText();
     m_container.m_photo = w_photo->photo();
     m_container.updateModified();
-    QDialog::accept();
 }
 
 #include <QPainter>
@@ -181,6 +172,26 @@ void DataEditor::fillBackground(QPainter *painter)
     }
     gradient.setColorAt(0.4, Qt::white);
     painter->fillRect(rect(), gradient);
+}
+void DataEditor::openPhotoFileDialog()
+{
+    QDir tempPicture = QDir::home();
+    tempPicture.cd("Pictures");
+
+    static QDir mainDirectory = tempPicture;
+
+    QFileDialog photoBrowser;
+    photoBrowser.setDirectory(mainDirectory);
+    photoBrowser.setWindowTitle("Select a photo to continue.");
+    photoBrowser.setAcceptMode(QFileDialog::AcceptOpen);
+    photoBrowser.setNameFilters({"JPG files (*.jpg *.jpeg)", "PNG files (*.png)", "BMP files (*.bmp)"});
+    photoBrowser.setFileMode(QFileDialog::ExistingFile);
+
+    if(photoBrowser.exec()) {
+        QString fileName = photoBrowser.selectedFiles().constFirst();
+        w_photo->setPhoto(fileName);
+        mainDirectory = QFileInfo(fileName).dir();
+    }
 }
 void DataEditor::paintEvent(QPaintEvent *event)
 {
