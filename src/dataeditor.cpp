@@ -44,7 +44,7 @@ void DataEditor::resetGender()
 }
 void DataEditor::resetCountry()
 {
-    if(!m_container.m_country.isEmpty()) {
+    if(m_container.m_country.isEmpty()) {
         ui->containerCountry->setCurrentIndex(0);
     } else {
         ui->containerCountry->setCurrentText(m_container.m_country);
