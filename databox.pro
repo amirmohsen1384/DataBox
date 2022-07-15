@@ -8,6 +8,7 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 
 SOURCES += \
     src/countrymodel.cpp \
+    src/datacreator.cpp \
     src/namedphotoviewer.cpp \
     src/datacontainer.cpp \
     src/dataeditor.cpp \
@@ -16,6 +17,7 @@ SOURCES += \
 HEADERS += \
     include/countrymodel.h \
     include/datacontainer.h \
+    include/datacreator.h \
     include/dataeditor.h \
     include/namedphotoviewer.h \
     include/photoviewer.h
