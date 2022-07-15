@@ -509,11 +509,12 @@
   <tabstop>containerLastName</tabstop>
   <tabstop>containerFatherName</tabstop>
   <tabstop>containerBirthday</tabstop>
+  <tabstop>containerCountry</tabstop>
   <tabstop>radioButtonMale</tabstop>
   <tabstop>radioButtonFemale</tabstop>
+  <tabstop>buttonLocalBrowser</tabstop>
   <tabstop>buttonOk</tabstop>
   <tabstop>buttonCancel</tabstop>
-  <tabstop>buttonResetEditor</tabstop>
   <tabstop>buttonResetFirstName</tabstop>
   <tabstop>buttonResetLastName</tabstop>
   <tabstop>buttonResetFatherName</tabstop>
@@ -521,6 +522,7 @@
   <tabstop>buttonResetCountry</tabstop>
   <tabstop>buttonResetGender</tabstop>
   <tabstop>buttonResetPhoto</tabstop>
+  <tabstop>buttonResetEditor</tabstop>
  </tabstops>
  <resources>
   <include location="icons/resource.qrc"/>
