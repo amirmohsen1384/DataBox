@@ -6,35 +6,62 @@ DataEditor::DataEditor(QWidget *parent) : QDialog(parent)
 {
     setupEditor();
 }
-DataEditor::DataEditor(const DataContainer &target, QWidget *parent) : QDialog(parent)
+void DataEditor::setContainer(DataContainer *container)
 {
-    setupEditor();
-    setContainer(target);
+    if(container != nullptr) {
+        m_container = container;
+        setWindowTitle(m_container->fullName() + " - " + "Editor");
+        resetEditor();
+    }
+}
+DataContainer *DataEditor::container() const
+{
+    return m_container;
 }
 void DataEditor::resetFirstName()
 {
-    ui->containerFirstName->setText(m_container.m_firstName);
+    DataContainer *target = this->container();
+    if(target == nullptr) {
+        return;
+    }
+    ui->containerFirstName->setText(target->m_firstName);
 }
 void DataEditor::resetLastName()
 {
-    ui->containerLastName->setText(m_container.m_lastName);
+    DataContainer *target = this->container();
+    if(target == nullptr) {
+        return;
+    }
+    ui->containerLastName->setText(target->m_lastName);
 }
 void DataEditor::resetFatherName()
 {
-    ui->containerFatherName->setText(m_container.m_fatherName);
+    DataContainer *target = this->container();
+    if(target == nullptr) {
+        return;
+    }
+    ui->containerFatherName->setText(target->m_fatherName);
 }
 void DataEditor::resetBirthday()
 {
-    ui->containerBirthday->setDate(m_container.m_birthday);
+    DataContainer *target = this->container();
+    if(target == nullptr) {
+        return;
+    }
+    ui->containerBirthday->setDate(target->m_birthday);
 }
 void DataEditor::resetGender()
 {
+    DataContainer *target = this->container();
+    if(target == nullptr) {
+        return;
+    }
     using enum DataContainer::GenderContainer;
-    switch(m_container.m_gender)
+    switch(target->m_gender)
     {
     case Male: {
-       ui->radioButtonMale->setChecked(true);
-       break;
+        ui->radioButtonMale->setChecked(true);
+        break;
     }
     case Female: {
         ui->radioButtonFemale->setChecked(true);
@@ -44,19 +71,31 @@ void DataEditor::resetGender()
 }
 void DataEditor::resetCountry()
 {
-    if(!m_container.m_country.isEmpty()) {
+    DataContainer *target = this->container();
+    if(target == nullptr) {
+        return;
+    }
+    const QString &country = target->m_country;
+    if(!country.isEmpty()) {
         ui->containerCountry->setCurrentIndex(0);
     } else {
-        ui->containerCountry->setCurrentText(m_container.m_country);
+        ui->containerCountry->setCurrentText(country);
     }
 }
 void DataEditor::resetPhoto()
 {
-    w_photo->setPhoto(m_container.m_photo);
+    DataContainer *target = this->container();
+    if(target == nullptr) {
+        return;
+    }
+    w_photo->setPhoto(target->m_photo);
     resize(sizeHint());
 }
 void DataEditor::resetEditor()
 {
+    if(this->container() == nullptr) {
+        return;
+    }
     resetFirstName();
     resetLastName();
     resetFatherName();
@@ -64,11 +103,6 @@ void DataEditor::resetEditor()
     resetGender();
     resetCountry();
     resetPhoto();
-}
-void DataEditor::resetContainer()
-{
-    m_container = DataContainer();
-    resetEditor();
 }
 
 #include <QFileDialog>
@@ -81,8 +115,8 @@ void DataEditor::setupEditor()
     ui->layoutPhoto->insertWidget(0, w_photo);
     w_photo->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
-    ui->containerBirthday->setDate(QDate::currentDate());
     ui->containerCountry->setModel(&m_country);
+    ui->containerBirthday->setDate(QDate::currentDate());
 
     connect(ui->radioButtonMale, &QRadioButton::toggled, [this](bool) { this->update(); });
     connect(ui->radioButtonFemale, &QRadioButton::toggled, [this](bool) { this->update(); });
@@ -106,28 +140,23 @@ DataEditor::~DataEditor()
 {
     delete ui;
 }
-const DataContainer &DataEditor::container() const
-{
-    return m_container;
-}
-void DataEditor::setContainer(const DataContainer &target)
-{
-    m_container = target;
-    resetEditor();
-}
 void DataEditor::accept()
 {
-    updateData();
+    this->commitData();
     QDialog::accept();
 }
-void DataEditor::updateData()
+bool DataEditor::commitData()
 {
+    DataContainer *target = this->container();
+    if(target == nullptr) {
+        return false;
+    }
     bool one = ui->containerFirstName->text().isEmpty();
     bool two = ui->containerLastName->text().isEmpty();
     bool three = ui->containerFatherName->text().isEmpty();
     if(one || two || three)
     {
-        const QString errorString = "This has not been filled yet.";
+        const QString errorString = "REQUIRED";
         if(one) {
             ui->containerFirstName->setPlaceholderText(errorString);
         }
@@ -137,23 +166,33 @@ void DataEditor::updateData()
         if(three) {
             ui->containerFatherName->setPlaceholderText(errorString);
         }
+        return false;
     }
-    m_container.m_firstName = ui->containerFirstName->text();
-    m_container.m_lastName = ui->containerLastName->text();
-    m_container.m_fatherName = ui->containerFatherName->text();
+    target->m_firstName = ui->containerFirstName->text();
+    target->m_lastName = ui->containerLastName->text();
+    target->m_fatherName = ui->containerFatherName->text();
     {
         using enum DataContainer::GenderContainer;
         if(ui->radioButtonMale->isChecked()) {
-            m_container.m_gender = Male;
+            target->m_gender = Male;
         }
         else if(ui->radioButtonFemale->isChecked()) {
-            m_container.m_gender = Female;
+            target->m_gender = Female;
         }
     }
-    m_container.m_birthday = ui->containerBirthday->date();
-    m_container.m_country = ui->containerCountry->currentText();
-    m_container.m_photo = w_photo->photo();
-    m_container.updateModified();
+    target->m_birthday = ui->containerBirthday->date();
+    target->m_country = ui->containerCountry->currentText();
+    target->m_photo = w_photo->photo();
+    target->updateModified();
+    return true;
+}
+int DataEditor::exec()
+{
+    if(this->container() == nullptr) {
+        qCritical() << "No data container is provided to the editor.";
+        qCritical() << "Most of functionality will not work.";
+    }
+    return QDialog::exec();
 }
 
 #include <QPainter>

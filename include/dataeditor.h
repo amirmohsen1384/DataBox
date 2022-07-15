@@ -16,23 +16,20 @@ class DataEditor : public QDialog
     Ui::DataEditor *ui{};
     PhotoViewer *w_photo{};
     CountryModel m_country;
-    DataContainer m_container;
+    DataContainer *m_container = nullptr;
 private:
     void fillBackground(QPainter *painter);
 private slots:
     void openPhotoFileDialog();
 protected:
-    void paintEvent(QPaintEvent *event) override;
-    virtual void updateData();
+    virtual void paintEvent(QPaintEvent *event) override;
+    virtual bool commitData();
 public:
     explicit DataEditor(QWidget *parent = nullptr);
-    explicit DataEditor(const DataContainer &target, QWidget *parent = nullptr);
+    virtual void setContainer(DataContainer *container);
+    virtual DataContainer* container() const;
     ~DataEditor();
-
-    const DataContainer& container() const;
-    void setContainer(const DataContainer &target);
 public slots:
-    void accept() override;
     void resetFirstName();
     void resetLastName();
     void resetFatherName();
@@ -41,7 +38,8 @@ public slots:
     void resetCountry();
     void resetPhoto();
     void resetEditor();
-    void resetContainer();
+    void accept() override;
+    virtual int exec() override;
 };
 
 #endif // DATAEDITOR_H
