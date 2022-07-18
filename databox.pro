@@ -7,6 +7,7 @@ CONFIG += c++2a
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 
 SOURCES += \
+    src/dataviewer.cpp \
     src/countrymodel.cpp \
     src/namedphotoviewer.cpp \
     src/datacontainer.cpp \
@@ -14,6 +15,7 @@ SOURCES += \
     src/photoviewer.cpp
 
 HEADERS += \
+    include/dataviewer.h \
     include/countrymodel.h \
     include/datacontainer.h \
     include/dataeditor.h \
@@ -21,6 +23,7 @@ HEADERS += \
     include/photoviewer.h
 
 FORMS += \
+    ui/dataviewer.ui \
     ui/dataeditor.ui
 
 qnx: target.path = /tmp/$${TARGET}/bin
