@@ -7,6 +7,7 @@ CONFIG += c++2a
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 
 SOURCES += \
+    main.cpp \
     src/dataviewer.cpp \
     src/countrymodel.cpp \
     src/namedphotoviewer.cpp \
