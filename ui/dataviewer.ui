@@ -24,105 +24,6 @@
    <bool>true</bool>
   </property>
   <layout class="QGridLayout" name="mainLayout">
-   <item row="10" column="0" colspan="4">
-    <widget class="QLabel" name="labelDateCreated">
-     <property name="font">
-      <font>
-       <family>Segoe UI Light</family>
-       <pointsize>14</pointsize>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Created on DATE CREATED</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="labelFatherName">
-     <property name="font">
-      <font>
-       <family>Segoe UI</family>
-       <pointsize>12</pointsize>
-       <italic>true</italic>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Father's name:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2" colspan="2">
-    <widget class="QLabel" name="labelBirthday">
-     <property name="font">
-      <font>
-       <family>Segoe UI</family>
-       <pointsize>12</pointsize>
-       <italic>true</italic>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Birthday</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0" colspan="4">
-    <widget class="QWidget" name="namedPhotoViewer" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="palette">
-      <palette>
-       <active/>
-       <inactive/>
-       <disabled/>
-      </palette>
-     </property>
-     <property name="autoFillBackground">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="0">
-    <widget class="QLabel" name="containerGender">
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>GENDER</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1">
-    <spacer name="seperator">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Preferred</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>22</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
    <item row="7" column="3">
     <widget class="QLabel" name="labelCountry">
      <property name="sizePolicy">
@@ -147,31 +48,50 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="3">
-    <widget class="QLabel" name="containerCountry">
+   <item row="1" column="2" colspan="2">
+    <widget class="QLabel" name="labelBirthday">
      <property name="font">
       <font>
+       <family>Segoe UI</family>
        <pointsize>12</pointsize>
+       <italic>true</italic>
+       <bold>true</bold>
       </font>
      </property>
      <property name="text">
-      <string>COUNTRY</string>
+      <string>Birthday</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="containerFatherName">
+   <item row="8" column="0">
+    <widget class="QLabel" name="containerGender">
      <property name="font">
       <font>
-       <family>Segoe Print</family>
+       <pointsize>12</pointsize>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Unknown</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3">
+    <widget class="QLabel" name="containerBirthday">
+     <property name="font">
+      <font>
+       <family>Segoe UI Light</family>
        <pointsize>14</pointsize>
       </font>
      </property>
      <property name="text">
-      <string>FATHER NAME</string>
+      <string>Unknown</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
@@ -190,21 +110,84 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="3">
-    <widget class="QLabel" name="containerBirthday">
+   <item row="1" column="0">
+    <widget class="QLabel" name="labelFatherName">
      <property name="font">
       <font>
-       <family>Segoe UI Light</family>
+       <family>Segoe UI</family>
+       <pointsize>12</pointsize>
+       <italic>true</italic>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Father's name:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <spacer name="seperator">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Preferred</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>22</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="containerFatherName">
+     <property name="font">
+      <font>
+       <family>Segoe Print</family>
        <pointsize>14</pointsize>
       </font>
      </property>
      <property name="text">
-      <string>BIRTHDAY</string>
+      <string>Unknown</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="3">
+    <widget class="QLabel" name="containerCountry">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Unknown</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
+   </item>
+   <item row="10" column="0" colspan="4">
+    <widget class="QLabel" name="labelDateCreated">
+     <property name="font">
+      <font>
+       <family>Segoe UI Light</family>
+       <pointsize>14</pointsize>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Created on Unkown</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="4">
+    <layout class="QVBoxLayout" name="layoutPhoto"/>
    </item>
   </layout>
  </widget>
