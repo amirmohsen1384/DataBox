@@ -1,12 +1,16 @@
 #include <QApplication>
+#include "include/dataeditor.h"
 #include "include/dataviewer.h"
 
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
 
-    DataViewer view;
-    view.exec();
+    DataEditor editor;
+    if(editor.exec() == QDialog::Accepted) {
+        DataViewer view(editor.container());
+        view.exec();
+    }
 
-    return app.exec();
+    return EXIT_SUCCESS;
 }
