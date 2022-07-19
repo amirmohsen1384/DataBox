@@ -82,8 +82,8 @@ void DataViewer::resetViewer()
     resetGender();
     resetCountry();
     resetPhoto();
-    w_photo->setSecondaryText("Date modified on " + m_container.modified().toString());
-    ui->labelDateCreated->setText("Date created: " + m_container.created().toString());
+    w_photo->setSecondaryText("Date modified: " + m_container.modified().toString());
+    ui->labelDateCreated->setText(ui->labelDateCreated->text() + m_container.created().toString());
 }
 
 #include <QPainter>
