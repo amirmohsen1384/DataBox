@@ -1,11 +1,13 @@
 #ifndef DATACONTAINER_H
 #define DATACONTAINER_H
 
+#include <QObject>
 #include <QPixmap>
 #include <QDateTime>
 
-class DataContainer
+class DataContainer : public QObject
 {
+    Q_OBJECT
 public:
     enum class GenderContainer {Male = 0x01, Female = 0x02};
 private:
@@ -21,8 +23,8 @@ private:
 private:
     inline void updateModified() { m_modified = QDateTime::currentDateTime(); }
 public:
-    DataContainer() {}
-    DataContainer(const DataContainer &value);
+    DataContainer(QObject *parent = nullptr) : QObject(parent) {}
+    DataContainer(const DataContainer &value, QObject *parent = nullptr);
     DataContainer& operator=(const DataContainer &value);
 
     friend QDataStream& operator<<(QDataStream &stream, const DataContainer &target);

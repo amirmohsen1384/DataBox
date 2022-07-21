@@ -1,6 +1,6 @@
 #include "include/datacontainer.h"
 
-DataContainer::DataContainer(const DataContainer &value)
+DataContainer::DataContainer(const DataContainer &value, QObject *parent) : QObject(parent)
 {
     *this = value;
 }
