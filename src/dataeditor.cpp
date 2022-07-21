@@ -3,6 +3,11 @@
 void DataEditor::initEditor()
 {
     connect(this, &DataEditor::containerChanged, [this](DataContainer*){ resetEditor(); });
+    connect(this, &DataEditor::containerChanged, [this](DataContainer*) { updateWindowTitle(); });
+}
+void DataEditor::updateWindowTitle()
+{
+    setWindowTitle(m_container->fullName() + " - Editor");
 }
 bool DataEditor::commitData()
 {
