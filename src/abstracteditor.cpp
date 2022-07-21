@@ -194,6 +194,25 @@ void AbstractEditor::openPhotoFileDialog()
         mainDirectory = QFileInfo(fileName).dir();
     }
 }
+void AbstractEditor::updateAcceptState()
+{
+    if(this->container() == nullptr) {
+        ui->buttonOk->setEnabled(false);
+
+    } else if(ui->containerFirstName->text().isEmpty()) {
+        ui->buttonOk->setEnabled(false);
+
+    } else if(ui->containerLastName->text().isEmpty()) {
+        ui->buttonOk->setEnabled(false);
+
+    } else if(ui->containerFatherName->text().isEmpty()) {
+        ui->buttonOk->setEnabled(false);
+
+    } else {
+        ui->buttonOk->setEnabled(true);
+
+    }
+}
 void AbstractEditor::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
@@ -204,31 +223,16 @@ void AbstractEditor::paintEvent(QPaintEvent *event)
 const QString &errorString = "REQUIRED!";
 void AbstractEditor::containerFirstName(const QString &text)
 {
-    bool result = text.isEmpty();
-    if(result) {
-        ui->containerFirstName->setPlaceholderText(errorString);
-    } else {
-        ui->containerFirstName->setPlaceholderText(QString());
-    }
-    ui->buttonOk->setDisabled(result);
+    ui->containerFirstName->setPlaceholderText(text.isEmpty() ? errorString : QString());
+    updateAcceptState();
 }
 void AbstractEditor::containerLastName(const QString &text)
 {
-    bool result = text.isEmpty();
-    if(result) {
-        ui->containerLastName->setPlaceholderText(errorString);
-    } else {
-        ui->containerLastName->setPlaceholderText(QString());
-    }
-    ui->buttonOk->setDisabled(result);
+    ui->containerLastName->setPlaceholderText(text.isEmpty() ? errorString : QString());
+    updateAcceptState();
 }
 void AbstractEditor::containerFatherName(const QString &text)
 {
-    bool result = text.isEmpty();
-    if(result) {
-        ui->containerFatherName->setPlaceholderText(errorString);
-    } else {
-        ui->containerFatherName->setPlaceholderText(QString());
-    }
-    ui->buttonOk->setDisabled(result);
+    ui->containerFatherName->setPlaceholderText(text.isEmpty() ? errorString : QString());
+    updateAcceptState();
 }

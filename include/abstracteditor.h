@@ -25,6 +25,7 @@ private slots:
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
     virtual bool commitData();
+    void updateAcceptState();
 public:
     explicit AbstractEditor(QWidget *parent = nullptr);
     virtual DataContainer* container() const = 0;

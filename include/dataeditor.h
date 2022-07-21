@@ -11,7 +11,7 @@ class DataEditor : public AbstractEditor
     QPointer<DataContainer> m_container{};
 private:
     void initEditor();
-    void updateWindowTitle();
+    void updateEditor();
 protected:
     bool commitData() override;
 public:
