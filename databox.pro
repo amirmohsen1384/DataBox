@@ -7,7 +7,6 @@ CONFIG += c++2a
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 
 SOURCES += \
-    main.cpp \
     src/abstracteditor.cpp \
     src/dataeditor.cpp \
     src/dataviewer.cpp \
