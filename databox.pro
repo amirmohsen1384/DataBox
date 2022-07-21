@@ -10,10 +10,8 @@ SOURCES += \
     src/abstracteditor.cpp \
     src/dataviewer.cpp \
     src/countrymodel.cpp \
-    src/datacreator.cpp \
     src/namedphotoviewer.cpp \
     src/datacontainer.cpp \
-    src/dataeditor.cpp \
     src/photoviewer.cpp
 
 HEADERS += \
@@ -21,14 +19,12 @@ HEADERS += \
     include/dataviewer.h \
     include/countrymodel.h \
     include/datacontainer.h \
-    include/datacreator.h \
-    include/dataeditor.h \
     include/namedphotoviewer.h \
     include/photoviewer.h
 
 FORMS += \
-    ui/dataviewer.ui \
-    ui/dataeditor.ui
+    ui/abstracteditor.ui \
+    ui/dataviewer.ui
 
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
