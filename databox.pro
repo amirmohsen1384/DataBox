@@ -7,6 +7,7 @@ CONFIG += c++2a
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 
 SOURCES += \
+    src/abstracteditor.cpp \
     src/countrymodel.cpp \
     src/datacreator.cpp \
     src/namedphotoviewer.cpp \
@@ -15,6 +16,7 @@ SOURCES += \
     src/photoviewer.cpp
 
 HEADERS += \
+    include/abstracteditor.h \
     include/countrymodel.h \
     include/datacontainer.h \
     include/datacreator.h \
