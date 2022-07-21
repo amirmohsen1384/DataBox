@@ -12,6 +12,7 @@ AbstractEditor::AbstractEditor(QWidget *parent) : QDialog(parent), ui(new Ui::Ab
 
     ui->containerCountry->setModel(&m_country);
     ui->containerBirthday->setDate(QDate::currentDate());
+
     connect(ui->buttonLocalBrowser, &QPushButton::clicked, this, &AbstractEditor::openPhotoFileDialog);
     connect(ui->buttonResetFirstName, &QPushButton::clicked, this, &AbstractEditor::resetFirstName);
     connect(ui->buttonResetLastName, &QPushButton::clicked, this, &AbstractEditor::resetLastName);
@@ -21,6 +22,9 @@ AbstractEditor::AbstractEditor(QWidget *parent) : QDialog(parent), ui(new Ui::Ab
     connect(ui->buttonResetCountry, &QPushButton::clicked, this, &AbstractEditor::resetCountry);
     connect(ui->buttonResetPhoto, &QPushButton::clicked, this, &AbstractEditor::resetPhoto);
     connect(ui->buttonResetEditor, &QPushButton::clicked, this, &AbstractEditor::resetEditor);
+    connect(ui->containerFirstName, &QLineEdit::textChanged, this, &AbstractEditor::containerFirstName);
+    connect(ui->containerLastName, &QLineEdit::textChanged, this, &AbstractEditor::containerLastName);
+    connect(ui->containerFatherName, &QLineEdit::textChanged, this, &AbstractEditor::containerFatherName);
 }
 void AbstractEditor::resetFirstName()
 {
@@ -124,23 +128,6 @@ bool AbstractEditor::commitData()
     if(target == nullptr) {
         return false;
     }
-    bool one = ui->containerFirstName->text().isEmpty();
-    bool two = ui->containerLastName->text().isEmpty();
-    bool three = ui->containerFatherName->text().isEmpty();
-    if(one || two || three)
-    {
-        const QString errorString = "REQUIRED";
-        if(one) {
-            ui->containerFirstName->setPlaceholderText(errorString);
-        }
-        if(two) {
-            ui->containerLastName->setPlaceholderText(errorString);
-        }
-        if(three) {
-            ui->containerFatherName->setPlaceholderText(errorString);
-        }
-        return false;
-    }
     target->m_firstName = ui->containerFirstName->text();
     target->m_lastName = ui->containerLastName->text();
     target->m_fatherName = ui->containerFatherName->text();
@@ -212,4 +199,36 @@ void AbstractEditor::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     fillBackground(&painter);
     QWidget::paintEvent(event);
+}
+
+const QString &errorString = "REQUIRED!";
+void AbstractEditor::containerFirstName(const QString &text)
+{
+    bool result = text.isEmpty();
+    if(result) {
+        ui->containerFirstName->setPlaceholderText(errorString);
+    } else {
+        ui->containerFirstName->setPlaceholderText(QString());
+    }
+    ui->buttonOk->setDisabled(result);
+}
+void AbstractEditor::containerLastName(const QString &text)
+{
+    bool result = text.isEmpty();
+    if(result) {
+        ui->containerLastName->setPlaceholderText(errorString);
+    } else {
+        ui->containerLastName->setPlaceholderText(QString());
+    }
+    ui->buttonOk->setDisabled(result);
+}
+void AbstractEditor::containerFatherName(const QString &text)
+{
+    bool result = text.isEmpty();
+    if(result) {
+        ui->containerFatherName->setPlaceholderText(errorString);
+    } else {
+        ui->containerFatherName->setPlaceholderText(QString());
+    }
+    ui->buttonOk->setDisabled(result);
 }
