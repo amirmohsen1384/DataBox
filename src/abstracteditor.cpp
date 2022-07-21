@@ -1,7 +1,7 @@
 #include "include/abstracteditor.h"
 #include "include/photoviewer.h"
 #include "ui_abstracteditor.h"
-#include "datacontainer.h"
+#include "include/datacontainer.h"
 
 AbstractEditor::AbstractEditor(QWidget *parent) : QDialog(parent), ui(new Ui::AbstractEditor)
 {
