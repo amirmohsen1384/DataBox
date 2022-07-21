@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>601</width>
-    <height>451</height>
+    <width>671</width>
+    <height>507</height>
    </rect>
   </property>
   <property name="font">
@@ -116,6 +116,15 @@
         <property name="text">
          <string>Father's name:</string>
         </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="openExternalLinks">
+         <bool>false</bool>
+        </property>
         <property name="buddy">
          <cstring>containerFatherName</cstring>
         </property>
@@ -131,6 +140,15 @@
         </property>
         <property name="text">
          <string>Country:</string>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="openExternalLinks">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -178,6 +196,15 @@
         <property name="text">
          <string>First name:</string>
         </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="openExternalLinks">
+         <bool>false</bool>
+        </property>
         <property name="buddy">
          <cstring>containerFirstName</cstring>
         </property>
@@ -193,6 +220,15 @@
         </property>
         <property name="text">
          <string>Last name:</string>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="openExternalLinks">
+         <bool>false</bool>
         </property>
         <property name="buddy">
          <cstring>containerLastName</cstring>
@@ -219,6 +255,15 @@
         </property>
         <property name="text">
          <string>Gender:</string>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="openExternalLinks">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -293,6 +338,15 @@
         <property name="text">
          <string>Birthday:</string>
         </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="openExternalLinks">
+         <bool>false</bool>
+        </property>
         <property name="buddy">
          <cstring>containerBirthday</cstring>
         </property>
@@ -332,6 +386,12 @@
           <bold>true</bold>
           <stylestrategy>PreferAntialias</stylestrategy>
          </font>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+        <property name="specialValueText">
+         <string/>
         </property>
         <property name="accelerated">
          <bool>false</bool>

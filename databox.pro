@@ -8,6 +8,7 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 
 SOURCES += \
     src/abstracteditor.cpp \
+    src/dataviewer.cpp \
     src/countrymodel.cpp \
     src/datacreator.cpp \
     src/namedphotoviewer.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
 
 HEADERS += \
     include/abstracteditor.h \
+    include/dataviewer.h \
     include/countrymodel.h \
     include/datacontainer.h \
     include/datacreator.h \
@@ -25,6 +27,7 @@ HEADERS += \
     include/photoviewer.h
 
 FORMS += \
+    ui/dataviewer.ui \
     ui/dataeditor.ui
 
 qnx: target.path = /tmp/$${TARGET}/bin

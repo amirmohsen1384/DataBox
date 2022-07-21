@@ -76,7 +76,7 @@ void DataEditor::resetCountry()
         return;
     }
     const QString &country = target->m_country;
-    if(!country.isEmpty()) {
+    if(m_container->m_country.isEmpty()) {
         ui->containerCountry->setCurrentIndex(0);
     } else {
         ui->containerCountry->setCurrentText(country);
