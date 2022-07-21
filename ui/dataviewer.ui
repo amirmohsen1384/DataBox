@@ -138,7 +138,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>22</width>
-       <height>40</height>
+       <height>10</height>
       </size>
      </property>
     </spacer>
@@ -179,7 +179,7 @@
      <property name="font">
       <font>
        <family>Segoe UI</family>
-       <pointsize>10</pointsize>
+       <pointsize>9</pointsize>
        <bold>false</bold>
       </font>
      </property>
@@ -187,7 +187,7 @@
       <string>Date created: </string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+      <set>Qt::AlignBottom|Qt::AlignHCenter</set>
      </property>
     </widget>
    </item>

@@ -8,24 +8,24 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 
 SOURCES += \
     main.cpp \
+    src/abstracteditor.cpp \
     src/dataviewer.cpp \
     src/countrymodel.cpp \
     src/namedphotoviewer.cpp \
     src/datacontainer.cpp \
-    src/dataeditor.cpp \
     src/photoviewer.cpp
 
 HEADERS += \
+    include/abstracteditor.h \
     include/dataviewer.h \
     include/countrymodel.h \
     include/datacontainer.h \
-    include/dataeditor.h \
     include/namedphotoviewer.h \
     include/photoviewer.h
 
 FORMS += \
-    ui/dataviewer.ui \
-    ui/dataeditor.ui
+    ui/abstracteditor.ui \
+    ui/dataviewer.ui
 
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin

@@ -30,6 +30,7 @@ public:
     friend bool operator==(const DataContainer &one, const DataContainer &two);
     friend inline bool operator!=(const DataContainer &one, const DataContainer &two);
     friend QDebug operator<<(QDebug debuggger, const DataContainer &target);
+    friend class AbstractEditor;
     friend class DataEditor;
 
     const QString& firstName() const;
