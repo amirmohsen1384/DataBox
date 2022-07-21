@@ -156,7 +156,6 @@ bool AbstractEditor::commitData()
     target->m_birthday = ui->containerBirthday->date();
     target->m_country = ui->containerCountry->currentText();
     target->m_photo = w_photo->photo();
-    target->updateModified();
     return true;
 }
 int AbstractEditor::exec()
