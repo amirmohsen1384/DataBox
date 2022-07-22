@@ -8,6 +8,7 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x06000
 
 SOURCES += \
     src/abstracteditor.cpp \
+    src/datacreator.cpp \
     src/dataeditor.cpp \
     src/dataviewer.cpp \
     src/countrymodel.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
 
 HEADERS += \
     include/abstracteditor.h \
+    include/datacreator.h \
     include/dataeditor.h \
     include/dataviewer.h \
     include/countrymodel.h \
