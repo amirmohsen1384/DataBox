@@ -9,10 +9,7 @@ AbstractEditor::AbstractEditor(QWidget *parent) : QDialog(parent), ui(new Ui::Ab
     w_photo = new PhotoViewer(this);
     ui->containerPhoto->addWidget(w_photo);
     w_photo->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-
     ui->containerCountry->setModel(&m_country);
-    ui->containerBirthday->setDate(QDate::currentDate());
-
     connect(ui->buttonLocalBrowser, &QPushButton::clicked, this, &AbstractEditor::openPhotoFileDialog);
     connect(ui->buttonResetFirstName, &QPushButton::clicked, this, &AbstractEditor::resetFirstName);
     connect(ui->buttonResetLastName, &QPushButton::clicked, this, &AbstractEditor::resetLastName);
@@ -22,9 +19,9 @@ AbstractEditor::AbstractEditor(QWidget *parent) : QDialog(parent), ui(new Ui::Ab
     connect(ui->buttonResetCountry, &QPushButton::clicked, this, &AbstractEditor::resetCountry);
     connect(ui->buttonResetPhoto, &QPushButton::clicked, this, &AbstractEditor::resetPhoto);
     connect(ui->buttonResetEditor, &QPushButton::clicked, this, &AbstractEditor::resetEditor);
-    connect(ui->containerFirstName, &QLineEdit::textChanged, this, &AbstractEditor::containerFirstName);
-    connect(ui->containerLastName, &QLineEdit::textChanged, this, &AbstractEditor::containerLastName);
-    connect(ui->containerFatherName, &QLineEdit::textChanged, this, &AbstractEditor::containerFatherName);
+    connect(ui->containerFirstName, &QLineEdit::textChanged, this, &AbstractEditor::updateAcceptState);
+    connect(ui->containerLastName, &QLineEdit::textChanged, this, &AbstractEditor::updateAcceptState);
+    connect(ui->containerFatherName, &QLineEdit::textChanged, this, &AbstractEditor::updateAcceptState);
 }
 void AbstractEditor::resetFirstName()
 {
@@ -116,7 +113,7 @@ AbstractEditor::~AbstractEditor()
 }
 void AbstractEditor::accept()
 {
-    if(commitData()) {
+    if(this->commitData()) {
         QDialog::accept();
     } else {
         QDialog::reject();
@@ -144,6 +141,25 @@ bool AbstractEditor::commitData()
     target->m_country = ui->containerCountry->currentText();
     target->m_photo = w_photo->photo();
     return true;
+}
+void AbstractEditor::updateAcceptState()
+{
+    if(this->container() == nullptr) {
+        ui->buttonOk->setEnabled(false);
+
+    } else if(ui->containerFirstName->text().isEmpty()) {
+        ui->buttonOk->setEnabled(false);
+
+    } else if(ui->containerLastName->text().isEmpty()) {
+        ui->buttonOk->setEnabled(false);
+
+    } else if(ui->containerFatherName->text().isEmpty()) {
+        ui->buttonOk->setEnabled(false);
+
+    } else {
+        ui->buttonOk->setEnabled(true);
+
+    }
 }
 int AbstractEditor::exec()
 {
@@ -194,45 +210,9 @@ void AbstractEditor::openPhotoFileDialog()
         mainDirectory = QFileInfo(fileName).dir();
     }
 }
-void AbstractEditor::updateAcceptState()
-{
-    if(this->container() == nullptr) {
-        ui->buttonOk->setEnabled(false);
-
-    } else if(ui->containerFirstName->text().isEmpty()) {
-        ui->buttonOk->setEnabled(false);
-
-    } else if(ui->containerLastName->text().isEmpty()) {
-        ui->buttonOk->setEnabled(false);
-
-    } else if(ui->containerFatherName->text().isEmpty()) {
-        ui->buttonOk->setEnabled(false);
-
-    } else {
-        ui->buttonOk->setEnabled(true);
-
-    }
-}
 void AbstractEditor::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     fillBackground(&painter);
     QWidget::paintEvent(event);
-}
-
-const QString &errorString = "REQUIRED!";
-void AbstractEditor::containerFirstName(const QString &text)
-{
-    ui->containerFirstName->setPlaceholderText(text.isEmpty() ? errorString : QString());
-    updateAcceptState();
-}
-void AbstractEditor::containerLastName(const QString &text)
-{
-    ui->containerLastName->setPlaceholderText(text.isEmpty() ? errorString : QString());
-    updateAcceptState();
-}
-void AbstractEditor::containerFatherName(const QString &text)
-{
-    ui->containerFatherName->setPlaceholderText(text.isEmpty() ? errorString : QString());
-    updateAcceptState();
 }

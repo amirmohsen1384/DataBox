@@ -19,9 +19,6 @@ private:
     void fillBackground(QPainter *painter);
 private slots:
     void openPhotoFileDialog();
-    void containerFirstName(const QString &text);
-    void containerLastName(const QString &text);
-    void containerFatherName(const QString &text);
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
     virtual bool commitData();
