@@ -3,7 +3,6 @@
 void DataEditor::initEditor()
 {
     connect(this, &DataEditor::containerChanged, this, &DataEditor::updateEditor);
-    updateAcceptState();
 }
 bool DataEditor::commitData()
 {
@@ -16,6 +15,7 @@ bool DataEditor::commitData()
 DataEditor::DataEditor(QWidget *parent) : AbstractEditor(parent)
 {
     initEditor();
+    updateAcceptState();
 }
 DataEditor::DataEditor(DataContainer *container, QWidget *parent) : AbstractEditor(parent)
 {
@@ -28,7 +28,7 @@ DataContainer *DataEditor::container() const
 }
 void DataEditor::setContainer(DataContainer *container)
 {
-    m_container = container;
+    m_container = qobject_cast<DataContainer*>(container);
     emit containerChanged(m_container);
 }
 void DataEditor::updateEditor()
